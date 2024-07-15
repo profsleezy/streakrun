@@ -38,8 +38,6 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     background-size: 115% auto;
     background-position: center;
     background-repeat: no-repeat;
-    transform: scale(.7);
-    transition: transform .2s ease;
   }
 
   &:hover {
