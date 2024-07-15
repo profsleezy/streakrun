@@ -18,9 +18,6 @@ const BannerImage = styled.img`
   height: auto; /* Ensures image maintains aspect ratio */
   max-height: 80vh; /* Adjust the maximum height as needed */
   border-radius: 10px; /* Rounded corners */
-  position: absolute;
-  top: 0;
-  left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 1s ease-in-out;
 `;
