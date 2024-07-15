@@ -100,8 +100,9 @@ const Welcome = styled.div`
 `
 const BannerImage = styled.img`
   /* Styles for the image */
-  width: 1980px;
-  length: 1080px;
+  width: 100%; /* Adjust the width as needed */
+  max-width: 100%;
+  border-radius: 10px; /* Rounded corners */
 `;
 
 export function WelcomeBanner() {
