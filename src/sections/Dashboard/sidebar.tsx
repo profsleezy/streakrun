@@ -1,4 +1,5 @@
-import React from 'react';
+// Sidebar.js
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const SidebarContainer = styled.div`
@@ -26,49 +27,27 @@ const SidebarItem = styled.div`
   width: 80%;
   transition: background-color 0.3s ease, transform 0.3s ease;
   border-radius: 5px;
-  
+  color: #F6B203;
+  text-decoration: none;
+
   &:hover {
     background-color: #444;
     transform: scale(1.05);
     color: #FFFFFF; /* Change text color on hover */
   }
+
+  ${({ active }) => active && `
+    background-color: #444;
+    color: #FFFFFF; /* Active link styling */
+  `}
 `;
 
-const GlowEffect = styled.div`
-  position: absolute;
-  bottom: 1rem;
-  width: 80%;
-  height: 4px;
-  background: linear-gradient(45deg, #F6B203, transparent);
-  border-radius: 2px;
-  box-shadow: 0 0 10px #F6B203, 0 0 20px #F6B203, 0 0 30px #F6B203;
-  animation: glowing 1.5s infinite;
-
-  @keyframes glowing {
-    0% { box-shadow: 0 0 5px #F6B203; }
-    50% { box-shadow: 0 0 20px #F6B203; }
-    100% { box-shadow: 0 0 5px #F6B203; }
-  }
-`;
-
-const LowerSection = styled.div`
-  margin-top: auto;
-  padding-bottom: 1rem;
-`;
-
-export function Sidebar() {
+export function Sidebar({ setPage }) {
   return (
     <SidebarContainer>
-      <SidebarItem>Home</SidebarItem>
-      <SidebarItem>Games</SidebarItem>
-      <SidebarItem>Settings</SidebarItem>
-      <SidebarItem>Profile</SidebarItem>
-      <SidebarItem>About</SidebarItem>
-      <LowerSection>
-        <SidebarItem>Help</SidebarItem>
-        <SidebarItem>Logout</SidebarItem>
-      </LowerSection>
-      <GlowEffect />
+      <SidebarItem onClick={() => setPage('Dashboard')}>Home</SidebarItem>
+      <SidebarItem onClick={() => setPage('Mines')}>Games</SidebarItem>
+      <SidebarItem onClick={() => setPage('Dice')}>Settings</SidebarItem>
     </SidebarContainer>
   );
 }
