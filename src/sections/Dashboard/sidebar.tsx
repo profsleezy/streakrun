@@ -46,7 +46,7 @@ export function Sidebar({ setPage }) {
   return (
     <SidebarContainer>
       <SidebarItem onClick={() => setPage('home')}>Home</SidebarItem>
-      <SidebarItem onClick={() => setPage('dice')}>Games</SidebarItem>
+      <SidebarItem to="/"}>Games</SidebarItem>
       <SidebarItem onClick={() => setPage('settings')}>Settings</SidebarItem>
       <SidebarItem onClick={() => setPage('profile')}>Profile</SidebarItem>
       <SidebarItem onClick={() => setPage('about')}>About</SidebarItem>
