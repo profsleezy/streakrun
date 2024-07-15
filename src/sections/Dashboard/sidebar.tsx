@@ -74,8 +74,8 @@ export function Sidebar() {
       <SidebarItem to="/hilo">Hilo</SidebarItem>
       <SidebarItem to="/plinko">plinko</SidebarItem>
       <LowerSection>
-        <SidebarItem to="/mine">gems</SidebarItem>
-        <SidebarItem to="/mine">gems</SidebarItem>
+        <SidebarItem to="/mine">gem</SidebarItem>
+        <SidebarItem to="/mine">gem</SidebarItem>
       </LowerSection>
       <GlowEffect />
     </SidebarContainer>
