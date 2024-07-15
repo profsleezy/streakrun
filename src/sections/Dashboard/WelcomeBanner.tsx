@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import bannerImage from 'public/premium'
+import bannerImage from 'public/premium.png'
 
 const Buttons = styled.div`
   overflow: hidden;
