@@ -3,7 +3,7 @@
 }
 
 :root {
-  --background-color: #5656ce;
+  --background: radial-gradient(circle, #424C6C 0%, #20273D 100%);
   --text-color: #ffffff;
   --gamba-ui-primary-color: #2D2D49;
 
