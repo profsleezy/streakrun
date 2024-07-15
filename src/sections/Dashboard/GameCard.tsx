@@ -24,7 +24,6 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   color: white;
   text-decoration: none;
   font-size: 24px;
-  border-radius: 15px; 
   transition: transform .2s ease;
   /* border-bottom: 2px solid #00000033; */
 
