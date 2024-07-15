@@ -1,40 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-
-const Buttons = styled.div`
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-
-  @media (min-width: 800px) {
-    height: 100%;
-  }
-
-  @media (max-width: 800px) {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    padding-top: 0!important;
-  }
-
-  & > button {
-    border: none;
-    width: 100%;
-    border-radius: 10px;
-    padding: 10px;
-    background: #ffffffdf;
-    transition: background .2s ease;
-    color: black;
-    cursor: pointer;
-    &:hover {
-      background: white;
-    }
-  }
-`
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 const Welcome = styled.div`
   @keyframes welcome-fade-in {
@@ -98,26 +66,108 @@ const Welcome = styled.div`
   }
 `
 
+const SlideContainer = styled.div`
+  width: 100%;
+  .slick-slide > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`
+
+const Buttons = styled.div`
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  @media (min-width: 800px) {
+    height: 100%;
+  }
+
+  @media (max-width: 800px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 0!important;
+  }
+
+  & > button {
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    background: #ffffffdf;
+    transition: background .2s ease;
+    color: black;
+    cursor: pointer;
+    &:hover {
+      background: white;
+    }
+  }
+`
+
 export function WelcomeBanner() {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
   return (
-    <Welcome>
-      <div>
-        <h1>Welcome to Gamba v2 👋</h1>
-        <p>
-          A fair, simple and decentralized casino on Solana.
-        </p>
-      </div>
-      <Buttons>
-        <button onClick={() => window.open('https://v2.gamba.so/', '_blank')}>
-          🚀 Add Liquidity
-        </button>
-        <button onClick={() => window.open('https://github.com/gamba-labs/gamba', '_blank')}>
-          👨‍💻 Build your own
-        </button>
-        <button onClick={() => window.open('https://discord.gg/HSTtFFwR', '_blank')}>
-          💬 Discord
-        </button>
-      </Buttons>
-    </Welcome>
+    <SlideContainer>
+      <Slider {...settings}>
+        <div>
+          <Welcome>
+            <div>
+              <h1>Welcome to Gamba v2 👋</h1>
+              <p>
+                A fair, simple and decentralized casino on Solana.
+              </p>
+            </div>
+            <Buttons>
+              <button onClick={() => window.open('https://v2.gamba.so/', '_blank')}>
+                🚀 Add Liquidity
+              </button>
+              <button onClick={() => window.open('https://github.com/gamba-labs/gamba', '_blank')}>
+                👨‍💻 Build your own
+              </button>
+              <button onClick={() => window.open('https://discord.gg/HSTtFFwR', '_blank')}>
+                💬 Discord
+              </button>
+            </Buttons>
+          </Welcome>
+        </div>
+        <div>
+          <Welcome>
+            <div>
+              <h1>Slide 2</h1>
+              <p>
+                Content for the second slide.
+              </p>
+            </div>
+            <Buttons>
+              <button onClick={() => window.open('https://example.com', '_blank')}>
+                Action 1
+              </button>
+              <button onClick={() => window.open('https://example.com', '_blank')}>
+                Action 2
+              </button>
+              <button onClick={() => window.open('https://example.com', '_blank')}>
+                Action 3
+              </button>
+            </Buttons>
+          </Welcome>
+        </div>
+        {/* Add more slides as needed */}
+      </Slider>
+    </SlideContainer>
   )
 }
