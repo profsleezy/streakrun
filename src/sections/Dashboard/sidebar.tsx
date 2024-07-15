@@ -5,7 +5,7 @@ const SidebarContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100px; /* Adjust width as needed */
+  width: 70px; /* Adjust width as needed */
   height: 100vh;
   background-color: #333;
   color: white;
