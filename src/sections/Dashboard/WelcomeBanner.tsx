@@ -14,20 +14,22 @@ const BannerImages = [
 const SlideshowContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 80vh; /* Adjust height as needed */
+  height: 60vh; /* Adjust height as needed */
   overflow: hidden;
 `;
 
 const BannerImage = styled.img`
   /* Styles for the image */
-  width: 100%;
+  width: auto;
   height: 100%;
+  max-width: 100%;
   object-fit: cover; /* Ensure image covers the container */
   position: absolute;
   top: 0;
   left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 1s ease-in-out;
+  border-radius: 10px; /* Rounded corners */
 `;
 
 export function WelcomeBanner() {
