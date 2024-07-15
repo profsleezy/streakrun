@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  'slick-carousel':
+    specifier: ^1.8.1
+    version: 1.8.1
   '@coral-xyz/anchor':
     specifier: ^0.27.0
     version: 0.27.0
