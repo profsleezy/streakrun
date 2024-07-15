@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as HomeIcon } from './icons/mine.svg';
+import { ReactComponent as MineIcon } from './mine.svg';
+
 
 
 const SidebarContainer = styled.div`
