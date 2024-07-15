@@ -1,51 +1,16 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from 'react'
+import styled, { keyframes } from 'styled-components'
 
-const Buttons = styled.div`
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-
-  @media (min-width: 800px) {
-    height: 100%;
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
   }
-
-  @media (max-width: 800px) {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    padding-top: 0!important;
+  to {
+    opacity: 1;
   }
-
-  & > button {
-    border: none;
-    width: 100%;
-    border-radius: 10px;
-    padding: 10px;
-    background: #ffffffdf;
-    transition: background .2s ease;
-    color: black;
-    cursor: pointer;
-    &:hover {
-      background: white;
-    }
-  }
-`
+`;
 
 const Welcome = styled.div`
-  @keyframes welcome-fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
   @keyframes backgroundGradient {
     0% {
       background-position: 0% 50%;
@@ -60,7 +25,7 @@ const Welcome = styled.div`
 
   background: linear-gradient(-45deg, #ffb07c, #ff3e88, #2969ff, #ef3cff, #ff3c87);
   background-size: 300% 300%;
-  animation: welcome-fade-in .5s ease, backgroundGradient 30s ease infinite;
+  animation: ${fadeIn} 0.5s ease, backgroundGradient 30s ease infinite;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
@@ -96,28 +61,125 @@ const Welcome = styled.div`
       padding: 40px;
     }
   }
-`
+`;
 
-export function WelcomeBanner() {
+const Buttons = styled.div`
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  @media (min-width: 800px) {
+    height: 100%;
+  }
+
+  @media (max-width: 800px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 0!important;
+  }
+
+  & > button {
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    background: #ffffffdf;
+    transition: background .2s ease;
+    color: black;
+    cursor: pointer;
+    &:hover {
+      background: white;
+    }
+  }
+`;
+
+const Slide = styled.div`
+  display: ${({ active }) => (active ? 'flex' : 'none')};
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: ${fadeIn} 1s ease-in-out;
+`;
+
+const Dots = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+
+  & > span {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    background-color: ${({ active }) => (active ? '#bbb' : '#717171')};
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+    cursor: pointer;
+  }
+`;
+
+const WelcomeBanner = () => {
+  const slides = [
+    {
+      title: "Welcome to Gamba v2 👋",
+      text: "A fair, simple and decentralized casino on Solana.",
+      buttons: [
+        { label: "🚀 Add Liquidity", link: "https://v2.gamba.so/" },
+        { label: "👨‍💻 Build your own", link: "https://github.com/gamba-labs/gamba" },
+        { label: "💬 Discord", link: "https://discord.gg/HSTtFFwR" },
+      ],
+    },
+    {
+      title: "Slide 2",
+      text: "Content for the second slide.",
+      buttons: [
+        { label: "Action 1", link: "https://example.com" },
+        { label: "Action 2", link: "https://example.com" },
+        { label: "Action 3", link: "https://example.com" },
+      ],
+    },
+    // Add more slides as needed
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
+    }, 3000); // Change slide every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
   return (
     <Welcome>
-      <div>
-        <h1>Welcome to Gamba v2 👋</h1>
-        <p>
-          A fair, simple and decentralized casino on Solana.
-        </p>
-      </div>
-      <Buttons>
-        <button onClick={() => window.open('https://v2.gamba.so/', '_blank')}>
-          🚀 Add Liquidity
-        </button>
-        <button onClick={() => window.open('https://github.com/gamba-labs/gamba', '_blank')}>
-          👨‍💻 Build your own
-        </button>
-        <button onClick={() => window.open('https://discord.gg/HSTtFFwR', '_blank')}>
-          💬 Discord
-        </button>
-      </Buttons>
+      {slides.map((slide, index) => (
+        <Slide key={index} active={index === currentSlide}>
+          <div>
+            <h1>{slide.title}</h1>
+            <p>{slide.text}</p>
+          </div>
+          <Buttons>
+            {slide.buttons.map((button, idx) => (
+              <button key={idx} onClick={() => window.open(button.link, '_blank')}>
+                {button.label}
+              </button>
+            ))}
+          </Buttons>
+        </Slide>
+      ))}
+      <Dots>
+        {slides.map((_, index) => (
+          <span key={index} active={index === currentSlide} onClick={() => setCurrentSlide(index)}></span>
+        ))}
+      </Dots>
     </Welcome>
-  )
-}
+  );
+};
+
+export default WelcomeBanner;
