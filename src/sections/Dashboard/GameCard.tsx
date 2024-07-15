@@ -20,6 +20,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   }
   aspect-ratio: ${(props) => props.$small ? '1/.5' : '1/.6'};
   background-size: cover;
+  border-radius: 10px;
   
   color: white;
   text-decoration: none;
