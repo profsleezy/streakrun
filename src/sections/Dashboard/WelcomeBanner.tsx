@@ -20,14 +20,12 @@ const SlideshowContainer = styled.div`
 
 const BannerImage = styled.img`
   /* Styles for the image */
-  width: 100%; /* Increase width */
+  width: 100%;
   height: 100%;
-  max-width: none; /* Remove max-width to allow width expansion */
   object-fit: cover; /* Ensure image covers the container */
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%); /* Center align horizontally */
+  left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 1s ease-in-out;
   border-radius: 10px; /* Rounded corners */
