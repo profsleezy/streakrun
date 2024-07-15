@@ -67,6 +67,7 @@ function Flip() {
 
   return (
     <>
+    <Sidebar />
       <GambaUi.Portal target="screen">
         <Canvas
           linear

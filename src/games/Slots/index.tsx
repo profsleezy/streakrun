@@ -153,6 +153,7 @@ export default function Slots() {
 
   return (
     <>
+    <Sidebar />
       <GambaUi.Portal target="screen">
         {good && <EffectTest src={combination[0].image} />}
         <GambaUi.Responsive>

@@ -5,6 +5,7 @@ import React from 'react'
 import Slider from './Slider'
 import { SOUND_LOSE, SOUND_PLAY, SOUND_TICK, SOUND_WIN } from './constants'
 import { Container, Result, RollUnder, Stats } from './styles'
+import { Sidebar } from './sidebar'; 
 
 const DICE_SIDES = 100
 
@@ -72,6 +73,7 @@ export default function Dice() {
 
   return (
     <>
+    <Sidebar />
       <GambaUi.Portal target="screen">
         <GambaUi.Responsive>
           <Container>

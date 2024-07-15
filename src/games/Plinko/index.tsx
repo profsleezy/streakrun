@@ -72,6 +72,7 @@ export default function Plinko() {
 
   return (
     <>
+    <Sidebar />
       <GambaUi.Portal target="screen">
         <GambaUi.Canvas
           render={({ ctx, size }, clock) => {

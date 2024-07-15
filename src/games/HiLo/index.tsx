@@ -127,6 +127,7 @@ export default function HiLo(props: HiLoConfig) {
 
   return (
     <>
+    <Sidebar />
       <GambaUi.Portal target="screen">
         <GambaUi.Responsive>
           <Container $disabled={claiming || gamba.isPlaying}>

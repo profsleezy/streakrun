@@ -113,6 +113,7 @@ export default function Roulette() {
 
   return (
     <>
+    <Sidebar />
       <GambaUi.Portal target="screen">
         <GambaUi.Responsive>
           <Wrapper onContextMenu={(e) => e.preventDefault()}>

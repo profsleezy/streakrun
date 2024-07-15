@@ -131,6 +131,7 @@ function Mines() {
 
   return (
     <>
+    <Sidebar />
       <GambaUi.Portal target="screen">
         <Container2>
           <Levels>
