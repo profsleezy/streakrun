@@ -48,28 +48,8 @@ export function Sidebar() {
   return (
     <SidebarContainer>
       <SidebarItem>
-        <HomeIcon />
+        <MineIcon />
       </SidebarItem>
-      <SidebarItem>
-        <GameIcon />
-      </SidebarItem>
-      <SidebarItem>
-        <SettingsIcon />
-      </SidebarItem>
-      <SidebarItem>
-        <ProfileIcon />
-      </SidebarItem>
-      <SidebarItem>
-        <InfoIcon />
-      </SidebarItem>
-      <LowerSection>
-        <SidebarItem>
-          <HelpIcon />
-        </SidebarItem>
-        <SidebarItem>
-          <LogoutIcon />
-        </SidebarItem>
-      </LowerSection>
     </SidebarContainer>
   );
 }
