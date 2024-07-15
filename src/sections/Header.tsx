@@ -30,7 +30,7 @@ const StyledHeader = styled.div`
   padding: 10px;
   background: rgba(33, 34, 51, 0.9);
   position: fixed;
-  background: #000000CC;
+  background: #131620;
   backdrop-filter: blur(20px);
   top: 0;
   left: 0;

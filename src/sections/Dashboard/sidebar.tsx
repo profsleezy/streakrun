@@ -70,12 +70,12 @@ export function Sidebar() {
     <SidebarContainer>
       <SidebarItem exact to="/">Home</SidebarItem>
       <SidebarItem exact to="/">Home</SidebarItem>
-      <SidebarItem to="/mine">Mines</SidebarItem>
+      <SidebarItem to="/mines">Mines</SidebarItem>
       <SidebarItem to="/hilo">Hilo</SidebarItem>
       <SidebarItem to="/plinko">plinko</SidebarItem>
       <LowerSection>
-        <SidebarItem to="/mine">gem</SidebarItem>
-        <SidebarItem to="/mine">gem</SidebarItem>
+        <SidebarItem to="/mine">TOS</SidebarItem>
+        <SidebarItem to="/mine">DISC</SidebarItem>
       </LowerSection>
       <GlowEffect />
     </SidebarContainer>
