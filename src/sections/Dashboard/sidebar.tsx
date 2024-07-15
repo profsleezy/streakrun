@@ -14,7 +14,7 @@ const SidebarContainer = styled.div`
   align-items: center;
   padding: 1rem 0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  font-family: 'Bebas Neue', cursive; /* Use a display font */
+  font-family: 'Orbitron', sans-serif; /* Use a tech display font */
 `;
 
 const SidebarItem = styled.div`
