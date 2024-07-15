@@ -24,7 +24,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   color: white;
   text-decoration: none;
   font-size: 24px;
-
+  border-radius: 15px; 
   transition: transform .2s ease;
   /* border-bottom: 2px solid #00000033; */
 
@@ -83,7 +83,8 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     outline: #9564ff33 solid 5px;
     outline-offset: 0px;
   }
-`
+
+
 
 export function GameCard({ game }: {game: GameBundle}) {
   const small = useLocation().pathname !== '/'
@@ -92,8 +93,8 @@ export function GameCard({ game }: {game: GameBundle}) {
       to={'/' + game.id}
       $small={small ?? false}
       $background={game.meta?.background}
-      border-radius: 15px; 
     >
+
       <div className="background" />
       <div className="image" style={{ backgroundImage: `url(${game.meta.image})` }} />
       <div className="play">Play {game.meta.name}</div>
