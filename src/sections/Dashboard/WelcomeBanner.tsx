@@ -15,6 +15,7 @@ const SlideshowContainer = styled.div`
   position: relative;
   width: 100%;
   height: 60vh; /* Adjust height as needed */
+  max-height: 80vh; /* Limit maximum height */
   overflow: hidden;
 `;
 
