@@ -45,9 +45,13 @@ const SidebarItem = styled.div`
 export function Sidebar({ setPage }) {
   return (
     <SidebarContainer>
-      <SidebarItem onClick={() => setPage('Dashboard')}>Home</SidebarItem>
-      <SidebarItem onClick={() => setPage('Mines')}>Games</SidebarItem>
-      <SidebarItem onClick={() => setPage('Dice')}>Settings</SidebarItem>
+      <SidebarItem onClick={() => setPage('home')}>Home</SidebarItem>
+      <SidebarItem onClick={() => setPage('dice')}>Games</SidebarItem>
+      <SidebarItem onClick={() => setPage('settings')}>Settings</SidebarItem>
+      <SidebarItem onClick={() => setPage('profile')}>Profile</SidebarItem>
+      <SidebarItem onClick={() => setPage('about')}>About</SidebarItem>
+      <SidebarItem onClick={() => setPage('help')}>Help</SidebarItem>
+      <SidebarItem onClick={() => setPage('logout')}>Logout</SidebarItem>
     </SidebarContainer>
   );
 }
