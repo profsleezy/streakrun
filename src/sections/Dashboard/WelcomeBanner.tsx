@@ -20,7 +20,7 @@ const SlideshowContainer = styled.div`
 
 const BannerImage = styled.img`
   /* Styles for the image */
-  width: auto;
+  width: 120%;
   height: 100%;
   max-width: 100%;
   object-fit: cover; /* Ensure image covers the container */
