@@ -28,7 +28,20 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   transition: transform .2s ease;
   /* border-bottom: 2px solid #00000033; */
 
-
+ & > .background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-position: center;
+    background-image: url(/stuff.png);
+    background-repeat: repeat;
+    transition: transform .2s ease, opacity .3s;
+    animation: ${tileAnimation} 5s linear infinite;
+    opacity: 0;
+  }
   & > .image {
     position: absolute;
     left: 20;
