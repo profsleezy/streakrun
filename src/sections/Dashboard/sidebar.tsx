@@ -1,6 +1,7 @@
 // Sidebar.js
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 const SidebarContainer = styled.div`
   position: fixed;
@@ -18,7 +19,7 @@ const SidebarContainer = styled.div`
   font-family: 'Orbitron', sans-serif; /* Use a tech display font */
 `;
 
-const SidebarItem = styled.div`
+const SidebarItem = styled(NavLink)`
   font-size: 1rem;
   padding: 10px;
   margin-bottom: 1.5rem;
@@ -36,22 +37,47 @@ const SidebarItem = styled.div`
     color: #FFFFFF; /* Change text color on hover */
   }
 
-  ${({ active }) => active && `
+  &.active {
     background-color: #444;
     color: #FFFFFF; /* Active link styling */
-  `}
+  }
 `;
 
-export function Sidebar({ setPage }) {
+const GlowEffect = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  width: 80%;
+  height: 4px;
+  background: linear-gradient(45deg, #F6B203, transparent);
+  border-radius: 2px;
+  box-shadow: 0 0 10px #F6B203, 0 0 20px #F6B203, 0 0 30px #F6B203;
+  animation: glowing 1.5s infinite;
+
+  @keyframes glowing {
+    0% { box-shadow: 0 0 5px #F6B203; }
+    50% { box-shadow: 0 0 20px #F6B203; }
+    100% { box-shadow: 0 0 5px #F6B203; }
+  }
+`;
+
+const LowerSection = styled.div`
+  margin-top: auto;
+  padding-bottom: 1rem;
+`;
+
+export function Sidebar() {
   return (
     <SidebarContainer>
-      <SidebarItem onClick={() => setPage('home')}>Home</SidebarItem>
-      <SidebarItem to="/"}>Games</SidebarItem>
-      <SidebarItem onClick={() => setPage('settings')}>Settings</SidebarItem>
-      <SidebarItem onClick={() => setPage('profile')}>Profile</SidebarItem>
-      <SidebarItem onClick={() => setPage('about')}>About</SidebarItem>
-      <SidebarItem onClick={() => setPage('help')}>Help</SidebarItem>
-      <SidebarItem onClick={() => setPage('logout')}>Logout</SidebarItem>
+      <SidebarItem exact to="/">Home</SidebarItem>
+      <SidebarItem exact to="/">Home</SidebarItem>
+      <SidebarItem to="/mine">Mines</SidebarItem>
+      <SidebarItem to="/hilo">Hilo</SidebarItem>
+      <SidebarItem to="/plinko">plinko</SidebarItem>
+      <LowerSection>
+        <SidebarItem to="/mine">gems</SidebarItem>
+        <SidebarItem to="/mine">gems</SidebarItem>
+      </LowerSection>
+      <GlowEffect />
     </SidebarContainer>
   );
 }
