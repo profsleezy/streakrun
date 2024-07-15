@@ -2,6 +2,7 @@ import { GambaUi, useSound, useWagerInput } from 'gamba-react-ui-v2'
 import { useGamba } from 'gamba-react-v2'
 import React from 'react'
 import { PEG_RADIUS, PLINKO_RAIUS, Plinko as PlinkoGame, PlinkoProps, barrierHeight, barrierWidth, bucketHeight } from './game'
+import { Sidebar } from './sidebar'; 
 
 import BUMP from './bump.mp3'
 import FALL from './fall.mp3'

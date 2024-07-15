@@ -5,6 +5,7 @@ import React from 'react'
 import { GRID_SIZE, MINE_SELECT, PITCH_INCREASE_FACTOR, SOUND_EXPLODE, SOUND_FINISH, SOUND_STEP, SOUND_TICK, SOUND_WIN } from './constants'
 import { CellButton, Container, Container2, Grid, Level, Levels, StatusBar } from './styles'
 import { generateGrid, revealAllMines, revealGold } from './utils'
+import { Sidebar } from './sidebar'; 
 
 function Mines() {
   const game = GambaUi.useGame()

@@ -8,6 +8,7 @@ import { StyledResults } from './Roulette.styles'
 import { Table } from './Table'
 import { CHIPS, SOUND_LOSE, SOUND_PLAY, SOUND_WIN } from './constants'
 import { addResult, bet, clearChips, results, selectedChip, totalChipValue } from './signals'
+import { Sidebar } from './sidebar'; 
 
 const Wrapper = styled.div`
   display: grid;

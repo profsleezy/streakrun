@@ -20,6 +20,7 @@ import {
   SlotItem,
 } from './constants'
 import { generateBetArray, getSlotCombination } from './utils'
+import { Sidebar } from './sidebar'; 
 
 function Messages({ messages }: {messages: string[]}) {
   const [messageIndex, setMessageIndex] = React.useState(0)

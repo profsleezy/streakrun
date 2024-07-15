@@ -4,6 +4,7 @@ import { useGamba } from 'gamba-react-v2'
 import React from 'react'
 import { Coin, TEXTURE_HEADS, TEXTURE_TAILS } from './Coin'
 import { Effect } from './Effect'
+import { Sidebar } from './sidebar'; 
 
 import SOUND_COIN from './coin.mp3'
 import SOUND_LOSE from './lose.mp3'

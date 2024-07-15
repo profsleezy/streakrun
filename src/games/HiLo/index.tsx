@@ -3,6 +3,7 @@ import { useGamba } from 'gamba-react-v2'
 import React from 'react'
 import { MAX_CARD_SHOWN, RANKS, RANK_SYMBOLS, SOUND_CARD, SOUND_FINISH, SOUND_LOSE, SOUND_PLAY, SOUND_WIN } from './constants'
 import { Card, CardContainer, CardPreview, CardsContainer, Container, Option, Options, Profit } from './styles'
+import { Sidebar } from './sidebar'; 
 
 const BPS_PER_WHOLE = 10000
 
