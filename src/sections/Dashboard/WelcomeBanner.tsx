@@ -7,7 +7,7 @@ const BannerImage = styled.img`
   width: 100%;
   max-width: 100%;
   height: auto; /* Ensures image maintains aspect ratio */
-  max-height: 20vh; /* Adjust the maximum height as needed */
+  max-height: 70vh; /* Adjust the maximum height as needed */
   border-radius: 10px; /* Rounded corners */
 `;
 
