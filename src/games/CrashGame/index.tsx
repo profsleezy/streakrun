@@ -6,6 +6,7 @@ import SOUND from './music.mp3'
 import { LineLayer1, LineLayer2, LineLayer3, MultiplierText, Rocket, ScreenWrapper, StarsLayer1, StarsLayer2, StarsLayer3 } from './styles'
 import { calculateBetArray } from './utils'
 import WIN_SOUND from './win.mp3'
+import { Sidebar } from './sidebar'; 
 
 export default function CrashGame() {
   const [wager, setWager] = useWagerInput()
@@ -91,6 +92,7 @@ export default function CrashGame() {
 
   return (
     <>
+    <Sidebar />
       <GambaUi.Portal target="screen">
         <ScreenWrapper>
           <StarsLayer1 style={{ opacity: currentMultiplier > 3 ? 0 : 1 }} />
