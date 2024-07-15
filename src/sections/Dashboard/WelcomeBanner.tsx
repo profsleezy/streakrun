@@ -29,7 +29,7 @@ const BannerImage = styled.img`
   left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 1s ease-in-out;
-  border-radius: 10px; /* Rounded corners */
+  border-radius: 20px; /* Rounded corners */
 `;
 
 const DotsContainer = styled.div`
@@ -55,7 +55,7 @@ export function WelcomeBanner() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex(prevIndex => (prevIndex + 1) % BannerImages.length);
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
