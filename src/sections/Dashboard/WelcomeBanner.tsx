@@ -32,16 +32,37 @@ const BannerImage = styled.img`
   border-radius: 10px; /* Rounded corners */
 `;
 
+const DotsContainer = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+`;
+
+const Dot = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: ${props => (props.active ? '#ffffff' : '#cccccc')};
+  margin: 0 5px;
+  cursor: pointer;
+`;
+
 export function WelcomeBanner() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % BannerImages.length);
+      setCurrentImageIndex(prevIndex => (prevIndex + 1) % BannerImages.length);
     }, 3000);
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleDotClick = index => {
+    setCurrentImageIndex(index);
+  };
 
   return (
     <SlideshowContainer>
@@ -53,6 +74,15 @@ export function WelcomeBanner() {
           show={index === currentImageIndex}
         />
       ))}
+      <DotsContainer>
+        {BannerImages.map((_, index) => (
+          <Dot
+            key={index}
+            active={index === currentImageIndex}
+            onClick={() => handleDotClick(index)}
+          />
+        ))}
+      </DotsContainer>
     </SlideshowContainer>
   );
 }
