@@ -16,7 +16,7 @@ const SlideshowContainer = styled.div`
   width: 100%;
   height: 60vh; /* Adjust height as needed */
   overflow: hidden;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 `;
 
 const BannerImage = styled.img`
