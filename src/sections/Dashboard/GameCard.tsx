@@ -13,8 +13,8 @@ const tileAnimation = keyframes`
 `
 
 const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
-  width: 120%;
-
+  width: 130%;
+  height: 130%;
   @media (min-width: 800px) {
     width: 100%;
   }
