@@ -4,7 +4,7 @@ import { SlideSection } from '../../components/Slider';
 import { GAMES } from '../../games';
 import { GameCard } from './GameCard';
 import { WelcomeBanner } from './WelcomeBanner';
-import { Sidebar } from './Sidebar'; // Import the Sidebar component
+import { Sidebar } from './sidebar'; // Import the Sidebar component
 
 const MainContent = styled.div`
   margin-left: 220px; /* Adjust margin to match the width of the sidebar */
