@@ -11,13 +11,21 @@ const BannerImages = [
   // Add more images as needed
 ];
 
+const SlideshowContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 80vh; /* Adjust height as needed */
+  overflow: hidden;
+`;
+
 const BannerImage = styled.img`
   /* Styles for the image */
   width: 100%;
-  max-width: 100%;
-  height: auto; /* Ensures image maintains aspect ratio */
-  max-height: 80vh; /* Adjust the maximum height as needed */
-  border-radius: 10px; /* Rounded corners */
+  height: 100%;
+  object-fit: cover; /* Ensure image covers the container */
+  position: absolute;
+  top: 0;
+  left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 1s ease-in-out;
 `;
@@ -34,7 +42,7 @@ export function WelcomeBanner() {
   }, []);
 
   return (
-    <>
+    <SlideshowContainer>
       {BannerImages.map((image, index) => (
         <BannerImage
           key={index}
@@ -43,6 +51,6 @@ export function WelcomeBanner() {
           show={index === currentImageIndex}
         />
       ))}
-    </>
+    </SlideshowContainer>
   );
 }
