@@ -4,10 +4,10 @@ import { SlideSection } from '../../components/Slider';
 import { GAMES } from '../../games';
 import { GameCard } from './GameCard';
 import { WelcomeBanner } from './WelcomeBanner';
-import { Sidebar } from './sidebar'; // Import the Sidebar component
+import { Sidebar } from './sidebar'; // Make sure to import the Sidebar
 
 const MainContent = styled.div`
-  margin-left: 220px; /* Adjust margin to match the width of the sidebar */
+  margin-left: 100px; /* Adjust this value to match the sidebar's width */
   padding: 1rem;
 `;
 
@@ -51,7 +51,7 @@ export function GameGrid() {
 export default function Dashboard() {
   return (
     <>
-      <Sidebar /> {/* Add the Sidebar component */}
+      <Sidebar />
       <MainContent>
         <WelcomeBanner />
         <h2 style={{ textAlign: 'center' }}>Games</h2>
