@@ -24,9 +24,24 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   color: white;
   text-decoration: none;
   font-size: 24px;
+
   transition: transform .2s ease;
   /* border-bottom: 2px solid #00000033; */
 
+ & > .background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-position: center;
+    background-image: url(/stuff.png);
+    background-repeat: repeat;
+    transition: transform .2s ease, opacity .3s;
+    animation: ${tileAnimation} 5s linear infinite;
+    opacity: 0;
+  }
   & > .image {
     position: absolute;
     left: 20;
@@ -82,8 +97,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     outline: #9564ff33 solid 5px;
     outline-offset: 0px;
   }
-
-
+`
 
 export function GameCard({ game }: {game: GameBundle}) {
   const small = useLocation().pathname !== '/'
