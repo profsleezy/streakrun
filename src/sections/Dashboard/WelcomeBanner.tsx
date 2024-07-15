@@ -101,24 +101,12 @@ const Welcome = styled.div`
 const BannerImage = styled.img`
   /* Styles for the image */
   width: 100%;
-  max-width: 300px; /* Adjust as per your design */
 `;
 
 export function WelcomeBanner() {
   return (
     <Welcome>
       <BannerImage src={bannerImage} alt="Welcome Banner Image" />
-      <Buttons>
-        <button onClick={() => window.open('https://v2.gamba.so/', '_blank')}>
-          🚀 Add Liquidity
-        </button>
-        <button onClick={() => window.open('https://github.com/gamba-labs/gamba', '_blank')}>
-          👨‍💻 Build your own
-        </button>
-        <button onClick={() => window.open('https://discord.gg/HSTtFFwR', '_blank')}>
-          💬 Discord
-        </button>
-      </Buttons>
     </Welcome>
   );
 }
