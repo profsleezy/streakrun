@@ -32,7 +32,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 200px auto; /* Adds space around the card and centers it horizontally */
+  margin: 10px 200px; /* Adds space around the card and centers it horizontally */
 
   &:hover {
     transform: scale(1.03); /* Slightly increased scale on hover */
