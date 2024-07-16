@@ -22,7 +22,7 @@ export const Container = styled.div`
   position: relative;
   display: grid;
   gap: 5px;
-  margin-left: 5%;
+  margin-left: 3%;
 `
 
 export const SettingControls = styled.div`
@@ -117,6 +117,7 @@ export const Controls = styled.div`
   color: white;
   border-radius: 10px;
   z-index: 6;
+  margin-left: 3%;
   
 
   @media (max-width: 800px) {
