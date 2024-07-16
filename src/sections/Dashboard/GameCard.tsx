@@ -13,7 +13,7 @@ const tileAnimation = keyframes`
 `;
 
 const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
-  width: 100%;
+  width: 120%;
   max-width: 900px; /* Increased max-width for a larger card */
   aspect-ratio: ${(props) => (props.$small ? '1/.5' : '1/.6')};
   background-size: cover;
@@ -31,7 +31,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: auto 100px; /* Adds space around the card and centers it horizontally */
+  margin: auto -10%; /* Adds space around the card and centers it horizontally */
 
   &:hover {
     transform: scale(1.03); /* Slightly increased scale on hover */
