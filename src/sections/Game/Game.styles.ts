@@ -22,7 +22,7 @@ export const Container = styled.div`
   position: relative;
   display: grid;
   gap: 5px;
-  margin-left: 10%;
+  margin-left: 5%;
 `
 
 export const SettingControls = styled.div`
