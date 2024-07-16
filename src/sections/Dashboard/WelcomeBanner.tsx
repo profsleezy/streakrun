@@ -13,7 +13,7 @@ const BannerImages = [
 
 const SlideshowContainer = styled.div`
   position: relative;
-  width: 140%; /* Adjust width as needed */
+  width: 130%; /* Adjust width as needed */
   height: 60vh; /* Adjust height as needed */
   overflow: hidden;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
