@@ -7,7 +7,7 @@ import { WelcomeBanner } from './WelcomeBanner';
 import { Sidebar } from './sidebar'; // Make sure to import the Sidebar
 
 const MainContent = styled.div`
-  margin-left: 50px; /* Adjust this value to match the sidebar's width */
+  margin-left: 250px; /* Adjust this value to match the sidebar's width */
   padding: 1rem;
 `;
 
@@ -15,7 +15,7 @@ export function GameSlider() {
   return (
     <SlideSection>
       {GAMES.map((game) => (
-        <div key={game.id} style={{ width: '160px', display: 'flex' }}>
+        <div key={game.id} style={{ width: '260px', display: 'flex' }}>
           <GameCard game={game} />
         </div>
       ))}
@@ -26,15 +26,15 @@ export function GameSlider() {
 const Grid = styled.div`
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* Adjust the number of columns */
   @media (min-width: 600px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Adjust for larger screens */
   }
   @media (min-width: 800px) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr)); /* Adjust for even larger screens */
   }
   @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr)); /* Adjust for very large screens */
   }
 `;
 
