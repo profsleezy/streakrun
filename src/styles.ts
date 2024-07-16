@@ -17,9 +17,9 @@ export const MainWrapper = styled.div`
   }
   @media (min-width: 1280px) {
     padding: 20px;
-    width: 1100px;
+    width: 1200px; /* Increased the width */
   }
-`
+`;
 
 export const TosWrapper = styled.div`
   position: relative;

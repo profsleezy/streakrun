@@ -9,6 +9,7 @@ import { Sidebar } from './sidebar'; // Make sure to import the Sidebar
 const MainContent = styled.div`
   margin-left: 50px; /* Adjust this value to match the sidebar's width */
   padding: 1rem;
+  max-width: 1200px; /* Ensuring max width to match MainWrapper */
 `;
 
 export function GameSlider() {
@@ -23,22 +24,20 @@ export function GameSlider() {
   );
 }
 
-
 const Grid = styled.div`
   display: grid;
   gap: 1.5rem; /* Increased the gap */
   grid-template-columns: repeat(1, minmax(0, 1fr));
   @media (min-width: 600px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Increased the size by reducing columns */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   @media (min-width: 800px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Increased the size by reducing columns */
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Changed to 4 columns */
   }
   @media (min-width: 1200px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Increased the size by reducing columns */
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Changed to 4 columns */
   }
 `;
-
 
 export function GameGrid() {
   return (
