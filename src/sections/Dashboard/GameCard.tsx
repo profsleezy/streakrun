@@ -14,7 +14,7 @@ const tileAnimation = keyframes`
 
 const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   width: 150%; /* Adjusted to 120% */
-  max-width: 300px; /* Adjust max-width as needed */
+  max-width: 600px; /* Adjust max-width as needed */
   aspect-ratio: ${(props) => (props.$small ? '1/.5' : '1/.6')};
   background-size: cover;
   border-radius: 15px; /* Slightly increased border radius */
