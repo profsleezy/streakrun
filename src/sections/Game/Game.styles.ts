@@ -117,7 +117,7 @@ export const Controls = styled.div`
   color: white;
   border-radius: 10px;
   z-index: 6;
-  margin-left: -10%;
+  margin-left: -20%;
   
 
   @media (max-width: 800px) {
