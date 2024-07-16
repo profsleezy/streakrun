@@ -5,7 +5,7 @@ export const MainWrapper = styled.div`
   width: 100%;
   max-width: 100%;
   transition: width .25s ease, padding .25s ease;
-  margin-right: 25px;
+  margin-right: 60px;
   margin-top: 60px;
   @media (min-width: 600px) {
     padding: 20px;
