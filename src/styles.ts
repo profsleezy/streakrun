@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 export const MainWrapper = styled.div`
   position: relative;
-  width: 1200px; /* Fixed width */
-  max-width: 100%;
+  width: 100%;
+  max-width: 1200px; /* Max width set to 1200px */
   transition: width .25s ease, padding .25s ease;
   margin: 0 auto;
   padding: 20px; /* Fixed padding */
@@ -12,7 +12,6 @@ export const MainWrapper = styled.div`
   gap: 20px;
   margin-top: 60px;
 `;
-
 
 export const TosWrapper = styled.div`
   position: relative;

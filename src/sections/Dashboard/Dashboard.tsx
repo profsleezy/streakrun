@@ -9,7 +9,9 @@ import { Sidebar } from './sidebar'; // Make sure to import the Sidebar
 const MainContent = styled.div`
   margin-left: 50px; /* Adjust this value to match the sidebar's width */
   padding: 1rem;
-  max-width: 1200px; /* Ensuring max width to match MainWrapper */
+  width: 100%;
+  max-width: 1200px; /* Max width set to 1200px */
+  margin: 0 auto; /* Center align the content */
 `;
 
 export function GameSlider() {
@@ -26,7 +28,7 @@ export function GameSlider() {
 
 const Grid = styled.div`
   display: grid;
-  gap: 2rem; /* Gap between grid items */
+  gap: 2rem; /* Increased the gap */
   grid-template-columns: repeat(4, 1fr); /* Fixed 4 columns */
 `;
 
