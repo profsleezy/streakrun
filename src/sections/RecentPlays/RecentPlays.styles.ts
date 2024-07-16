@@ -43,7 +43,6 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 10px;
   margin-left: auto; /* This moves the container to the right */
-  max-width: 600px; /* Adjust max-width as needed */
 `;
 
 export const Profit = styled.div<{$win: boolean}>`
