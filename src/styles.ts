@@ -5,11 +5,11 @@ export const MainWrapper = styled.div`
   width: 100%;
   max-width: 100%;
   transition: width .25s ease, padding .25s ease;
-  margin: 0 auto;
+  margin: 0 ;
   padding: 10px;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-direction: row;
+  gap: 200px;
   margin-top: 60px;
   @media (min-width: 600px) {
     padding: 20px;
