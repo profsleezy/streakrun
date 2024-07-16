@@ -17,6 +17,9 @@ const SlideshowContainer = styled.div`
   height: 60vh; /* Adjust height as needed */
   overflow: hidden;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (min-width: 768px) {
     height: 70vh; /* Adjust height for larger screens */
