@@ -6,9 +6,10 @@ import { GameCard } from './GameCard';
 import { WelcomeBanner } from './WelcomeBanner';
 import { Sidebar } from './sidebar'; // Make sure to import the Sidebar
 
-const Container = styled.div`
-  display: flex;
-`;
+const MainContent = styled.div
+  margin-left: 50px; /* Adjust this value to match the sidebar's width */
+  padding: 1rem;
+;
 
 const MainContent = styled.div`
   flex: 1;
