@@ -22,7 +22,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   text-decoration: none;
   font-size: 28px; /* Increased font size for better readability */
   transition: transform .2s ease;
-
+  
   position: relative;
   overflow: hidden;
   display: flex;
@@ -33,6 +33,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     transform: scale(1.03); /* Slightly increased scale on hover */
   }
 
+  /* Animation for background */
   .background {
     position: absolute;
     left: 0;
@@ -48,6 +49,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     opacity: 0;
   }
 
+  /* Styling for main image */
   .image {
     position: absolute;
     left: 0;
@@ -59,28 +61,32 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     background-repeat: no-repeat;
   }
 
+  /* Styling for play button */
   .play {
-    font-size: 16px; /* Increased font size for play button */
-    border-radius: 12px; /* Adjusted border radius for play button */
-    padding: 8px 16px; /* Increased padding for play button */
+    font-size: 16px; /* Font size for play button */
+    border-radius: 8px; /* Border radius for play button */
+    padding: 8px 16px; /* Padding for play button */
     background: rgba(0, 0, 0, 0.4);
     position: absolute;
-    right: 10px; /* Adjusted position of play button */
-    bottom: 10px; /* Adjusted position of play button */
+    right: 10px; /* Positioning of play button */
+    bottom: 10px; /* Positioning of play button */
     opacity: 0;
     text-transform: uppercase;
     backdrop-filter: blur(20px);
     transition: opacity 0.3s ease;
   }
 
+  /* Hover effect for play button */
   &:hover .play {
     opacity: 1;
   }
 
+  /* Hover effect for background */
   &:hover .background {
     opacity: 0.35;
   }
 
+  /* Outline effect on hover */
   &:hover {
     outline: #9564ff33 solid 5px;
     outline-offset: 0px;
