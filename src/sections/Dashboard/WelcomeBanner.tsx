@@ -13,22 +13,21 @@ const BannerImages = [
 
 const SlideshowContainer = styled.div`
   position: relative;
-  width: 100%;
+  width: 120%; /* Adjust width as needed */
   height: 60vh; /* Adjust height as needed */
   overflow: hidden;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto; /* Center the container horizontally */
 `;
 
 const BannerImage = styled.img`
   /* Styles for the image */
-  width: 150%; /* Increase the width to make it wider */
+  width: 100%;
   height: 100%;
-  max-width: none; /* Ensure it doesn't shrink */
   object-fit: cover; /* Ensure image covers the container */
   position: absolute;
   top: 0;
-  left: 50%; /* Start from the center horizontally */
-  transform: translateX(-50%); /* Center the image */
+  left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 1s ease-in-out;
   border-radius: 20px; /* Rounded corners */
