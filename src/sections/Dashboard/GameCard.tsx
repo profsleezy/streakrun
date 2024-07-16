@@ -26,7 +26,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   justify-content: center;
   align-items: center;
   margin: 10px; /* Added margin for spacing between cards */
-  position: absolute;
+  position: relative;
   overflow: hidden;
 
   &:hover {
