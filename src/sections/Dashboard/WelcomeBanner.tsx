@@ -13,18 +13,17 @@ const BannerImages = [
 
 const SlideshowContainer = styled.div`
   position: relative;
-  width: 100%; /* Adjust width to 100% for responsiveness */
+  width: 100%;
   height: 60vh; /* Adjust height as needed */
-  max-width: 1000px; /* Set max-width to limit the banner's maximum width */
-  margin: 0 auto; /* Center the banner horizontally */
   overflow: hidden;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const BannerImage = styled.img`
   /* Styles for the image */
-  width: 100%;
+  width: 120%;
   height: 100%;
+  max-width: 100%;
   object-fit: cover; /* Ensure image covers the container */
   position: absolute;
   top: 0;
