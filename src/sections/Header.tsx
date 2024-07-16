@@ -35,7 +35,6 @@ const StyledHeader = styled.div`
   top: 0;
   left: 0;
   z-index: 1000;
-  backdrop-filter: blur(20px);
 `
 
 const Logo = styled(NavLink)`
@@ -44,6 +43,14 @@ const Logo = styled(NavLink)`
   & > img {
     height: 100%;
   }
+`
+
+const RightSection = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+  margin-right: 20px; /* Move this section a bit to the left */
 `
 
 export default function Header() {
@@ -90,7 +97,7 @@ export default function Header() {
             <img alt="Gamba logo" src="/logo.png" />
           </Logo>
         </div>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', position: 'relative' }}>
+        <RightSection>
           {pool.jackpotBalance > 0 && (
             <Bonus onClick={() => setJackpotHelp(true)}>
               💰 <TokenValue amount={pool.jackpotBalance} />
@@ -103,7 +110,7 @@ export default function Header() {
           )}
           <TokenSelect />
           <UserButton />
-        </div>
+        </RightSection>
       </StyledHeader>
     </>
   )
