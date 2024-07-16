@@ -1,7 +1,8 @@
-// Sidebar.js
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { ReactComponent as TOSIcon } from './icon1.svg'; // Adjust the path to your SVG file
+import { ReactComponent as DISCIcon } from './icon2.svg'; // Adjust the path to your SVG file
 
 const SidebarContainer = styled.div`
   position: fixed;
@@ -43,6 +44,33 @@ const SidebarItem = styled(NavLink)`
   }
 `;
 
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #444;
+    transform: scale(1.05);
+
+    svg {
+      fill: #FFFFFF; /* Change SVG color on hover */
+    }
+  }
+
+  svg {
+    fill: #F6B203;
+    width: 24px; /* Adjust icon size */
+    height: 24px; /* Adjust icon size */
+  }
+`;
+
 const GlowEffect = styled.div`
   position: absolute;
   bottom: 1rem;
@@ -64,17 +92,21 @@ const LowerSection = styled.div`
   margin-top: auto;
   padding-bottom: 1rem;
 `;
+
 export function Sidebar() {
   return (
     <SidebarContainer>
       <SidebarItem exact to="/">Home</SidebarItem>
-      <SidebarItem exact to="/">Home</SidebarItem>
       <SidebarItem to="/mines">Mines</SidebarItem>
       <SidebarItem to="/hilo">Hilo</SidebarItem>
-      <SidebarItem to="/plinko">plinko</SidebarItem>
+      <SidebarItem to="/plinko">Plinko</SidebarItem>
       <LowerSection>
-        <SidebarItem to="/mine">TOS</SidebarItem>
-        <SidebarItem to="/mine">DISC</SidebarItem>
+        <IconWrapper as={NavLink} to="/tos">
+          <TOSIcon />
+        </IconWrapper>
+        <IconWrapper as={NavLink} to="/disc">
+          <DISCIcon />
+        </IconWrapper>
       </LowerSection>
       <GlowEffect />
     </SidebarContainer>
