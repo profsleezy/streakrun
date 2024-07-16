@@ -26,17 +26,8 @@ export function GameSlider() {
 
 const Grid = styled.div`
   display: grid;
-  gap: 2rem; /* Increased the gap */
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  @media (min-width: 600px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  @media (min-width: 800px) {
-    grid-template-columns: repeat(4, 1fr); /* Changed to 4 columns with equal width */
-  }
-  @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, 1fr); /* Changed to 4 columns with equal width */
-  }
+  gap: 2rem; /* Gap between grid items */
+  grid-template-columns: repeat(4, 1fr); /* Fixed 4 columns */
 `;
 
 export function GameGrid() {

@@ -2,23 +2,15 @@ import styled from 'styled-components'
 
 export const MainWrapper = styled.div`
   position: relative;
-  width: 100%;
+  width: 1200px; /* Fixed width */
   max-width: 100%;
   transition: width .25s ease, padding .25s ease;
   margin: 0 auto;
-  padding: 10px;
+  padding: 20px; /* Fixed padding */
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-top: 60px;
-  @media (min-width: 600px) {
-    padding: 20px;
-    width: 100%;
-  }
-  @media (min-width: 1280px) {
-    padding: 20px;
-    width: 1200px; /* Increased the width */
-  }
 `;
 
 
