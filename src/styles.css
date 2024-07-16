@@ -10,6 +10,8 @@
   --gamba-ui-button-default-background: #0e0e16;
   --gamba-ui-button-default-background-hover: #11111d;
   --gamba-ui-button-default-color: white;
+  --gamba-ui-button-border-color: white; 
+  --gamba-ui-button-border-style: solid; 
 
   --gamba-ui-button-main-background: #FFB802;
   --gamba-ui-button-main-color: white;
