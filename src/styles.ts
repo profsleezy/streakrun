@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MainWrapper = styled.div`
   position: relative;
-  width: 90%;
+  width: 80%;
   transition: width 0.25s ease, padding 0.25s ease;
   margin: 0 auto;
   padding: 20px; /* Fixed padding */
