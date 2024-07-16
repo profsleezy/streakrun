@@ -13,13 +13,14 @@ export const MainWrapper = styled.div`
   margin-top: 60px;
   @media (min-width: 600px) {
     padding: 20px;
-    width: 1000px;
+    width: 100%;
   }
   @media (min-width: 1280px) {
     padding: 20px;
     width: 1200px; /* Increased the width */
   }
 `;
+
 
 export const TosWrapper = styled.div`
   position: relative;
