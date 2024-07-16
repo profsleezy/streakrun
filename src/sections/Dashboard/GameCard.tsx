@@ -23,7 +23,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   font-size: 28px; /* Increased font size for better readability */
   transition: transform .2s ease;
   display: grid;
-  gap: 3rem;
+  gap: 10rem;
 
   
   position: relative;
