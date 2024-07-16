@@ -14,7 +14,7 @@ const tileAnimation = keyframes`
 
 const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   width: 100%;
-  max-width: 500px; /* Increased max-width for a larger card */
+  max-width: 900px; /* Increased max-width for a larger card */
   aspect-ratio: ${(props) => (props.$small ? '1/.5' : '1/.6')};
   background-size: cover;
   border-radius: 15px; /* Slightly increased border radius */
@@ -61,7 +61,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
 
   .play {
     font-size: 16px; /* Increased font size for play button */
-    border-radius: 8px; /* Adjusted border radius for play button */
+    border-radius: 12px; /* Adjusted border radius for play button */
     padding: 8px 16px; /* Increased padding for play button */
     background: rgba(0, 0, 0, 0.4);
     position: absolute;
