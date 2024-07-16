@@ -1,3 +1,17 @@
+import { GameBundle } from 'gamba-react-ui-v2';
+import React from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+
+const tileAnimation = keyframes`
+  0% {
+    background-position: -100px 100px;
+  }
+  100% {
+    background-position: 100px -100px;
+  }
+`;
+
 const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   width: 100%;
 
@@ -84,3 +98,19 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     outline-offset: 0px;
   }
 `;
+
+
+export function GameCard({ game }: { game: GameBundle }) {
+  const small = useLocation().pathname !== '/';
+  return (
+    <StyledGameCard
+      to={'/' + game.id}
+      $small={small ?? false}
+      $background={game.meta?.background}
+    >
+      <div className="background" />
+      <div className="image" style={{ backgroundImage: `url(${game.meta.image})` }} />
+      <div className="play">Play {game.meta.name}</div>
+    </StyledGameCard>
+  );
+}
