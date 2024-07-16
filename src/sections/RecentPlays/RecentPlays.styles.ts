@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components';
 
 const jackpotGradient = keyframes`
   0% {
@@ -25,7 +25,7 @@ const jackpotGradient = keyframes`
   100% {
     background: #6666ff;
   }
-`
+`;
 
 const skeletonAnimation = keyframes`
   0%, 100% {
@@ -34,7 +34,7 @@ const skeletonAnimation = keyframes`
   50% {
     background-color: #cccccc22;
   }
-`
+`;
 
 export const Container = styled.div`
   width: 100%;
@@ -42,7 +42,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-`
+  margin-left: auto; /* This moves the container to the right */
+  max-width: 600px; /* Adjust max-width as needed */
+`;
 
 export const Profit = styled.div<{$win: boolean}>`
   display: flex;
@@ -51,7 +53,7 @@ export const Profit = styled.div<{$win: boolean}>`
   background: ${props => props.$win ? '#00ff4021' : '#ffffff11'};
   border-radius: 10px;
   padding: 2px 5px;
-`
+`;
 
 export const Jackpot = styled.div`
   animation: ${jackpotGradient} 1s linear 0s infinite;
@@ -61,7 +63,7 @@ export const Jackpot = styled.div`
   color: black;
   border-radius: 10px;
   padding: 1px 5px;
-`
+`;
 
 export const Recent = styled.button`
   all: unset;
@@ -79,11 +81,11 @@ export const Recent = styled.button`
   &:hover {
     background: #131724;
   }
-`
+`;
 
 export const Skeleton = styled.div`
   height: 40px;
   width: 100%;
   border-radius: 10px;
   animation: ${skeletonAnimation} 1s infinite;
-`
+`;
