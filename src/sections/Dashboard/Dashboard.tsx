@@ -6,38 +6,20 @@ import { GameCard } from './GameCard';
 import { WelcomeBanner } from './WelcomeBanner';
 import { Sidebar } from './sidebar'; // Make sure to import the Sidebar
 
-const MainContent = styled.div`
-  margin-left: 50px; /* Adjust this value to match the sidebar's width */
-  padding: 1rem;
+const Container = styled.div`
+  display: flex;
 `;
 
-const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
-  width: 100%;
-  max-width: 600px; /* Increased max-width for a larger card */
-  aspect-ratio: ${(props) => (props.$small ? '1/.5' : '1/.6')};
-  background-size: cover;
-  border-radius: 20px; /* Increased border radius for a smoother look */
-  color: white;
-  text-decoration: none;
-  font-size: 24px; /* Adjusted font size for readability */
-  transition: transform .2s ease;
-  
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:hover {
-    transform: scale(1.03); /* Slightly increased scale on hover */
-  }
-    
+const MainContent = styled.div`
+  flex: 1;
+  padding: 1rem;
+`;
 
 export function GameSlider() {
   return (
     <SlideSection>
       {GAMES.map((game) => (
-        <div key={game.id} style={{ width: '160px', display: 'flex' }}>
+        <div key={game.id} style={{ width: '260px', display: 'flex' }}>
           <GameCard game={game} />
         </div>
       ))}
@@ -48,15 +30,15 @@ export function GameSlider() {
 const Grid = styled.div`
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* Adjust the number of columns */
   @media (min-width: 600px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Adjust for larger screens */
   }
   @media (min-width: 800px) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr)); /* Adjust for even larger screens */
   }
   @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr)); /* Adjust for very large screens */
   }
 `;
 
@@ -72,13 +54,15 @@ export function GameGrid() {
 
 export default function Dashboard() {
   return (
-    <>
-      <Sidebar />
+    <Container>
+      <SidebarContainer>
+        <Sidebar />
+      </SidebarContainer>
       <MainContent>
         <WelcomeBanner />
         <h2 style={{ textAlign: 'center' }}>Games</h2>
         <GameGrid />
       </MainContent>
-    </>
+    </Container>
   );
 }
