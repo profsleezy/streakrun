@@ -42,7 +42,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-left: auto; /* This moves the container to the right */
+  margin-left: 200px; /* This moves the container to the right */
 `;
 
 export const Profit = styled.div<{$win: boolean}>`
