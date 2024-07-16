@@ -22,11 +22,9 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   text-decoration: none;
   font-size: 28px; /* Increased font size for better readability */
   transition: transform .2s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 10px; /* Added margin for spacing between cards */
-  position: relative;
+  margin
+  position: absolute;
   overflow: hidden;
 
   &:hover {
