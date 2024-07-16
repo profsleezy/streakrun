@@ -14,13 +14,13 @@ const tileAnimation = keyframes`
 
 const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   width: 100%;
-  max-width: 400px; /* Adjust maximum width as needed */
+  max-width: 500px; /* Increased max-width for a larger card */
   aspect-ratio: ${(props) => (props.$small ? '1/.5' : '1/.6')};
   background-size: cover;
-  border-radius: 10px;
+  border-radius: 15px; /* Slightly increased border radius */
   color: white;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 28px; /* Increased font size for better readability */
   transition: transform .2s ease;
 
   position: relative;
@@ -30,7 +30,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   align-items: center;
 
   &:hover {
-    transform: scale(1.02);
+    transform: scale(1.03); /* Slightly increased scale on hover */
   }
 
   .background {
@@ -60,13 +60,13 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   }
 
   .play {
-    font-size: 14px;
-    border-radius: 5px;
-    padding: 5px 10px;
+    font-size: 16px; /* Increased font size for play button */
+    border-radius: 8px; /* Adjusted border radius for play button */
+    padding: 8px 16px; /* Increased padding for play button */
     background: rgba(0, 0, 0, 0.4);
     position: absolute;
-    right: 5px;
-    bottom: 5px;
+    right: 10px; /* Adjusted position of play button */
+    bottom: 10px; /* Adjusted position of play button */
     opacity: 0;
     text-transform: uppercase;
     backdrop-filter: blur(20px);
