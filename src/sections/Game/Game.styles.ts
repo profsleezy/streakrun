@@ -116,6 +116,7 @@ export const Controls = styled.div`
   color: white;
   border-radius: 10px;
   z-index: 6;
+  
 
   @media (max-width: 800px) {
     padding: 10px;
