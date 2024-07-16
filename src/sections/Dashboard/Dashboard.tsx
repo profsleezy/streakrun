@@ -6,8 +6,18 @@ import { GameCard } from './GameCard';
 import { WelcomeBanner } from './WelcomeBanner';
 import { Sidebar } from './sidebar'; // Make sure to import the Sidebar
 
+const Container = styled.div`
+  display: flex;
+`;
+
+const SidebarContainer = styled.div`
+  width: 300px; /* Adjust sidebar width as needed */
+  background-color: #131620;
+  color: #f6b203;
+`;
+
 const MainContent = styled.div`
-  margin-left: 50px; /* Adjust this value to match the sidebar's width */
+  flex: 1;
   padding: 1rem;
 `;
 
@@ -15,7 +25,7 @@ export function GameSlider() {
   return (
     <SlideSection>
       {GAMES.map((game) => (
-        <div key={game.id} style={{ width: '12000px', display: 'flex' }}>
+        <div key={game.id} style={{ width: '300px', display: 'flex' }}>
           <GameCard game={game} />
         </div>
       ))}
@@ -26,16 +36,7 @@ export function GameSlider() {
 const Grid = styled.div`
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  @media (min-width: 600px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  @media (min-width: 800px) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust minimum column width */
 `;
 
 export function GameGrid() {
@@ -50,13 +51,15 @@ export function GameGrid() {
 
 export default function Dashboard() {
   return (
-    <>
-      <Sidebar />
+    <Container>
+      <SidebarContainer>
+        <Sidebar />
+      </SidebarContainer>
       <MainContent>
         <WelcomeBanner />
         <h2 style={{ textAlign: 'center' }}>Games</h2>
         <GameGrid />
       </MainContent>
-    </>
+    </Container>
   );
 }
