@@ -15,7 +15,7 @@ export function GameSlider() {
   return (
     <SlideSection>
       {GAMES.map((game) => (
-        <div key={game.id} style={{ width: '400px', display: 'flex' }}>
+        <div key={game.id} style={{ width: '900px', display: 'flex' }}>
           <GameCard game={game} />
         </div>
       ))}
