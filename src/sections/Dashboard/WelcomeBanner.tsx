@@ -17,7 +17,7 @@ const SlideshowContainer = styled.div`
   height: 60vh; /* Adjust height as needed */
   overflow: hidden;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
-  margin: 0 -12%; /* Adjust negative margin to equally expand left and right */
+  margin: 0 -14%; /* Adjust negative margin to equally expand left and right */
 `;
 
 const BannerImage = styled.img`
