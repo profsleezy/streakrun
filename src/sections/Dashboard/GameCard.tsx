@@ -28,6 +28,10 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   text-decoration: none;
   font-size: 28px; /* Increased font size for better readability */
   transition: transform .2s ease;
+  display: grid;
+  gap: 1rem;
+  margin: 0 -10%; /* Adjust negative margin to equally expand left and right */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust minimum card width as needed */
   
   position: relative;
   overflow: hidden;
