@@ -1,7 +1,8 @@
-// Sidebar.js
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import tosIcon from './icon2.svg'; // Adjust the path to your SVG file
+import discIcon from './icon1.svg'; // Adjust the path to your SVG file
 
 const SidebarContainer = styled.div`
   position: fixed;
@@ -43,6 +44,28 @@ const SidebarItem = styled(NavLink)`
   }
 `;
 
+const IconWrapper = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #444;
+    transform: scale(1.05);
+  }
+
+  img {
+    width: 24px; /* Adjust icon size */
+    height: 24px; /* Adjust icon size */
+  }
+`;
+
 const GlowEffect = styled.div`
   position: absolute;
   bottom: 1rem;
@@ -69,13 +92,16 @@ export function Sidebar() {
   return (
     <SidebarContainer>
       <SidebarItem exact to="/">Home</SidebarItem>
-      <SidebarItem exact to="/">Home</SidebarItem>
       <SidebarItem to="/mines">Mines</SidebarItem>
       <SidebarItem to="/hilo">Hilo</SidebarItem>
-      <SidebarItem to="/plinko">plinko</SidebarItem>
+      <SidebarItem to="/plinko">Plinko</SidebarItem>
       <LowerSection>
-        <SidebarItem to="/mine">TOS</SidebarItem>
-        <SidebarItem to="/mine">DISC</SidebarItem>
+        <IconWrapper to="/tos">
+          <img src={tosIcon} alt="TOS" />
+        </IconWrapper>
+        <IconWrapper to="/disc">
+          <img src={discIcon} alt="DISC" />
+        </IconWrapper>
       </LowerSection>
       <GlowEffect />
     </SidebarContainer>
