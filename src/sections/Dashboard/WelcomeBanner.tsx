@@ -13,11 +13,12 @@ const BannerImages = [
 
 const SlideshowContainer = styled.div`
   position: relative;
-  width: 135%; /* Adjust width as needed */
+  width: 100%; /* Adjust width to 100% for responsiveness */
   height: 60vh; /* Adjust height as needed */
+  max-width: 1000px; /* Set max-width to limit the banner's maximum width */
+  margin: 0 auto; /* Center the banner horizontally */
   overflow: hidden;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
-  margin: 0 -15%; /* Adjust negative margin to equally expand left and right */
 `;
 
 const BannerImage = styled.img`
