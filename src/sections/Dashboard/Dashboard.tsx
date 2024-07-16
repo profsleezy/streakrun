@@ -15,7 +15,7 @@ export function GameSlider() {
   return (
     <SlideSection>
       {GAMES.map((game) => (
-        <div key={game.id} style={{ width: '160px', display: 'flex' }}>
+        <div key={game.id} style={{ width: '220px', display: 'flex' }}> {/* Increased the width */}
           <GameCard game={game} />
         </div>
       ))}
@@ -23,20 +23,22 @@ export function GameSlider() {
   );
 }
 
+
 const Grid = styled.div`
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   @media (min-width: 600px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Increased the size by reducing columns */
   }
   @media (min-width: 800px) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Increased the size by reducing columns */
   }
   @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Increased the size by reducing columns */
   }
 `;
+
 
 export function GameGrid() {
   return (
