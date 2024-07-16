@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const MainWrapper = styled.div`
   position: relative;
   width: 100%;
-  max-width: 1200px; /* Max width set to 1200px */
   transition: width 0.25s ease, padding 0.25s ease;
   margin: 0 auto;
   padding: 20px; /* Fixed padding */

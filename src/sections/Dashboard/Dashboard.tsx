@@ -10,7 +10,6 @@ const MainContent = styled.div`
   margin-left: 50px; /* Adjust this value to match the sidebar's width */
   padding: 1rem;
   width: 100%;
-  max-width: 1200px; /* Max width set to 1200px */
   margin: 0 auto; /* Center align the content */
 `;
 
