@@ -6,6 +6,20 @@ import { GameCard } from './GameCard';
 import { WelcomeBanner } from './WelcomeBanner';
 import { Sidebar } from './sidebar'; // Make sure to import the Sidebar
 
+const GridContainer = styled.div`
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust minimum card width as needed */
+`;
+
+export function GameGrid() {
+  return (
+    <GridContainer>
+      {GAMES.map((game: GameBundle) => (
+        <GameCard key={game.id} game={game} />
+      ))}
+    </GridContainer>
+
 const MainContent = styled.div`
   margin-left: 50px; /* Adjust this value to match the sidebar's width */
   padding: 1rem;
