@@ -139,7 +139,7 @@ export const Controls = styled.div`
 export const MetaControls = styled.div`
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 10%;
   width: 100%;
   padding: 10px;
   display: flex;
