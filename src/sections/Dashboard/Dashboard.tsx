@@ -11,6 +11,28 @@ const MainContent = styled.div`
   padding: 1rem;
 `;
 
+const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
+  width: 100%;
+  max-width: 600px; /* Increased max-width for a larger card */
+  aspect-ratio: ${(props) => (props.$small ? '1/.5' : '1/.6')};
+  background-size: cover;
+  border-radius: 20px; /* Increased border radius for a smoother look */
+  color: white;
+  text-decoration: none;
+  font-size: 24px; /* Adjusted font size for readability */
+  transition: transform .2s ease;
+  
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    transform: scale(1.03); /* Slightly increased scale on hover */
+  }
+    
+
 export function GameSlider() {
   return (
     <SlideSection>
