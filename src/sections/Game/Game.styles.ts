@@ -113,7 +113,7 @@ export const StyledLoadingIndicator = styled.div<{$active: boolean}>`
 export const Controls = styled.div`
   width: 100%;
   background: rgb(26, 27, 40);
-  padding: 15px;
+  padding: 10px;
   color: white;
   border-radius: 10px;
   z-index: 6;
