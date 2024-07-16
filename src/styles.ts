@@ -8,7 +8,7 @@ export const MainWrapper = styled.div`
   margin: 0 ;
   padding: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 200px;
   margin-top: 60px;
   @media (min-width: 600px) {
