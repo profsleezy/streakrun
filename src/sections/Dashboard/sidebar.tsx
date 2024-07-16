@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as TOSIcon } from './icon1.svg'; // Adjust the path to your SVG file
-import { ReactComponent as DISCIcon } from './icon2.svg'; // Adjust the path to your SVG file
+import tosIcon from './icon2.svg'; // Adjust the path to your SVG file
+import discIcon from './icon1.svg'; // Adjust the path to your SVG file
 
 const SidebarContainer = styled.div`
   position: fixed;
@@ -44,7 +44,7 @@ const SidebarItem = styled(NavLink)`
   }
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,14 +58,9 @@ const IconWrapper = styled.div`
   &:hover {
     background-color: #444;
     transform: scale(1.05);
-
-    svg {
-      fill: #FFFFFF; /* Change SVG color on hover */
-    }
   }
 
-  svg {
-    fill: #F6B203;
+  img {
     width: 24px; /* Adjust icon size */
     height: 24px; /* Adjust icon size */
   }
@@ -101,11 +96,11 @@ export function Sidebar() {
       <SidebarItem to="/hilo">Hilo</SidebarItem>
       <SidebarItem to="/plinko">Plinko</SidebarItem>
       <LowerSection>
-        <IconWrapper as={NavLink} to="/tos">
-          <TOSIcon />
+        <IconWrapper to="/tos">
+          <img src={tosIcon} alt="TOS" />
         </IconWrapper>
-        <IconWrapper as={NavLink} to="/disc">
-          <DISCIcon />
+        <IconWrapper to="/disc">
+          <img src={discIcon} alt="DISC" />
         </IconWrapper>
       </LowerSection>
       <GlowEffect />
