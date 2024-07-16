@@ -64,7 +64,6 @@ const LowerSection = styled.div`
   margin-top: auto;
   padding-bottom: 1rem;
 `;
-
 export function Sidebar() {
   return (
     <SidebarContainer>
