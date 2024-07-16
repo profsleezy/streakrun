@@ -1,13 +1,6 @@
 import styled from 'styled-components'
 
 export const MainWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  transition: width .25s ease, padding .25s ease;
-  margin: 0 auto;
-  gap: 20px;
-  margin-top: 60px;
   @media (min-width: 600px) {
     padding: 20px;
     width: 1000px;
@@ -34,7 +27,6 @@ export const TosWrapper = styled.div`
 
 export const TosInner = styled.div`
   max-height: 400px;
-  padding: 10px;
   overflow: auto;
   position: relative;
 `
