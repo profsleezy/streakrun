@@ -1,16 +1,24 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const MainWrapper = styled.div`
   position: relative;
   width: 100%;
   max-width: 1200px; /* Max width set to 1200px */
-  transition: width .25s ease, padding .25s ease;
+  transition: width 0.25s ease, padding 0.25s ease;
   margin: 0 auto;
   padding: 20px; /* Fixed padding */
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-top: 60px;
+
+  @media (min-width: 768px) {
+    padding: 30px; /* Adjust padding for larger screens */
+  }
+
+  @media (min-width: 1200px) {
+    padding: 40px; /* Adjust padding for extra-large screens */
+  }
 `;
 
 export const TosWrapper = styled.div`

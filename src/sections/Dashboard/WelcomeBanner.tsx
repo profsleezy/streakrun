@@ -17,20 +17,26 @@ const SlideshowContainer = styled.div`
   height: 60vh; /* Adjust height as needed */
   overflow: hidden;
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 768px) {
+    height: 70vh; /* Adjust height for larger screens */
+  }
+
+  @media (min-width: 1200px) {
+    height: 80vh; /* Adjust height for extra-large screens */
+  }
 `;
 
 const BannerImage = styled.img`
-  /* Styles for the image */
-  width: 120%;
+  width: 100%;
   height: 100%;
-  max-width: 100%;
-  object-fit: cover; /* Ensure image covers the container */
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
   opacity: ${props => (props.show ? 1 : 0)};
   transition: opacity 1s ease-in-out;
-  border-radius: 20px; /* Rounded corners */
+  border-radius: 20px;
 `;
 
 const DotsContainer = styled.div`

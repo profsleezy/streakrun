@@ -11,17 +11,24 @@ const tileAnimation = keyframes`
     background-position: 100px -100px;
   }
 `;
+
 const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   width: 100%;
-  aspect-ratio: ${(props) => props.$small ? '1/.7' : '1/.8'};
+  aspect-ratio: ${(props) => (props.$small ? '1 / 0.7' : '1 / 0.8')};
   background-size: cover;
   border-radius: 10px;
-  
   color: white;
   text-decoration: none;
   font-size: 24px;
+  transition: transform 0.2s ease;
 
-  transition: transform .2s ease;
+  @media (min-width: 768px) {
+    aspect-ratio: ${(props) => (props.$small ? '1 / 0.6' : '1 / 0.7')};
+  }
+
+  @media (min-width: 1200px) {
+    aspect-ratio: ${(props) => (props.$small ? '1 / 0.5' : '1 / 0.6')};
+  }
 
   & > .background {
     position: absolute;
@@ -33,10 +40,11 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     background-position: center;
     background-image: url(/stuff.png);
     background-repeat: repeat;
-    transition: transform .2s ease, opacity .3s;
+    transition: transform 0.2s ease, opacity 0.3s;
     animation: ${tileAnimation} 5s linear infinite;
     opacity: 0;
   }
+
   & > .image {
     position: absolute;
     left: 0;
@@ -55,7 +63,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     }
 
     .background {
-      opacity: .35;
+      opacity: 0.35;
     }
   }
 
@@ -72,6 +80,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   background-size: 100% auto;
   background-position: center;
   font-weight: bold;
+
   .play {
     font-size: 14px;
     border-radius: 5px;
@@ -82,27 +91,23 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     bottom: 5px;
     opacity: 0;
     text-transform: uppercase;
-
     backdrop-filter: blur(20px);
   }
+
   &:hover .play {
     opacity: 1;
   }
+
   &:hover {
     outline: #9564ff33 solid 5px;
     outline-offset: 0px;
   }
 `;
 
-
 export function GameCard({ game }: { game: GameBundle }) {
   const small = useLocation().pathname !== '/';
   return (
-    <StyledGameCard
-      to={'/' + game.id}
-      $small={small ?? false}
-      $background={game.meta?.background}
-    >
+    <StyledGameCard to={'/' + game.id} $small={small ?? false} $background={game.meta?.background}>
       <div className="background" />
       <div className="image" style={{ backgroundImage: `url(${game.meta.image})` }} />
       <div className="play">Play {game.meta.name}</div>
