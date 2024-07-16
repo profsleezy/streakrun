@@ -20,6 +20,7 @@ const SlideshowContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 5%; 
 
   @media (min-width: 768px) {
     height: 70vh; /* Adjust height for larger screens */
