@@ -55,10 +55,10 @@ const BuyNowItem = styled.a`
   border-radius: 5px;
   color: #FFFFFF;
   text-decoration: none;
-  background-color: #ec1495; /* Different background color */
+  background-color: #902EDE; /* Different background color */
 
   &:hover {
-    background-color: #902EDE; /* Change background color on hover */
+    background-color: #ec1495; /* Change background color on hover */
     transform: scale(1.05);
   }
 `;
@@ -104,13 +104,13 @@ const GlowEffect = styled.div`
 
 const LowerSection = styled.div`
   padding-bottom: 1rem;
-  margin-top: 3rem; /* Added margin-top to separate from top items */
+  margin-top: 5rem; /* Added margin-top to separate from top items */
 `;
 
 export function Sidebar() {
   return (
     <SidebarContainer>
-      <SidebarItem exact to="/">Home</SidebarItem>
+      <SidebarItem exact to="/"> </SidebarItem>
       <BuyNowItem href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">BUY NOW</BuyNowItem>
       <SidebarItem to="/mines">Mines</SidebarItem>
       <SidebarItem to="/hilo">Hilo</SidebarItem>
