@@ -53,6 +53,14 @@ const RightSection = styled.div`
   margin-right: 20px; /* Move this section a bit to the left */
 `
 
+const CustomUserButton = styled(UserButton)`
+  background: #512DA8; /* Example color */
+  color: white;
+  &:hover {
+    background: #ff4500;
+  }
+`
+
 export default function Header() {
   const pool = useCurrentPool()
   const context = useGambaPlatformContext()
@@ -109,7 +117,7 @@ export default function Header() {
             </Bonus>
           )}
           <TokenSelect />
-          <UserButton />
+          <CustomUserButton />
         </RightSection>
       </StyledHeader>
     </>
