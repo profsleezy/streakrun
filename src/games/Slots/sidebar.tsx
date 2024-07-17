@@ -104,7 +104,7 @@ const GlowEffect = styled.div`
 
 const LowerSection = styled.div`
   padding-bottom: 1rem;
-  margin-top: 5.5rem; /* Added margin-top to separate from top items */
+  margin-top: 50%; /* Added margin-top to separate from top items */
 `;
 
 export function Sidebar() {
