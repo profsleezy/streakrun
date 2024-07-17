@@ -22,8 +22,8 @@ const SidebarContainer = styled.div`
 
 const SidebarItem = styled(NavLink)`
   font-size: 1rem;
-  padding: 10px;
-  margin-bottom: 1.5rem;
+  padding: 8px; /* Reduced padding */
+  margin-bottom: 0.5rem; /* Reduced margin-bottom */
   cursor: pointer;
   text-align: center;
   width: 80%;
@@ -46,8 +46,8 @@ const SidebarItem = styled(NavLink)`
 
 const BuyNowItem = styled.a`
   font-size: 1rem;
-  padding: 10px;
-  margin-bottom: 1.5rem;
+  padding: 8px; /* Reduced padding */
+  margin-bottom: 0.5rem; /* Reduced margin-bottom */
   cursor: pointer;
   text-align: center;
   width: 80%;
@@ -68,8 +68,8 @@ const IconWrapper = styled.a`
   align-items: center;
   justify-content: center;
   width: 80%;
-  padding: 10px;
-  margin-bottom: 1.5rem;
+  padding: 8px; /* Reduced padding */
+  margin-bottom: 0.5rem; /* Reduced margin-bottom */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   border-radius: 5px;
@@ -105,6 +105,7 @@ const GlowEffect = styled.div`
 const LowerSection = styled.div`
   margin-top: auto;
   padding-bottom: 1rem;
+  margin-top: 2rem; /* Added margin-top to separate from top items */
 `;
 
 export function Sidebar() {
