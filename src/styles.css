@@ -1,5 +1,5 @@
 :root {
-  --background-image: url("background.png");
+  --background-image: url("./background.png");
   --text-color: #ffffff;
   --gamba-ui-primary-color: #2D2D49;
 
@@ -32,13 +32,16 @@ h1, h2 {
 }
 
 body {
-  background: var(--background-color);
+  background: var(--background-image);
   color: var(--text-color);
   cursor: default;
   margin: 0;
   overflow-y: scroll;
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
+  background-size: cover; /* Make sure the background covers the entire body */
+  background-repeat: no-repeat; /* Prevent the background from repeating */
+  background-attachment: fixed; /* Fix the background image so it doesn't scroll with the page */
 }
 
 a {
