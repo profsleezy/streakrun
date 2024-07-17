@@ -13,11 +13,21 @@ const MainContent = styled.div`
   margin: 0 auto; /* Center align the content */
 `;
 
+const BannerContainer = styled.div`
+  margin-bottom: 2rem; /* Adjust as needed for spacing */
+`;
+
+const GamesHeading = styled.h2`
+  margin-left: 50%; /* Adjust the left margin */
+  margin-top: 2rem; /* Adjust the top margin */
+  margin-bottom: 1rem; /* Adjust the bottom margin */
+`;
+
 export function GameSlider() {
   return (
     <SlideSection>
       {GAMES.map((game) => (
-        <div key={game.id} style={{ width: '280px', display: 'flex' }}> {/* Slightly decreased the width */}
+        <div key={game.id} style={{ width: '280px', display: 'flex' }}>
           <GameCard game={game} />
         </div>
       ))}
@@ -46,8 +56,10 @@ export default function Dashboard() {
     <>
       <Sidebar />
       <MainContent>
-        <WelcomeBanner />
-        <h2 style={{ marginLeft: '50%' }}>Games</h2>
+        <BannerContainer>
+          <WelcomeBanner />
+        </BannerContainer>
+        <GamesHeading>Games</GamesHeading>
         <GameGrid />
       </MainContent>
     </>

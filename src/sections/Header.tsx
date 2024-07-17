@@ -54,10 +54,10 @@ const RightSection = styled.div`
 `
 
 const CustomUserButton = styled(UserButton)`
-  background: #512DA8; /* Example color */
+  background: #512DA8 !important; /* Example color */
   color: white;
   &:hover {
-    background: #ff4500;
+    background: #ff4500 !important;
   }
 `
 
