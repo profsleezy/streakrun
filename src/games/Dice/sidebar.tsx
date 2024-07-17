@@ -92,7 +92,7 @@ export function Sidebar() {
   return (
     <SidebarContainer>
       <SidebarItem exact to="/">Home</SidebarItem>
-      <ExternalSidebarItem href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">BUY NOW</ExternalSidebarItem>
+      <SidebarItem href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">BUY NOW</SidebarItem>
       <SidebarItem to="/mines">Mines</SidebarItem>
       <SidebarItem to="/hilo">Hilo</SidebarItem>
       <SidebarItem to="/plinko">Plinko</SidebarItem>
