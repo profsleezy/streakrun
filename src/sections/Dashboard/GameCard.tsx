@@ -14,21 +14,21 @@ const tileAnimation = keyframes`
 
 const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   width: 100%;
-  aspect-ratio: ${(props) => (props.$small ? '1 / 0.7' : '1 / 0.8')};
+  aspect-ratio: ${(props) => (props.$small ? '1 / 0.8' : '1 / 1')}; /* Adjusted aspect ratio */
   background-size: cover;
   border-radius: 10px;
   color: white;
   text-decoration: none;
   font-size: 24px;
   transition: transform 0.2s ease;
-  margin-left: 18%; 
+  margin-left: 10%; /* Adjusted margin */
 
   @media (min-width: 768px) {
-    aspect-ratio: ${(props) => (props.$small ? '1 / 0.6' : '1 / 0.7')};
+    aspect-ratio: ${(props) => (props.$small ? '1 / 0.7' : '1 / 0.8')}; /* Adjusted aspect ratio */
   }
 
   @media (min-width: 1200px) {
-    aspect-ratio: ${(props) => (props.$small ? '1 / 0.5' : '1 / 0.6')};
+    aspect-ratio: ${(props) => (props.$small ? '1 / 0.6' : '1 / 0.7')}; /* Adjusted aspect ratio */
   }
 
   & > .background {

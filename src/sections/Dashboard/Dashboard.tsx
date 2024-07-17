@@ -17,7 +17,7 @@ export function GameSlider() {
   return (
     <SlideSection>
       {GAMES.map((game) => (
-        <div key={game.id} style={{ width: '240px', display: 'flex' }}> {/* Increased the width */}
+        <div key={game.id} style={{ width: '300px', display: 'flex' }}> {/* Increased the width */}
           <GameCard game={game} />
         </div>
       ))}
@@ -27,8 +27,8 @@ export function GameSlider() {
 
 const Grid = styled.div`
   display: grid;
-  gap: 2rem; /* Increased the gap */
-  grid-template-columns: repeat(4, 1fr); /* Fixed 4 columns */
+  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr); /* Adjusted to 3 columns for larger cards */
 `;
 
 export function GameGrid() {
@@ -40,6 +40,7 @@ export function GameGrid() {
     </Grid>
   );
 }
+
 
 export default function Dashboard() {
   return (
