@@ -44,7 +44,7 @@ const SidebarItem = styled(NavLink)`
   }
 `;
 
-const IconWrapper = styled(NavLink)`
+const IconWrapper = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,14 +92,15 @@ export function Sidebar() {
   return (
     <SidebarContainer>
       <SidebarItem exact to="/">Home</SidebarItem>
+      <SidebarItem href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">BUY NOW</SidebarItem>
       <SidebarItem to="/mines">Mines</SidebarItem>
       <SidebarItem to="/hilo">Hilo</SidebarItem>
       <SidebarItem to="/plinko">Plinko</SidebarItem>
       <LowerSection>
-        <IconWrapper to="/tos">
+        <IconWrapper href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">
           <img src={tosIcon} alt="TOS" />
         </IconWrapper>
-        <IconWrapper to="/disc">
+        <IconWrapper href="https://x.com/streak_run" target="_blank" rel="noopener noreferrer">
           <img src={discIcon} alt="DISC" />
         </IconWrapper>
       </LowerSection>

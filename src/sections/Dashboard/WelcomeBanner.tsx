@@ -6,8 +6,6 @@ import bannerImage3 from './premium3.png';
 
 const BannerImages = [
   bannerImage1,
-  bannerImage2,
-  bannerImage3,
   // Add more images as needed
 ];
 
