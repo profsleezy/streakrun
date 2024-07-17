@@ -53,7 +53,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     width: 100%;
     height: 100%;
     background-size: cover; /* Ensure the image covers the entire area */
-    background-position: center bottom; /* Move the image down */
+    background-position: center top; /* Move the image down */
     background-repeat: no-repeat;
   }
 
