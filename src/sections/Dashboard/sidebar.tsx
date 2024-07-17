@@ -15,7 +15,7 @@ const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 0 1rem;
+  padding: 3rem 0 2rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   font-family: 'Orbitron', sans-serif; /* Use a tech display font */
 `;
@@ -104,13 +104,12 @@ const GlowEffect = styled.div`
 
 const LowerSection = styled.div`
   padding-bottom: 1rem;
-  margin-top: 5rem; /* Added margin-top to separate from top items */
+  margin-top: 5.5rem; /* Added margin-top to separate from top items */
 `;
 
 export function Sidebar() {
   return (
     <SidebarContainer>
-      <SidebarItem exact to="/"> </SidebarItem>
       <BuyNowItem href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">BUY NOW</BuyNowItem>
       <SidebarItem to="/mines">Mines</SidebarItem>
       <SidebarItem to="/hilo">Hilo</SidebarItem>
