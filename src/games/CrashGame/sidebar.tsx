@@ -15,15 +15,15 @@ const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0;
+  padding: 4.5rem 0 3.5rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   font-family: 'Orbitron', sans-serif; /* Use a tech display font */
 `;
 
 const SidebarItem = styled(NavLink)`
   font-size: 1rem;
-  padding: 10px;
-  margin-bottom: 1.5rem;
+  padding: 8px; /* Reduced padding */
+  margin-bottom: 0.5rem; /* Reduced margin-bottom */
   cursor: pointer;
   text-align: center;
   width: 80%;
@@ -44,13 +44,32 @@ const SidebarItem = styled(NavLink)`
   }
 `;
 
+const BuyNowItem = styled.a`
+  font-size: 1rem;
+  padding: 8px; /* Reduced padding */
+  margin-bottom: 0.5rem; /* Reduced margin-bottom */
+  cursor: pointer;
+  text-align: center;
+  width: 80%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 5px;
+  color: #FFFFFF;
+  text-decoration: none;
+  background-color: #902EDE; /* Different background color */
+
+  &:hover {
+    background-color: #ec1495; /* Change background color on hover */
+    transform: scale(1.05);
+  }
+`;
+
 const IconWrapper = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 80%;
-  padding: 10px;
-  margin-bottom: 1.5rem;
+  padding: 8px; /* Reduced padding */
+  margin-bottom: 0.5rem; /* Reduced margin-bottom */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   border-radius: 5px;
@@ -84,18 +103,22 @@ const GlowEffect = styled.div`
 `;
 
 const LowerSection = styled.div`
-  margin-top: auto;
   padding-bottom: 1rem;
+  margin-top: 5.5rem; /* Added margin-top to separate from top items */
 `;
 
 export function Sidebar() {
   return (
     <SidebarContainer>
-      <SidebarItem exact to="/">Home</SidebarItem>
-      <SidebarItem href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">BUY NOW</SidebarItem>
+      <BuyNowItem href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">BUY NOW</BuyNowItem>
       <SidebarItem to="/mines">Mines</SidebarItem>
       <SidebarItem to="/hilo">Hilo</SidebarItem>
       <SidebarItem to="/plinko">Plinko</SidebarItem>
+      <SidebarItem to="/crash">Crash</SidebarItem>
+      <SidebarItem to="/slots">Slots</SidebarItem>
+      <SidebarItem to="/flip">Flip</SidebarItem>
+      <SidebarItem to="/Roulette">Roulette</SidebarItem>
+      <SidebarItem to="/dice">Dice</SidebarItem>
       <LowerSection>
         <IconWrapper href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">
           <img src={tosIcon} alt="TOS" />
