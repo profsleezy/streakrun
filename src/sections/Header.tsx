@@ -1,10 +1,10 @@
-import { GambaUi, TokenValue, useCurrentPool, useGambaPlatformContext, useUserBalance } from 'gamba-react-ui-v2'
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import styled from 'styled-components'
-import { Modal } from '../components/Modal'
-import TokenSelect from './TokenSelect'
-import { UserButton } from './UserButton'
+import { GambaUi, TokenValue, useCurrentPool, useGambaPlatformContext, useUserBalance } from 'gamba-react-ui-v2';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { Modal } from '../components/Modal';
+import TokenSelect from './TokenSelect';
+import { UserButton } from './UserButton';
 
 const Bonus = styled.button`
   all: unset;
@@ -20,7 +20,7 @@ const Bonus = styled.button`
   &:hover {
     background: white;
   }
-`
+`;
 
 const StyledHeader = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const StyledHeader = styled.div`
   top: 0;
   left: 0;
   z-index: 1000;
-`
+`;
 
 const Logo = styled(NavLink)`
   height: 45px;
@@ -43,7 +43,7 @@ const Logo = styled(NavLink)`
   & > img {
     height: 115%;
   }
-`
+`;
 
 const RightSection = styled.div`
   display: flex;
@@ -51,22 +51,23 @@ const RightSection = styled.div`
   align-items: center;
   position: relative;
   margin-right: 20px; /* Move this section a bit to the left */
-`
+`;
 
 const CustomUserButton = styled(UserButton)`
-  background: var(--custom-user-button-background);
-  color: white;
+  background-color: #512DA8 !important; /* Ensure this style takes precedence */
+  color: white !important; /* Ensure this style takes precedence */
+  border-radius: 10px !important; /* Ensure this style takes precedence */
   &:hover {
-    background: var(--custom-user-button-hover-background);
+    background-color: #ff4500 !important; /* Ensure this style takes precedence */
   }
-`
+`;
 
 export default function Header() {
-  const pool = useCurrentPool()
-  const context = useGambaPlatformContext()
-  const balance = useUserBalance()
-  const [bonusHelp, setBonusHelp] = React.useState(false)
-  const [jackpotHelp, setJackpotHelp] = React.useState(false)
+  const pool = useCurrentPool();
+  const context = useGambaPlatformContext();
+  const balance = useUserBalance();
+  const [bonusHelp, setBonusHelp] = React.useState(false);
+  const [jackpotHelp, setJackpotHelp] = React.useState(false);
 
   return (
     <>
@@ -121,5 +122,5 @@ export default function Header() {
         </RightSection>
       </StyledHeader>
     </>
-  )
+  );
 }
