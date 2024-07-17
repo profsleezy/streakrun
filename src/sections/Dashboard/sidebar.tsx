@@ -23,7 +23,7 @@ const SidebarContainer = styled.div`
 const SidebarItem = styled(NavLink)`
   font-size: 1rem;
   padding: 8px; /* Reduced padding */
-  margin-bottom: 0.5rem; /* Reduced margin-bottom */
+  margin-bottom: 2rem; /* Increased margin-bottom to create more gap */
   cursor: pointer;
   text-align: center;
   width: 80%;
@@ -47,7 +47,7 @@ const SidebarItem = styled(NavLink)`
 const BuyNowItem = styled.a`
   font-size: 1rem;
   padding: 8px; /* Reduced padding */
-  margin-bottom: 0.5rem; /* Reduced margin-bottom */
+  margin-bottom: 2rem; /* Increased margin-bottom to match */
   cursor: pointer;
   text-align: center;
   width: 80%;
@@ -69,7 +69,7 @@ const IconWrapper = styled.a`
   justify-content: center;
   width: 80%;
   padding: 8px; /* Reduced padding */
-  margin-bottom: 0.5rem; /* Reduced margin-bottom */
+  margin-bottom: 2rem; /* Increased margin-bottom to match */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   border-radius: 5px;
