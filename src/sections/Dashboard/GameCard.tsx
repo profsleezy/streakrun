@@ -13,8 +13,8 @@ const tileAnimation = keyframes`
 `;
 
 const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
-  width: 80%; /* Adjusted width to be slightly smaller */
-  aspect-ratio: ${(props) => (props.$small ? '1 / 0.9' : '1 / 1.1')}; /* Adjusted aspect ratio */
+  width: 100%;
+  aspect-ratio: ${(props) => (props.$small ? '1 / 0.8' : '1 / 1')}; /* Adjusted aspect ratio */
   background-size: cover;
   border-radius: 10px;
   color: white;
@@ -24,11 +24,11 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   margin-left: 12%; /* Adjust this value to move the card to the right */
 
   @media (min-width: 768px) {
-    aspect-ratio: ${(props) => (props.$small ? '1 / 0.8' : '1 / 1')}; /* Adjusted aspect ratio */
+    aspect-ratio: ${(props) => (props.$small ? '1 / 0.7' : '1 / 0.8')}; /* Adjusted aspect ratio */
   }
 
   @media (min-width: 1200px) {
-    aspect-ratio: ${(props) => (props.$small ? '1 / 0.7' : '1 / 0.9')}; /* Adjusted aspect ratio */
+    aspect-ratio: ${(props) => (props.$small ? '1 / 0.6' : '1 / 0.7')}; /* Adjusted aspect ratio */
   }
 
   & > .background {
@@ -52,7 +52,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
     top: 0;
     width: 100%;
     height: 100%;
-    background-size: contain; /* Ensure the image is fully contained */
+    background-size: cover; /* Ensure the image covers the entire area */
     background-position: center; /* Center the image */
     background-repeat: no-repeat;
   }
@@ -60,7 +60,7 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
   &:hover {
     transform: scale(1.01);
     .image {
-      transform: scale(1);
+      transform: scale(1.01); /* Slightly increase the size on hover */
     }
 
     .background {
