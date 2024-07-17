@@ -32,16 +32,14 @@ h1, h2 {
 }
 
 body {
-  background: var(--background-image);
+  background: var(--background-image) no-repeat center center fixed;
+  background-size: cover;
   color: var(--text-color);
   cursor: default;
   margin: 0;
   overflow-y: scroll;
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
-  background-size: cover; /* Make sure the background covers the entire body */
-  background-repeat: no-repeat; /* Prevent the background from repeating */
-  background-attachment: fixed; /* Fix the background image so it doesn't scroll with the page */
 }
 
 a {
