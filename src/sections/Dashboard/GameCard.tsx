@@ -48,8 +48,8 @@ const StyledGameCard = styled(NavLink)<{$small: boolean, $background: string}>`
 
   & > .image {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 5%;
+    top: -5%;
     width: 90%;
     height: 90%;
     background-size: 100% auto;
