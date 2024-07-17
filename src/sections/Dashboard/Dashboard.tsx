@@ -17,7 +17,7 @@ export function GameSlider() {
   return (
     <SlideSection>
       {GAMES.map((game) => (
-        <div key={game.id} style={{ width: '300px', display: 'flex' }}> {/* Increased the width */}
+        <div key={game.id} style={{ width: '280px', display: 'flex' }}> {/* Slightly decreased the width */}
           <GameCard game={game} />
         </div>
       ))}
@@ -47,7 +47,7 @@ export default function Dashboard() {
       <Sidebar />
       <MainContent>
         <WelcomeBanner />
-        <h2 style={{ textAlign: 'center' }}>Games</h2>
+        <h2 style={{ marginLeft: '55%' }}>Games</h2>
         <GameGrid />
       </MainContent>
     </>
