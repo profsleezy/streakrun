@@ -41,14 +41,13 @@ export function GameGrid() {
   );
 }
 
-
 export default function Dashboard() {
   return (
     <>
       <Sidebar />
       <MainContent>
         <WelcomeBanner />
-        <h2 style={{marginLeft: '50%'}}>Games</h2>
+        <h2 style={{ textAlign: 'center' }}>Games</h2>
         <GameGrid />
       </MainContent>
     </>
