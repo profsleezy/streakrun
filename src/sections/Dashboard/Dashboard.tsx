@@ -7,6 +7,7 @@ import { WelcomeBanner } from './WelcomeBanner';
 import { Sidebar } from './sidebar'; // Make sure to import the Sidebar
 
 const MainContent = styled.div
+  margin-left: 50px; /* Adjust this value to match the sidebar's width */
   padding: 1rem;
   width: 90%;
   margin: 0 auto; /* Center align the content */
