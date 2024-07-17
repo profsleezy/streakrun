@@ -23,7 +23,7 @@ const SidebarContainer = styled.div`
 const SidebarItem = styled(NavLink)`
   font-size: 1rem;
   padding: 8px; /* Reduced padding */
-  margin-bottom: 0.5rem; /* Reduced margin-bottom */
+  margin-bottom: 2rem; /* Increased margin-bottom to create more gap */
   cursor: pointer;
   text-align: center;
   width: 80%;
@@ -47,7 +47,7 @@ const SidebarItem = styled(NavLink)`
 const BuyNowItem = styled.a`
   font-size: 1rem;
   padding: 8px; /* Reduced padding */
-  margin-bottom: 0.5rem; /* Reduced margin-bottom */
+  margin-bottom: 2rem; /* Increased margin-bottom to match */
   cursor: pointer;
   text-align: center;
   width: 80%;
@@ -69,7 +69,7 @@ const IconWrapper = styled.a`
   justify-content: center;
   width: 80%;
   padding: 8px; /* Reduced padding */
-  margin-bottom: 0.5rem; /* Reduced margin-bottom */
+  margin-bottom: 2rem; /* Increased margin-bottom to match */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   border-radius: 5px;
@@ -104,7 +104,7 @@ const GlowEffect = styled.div`
 
 const LowerSection = styled.div`
   padding-bottom: 1rem;
-  margin-top: 50%; /* Added margin-top to separate from top items */
+  margin-top: 5.5rem; /* Added margin-top to separate from top items */
 `;
 
 export function Sidebar() {
@@ -117,7 +117,7 @@ export function Sidebar() {
       <SidebarItem to="/crash">Crash</SidebarItem>
       <SidebarItem to="/slots">Slots</SidebarItem>
       <SidebarItem to="/flip">Flip</SidebarItem>
-      <SidebarItem to="/Roulette">Roulette</SidebarItem>
+      <SidebarItem to="/roulette">Roulette</SidebarItem>
       <SidebarItem to="/dice">Dice</SidebarItem>
       <LowerSection>
         <IconWrapper href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">

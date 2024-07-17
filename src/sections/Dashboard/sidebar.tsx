@@ -117,7 +117,7 @@ export function Sidebar() {
       <SidebarItem to="/crash">Crash</SidebarItem>
       <SidebarItem to="/slots">Slots</SidebarItem>
       <SidebarItem to="/flip">Flip</SidebarItem>
-      <SidebarItem to="/Roulette">Roulette</SidebarItem>
+      <SidebarItem to="/roulette">Roulette</SidebarItem>
       <SidebarItem to="/dice">Dice</SidebarItem>
       <LowerSection>
         <IconWrapper href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">
