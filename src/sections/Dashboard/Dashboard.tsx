@@ -11,6 +11,7 @@ const MainContent = styled.div`
   padding: 1rem;
   width: 90%;
   margin: 0 auto; /* Center align the content */
+  z-index: 1; /* Ensure main content is above the background */
 `;
 
 const BannerContainer = styled.div`
@@ -21,6 +22,12 @@ const GamesHeading = styled.h2`
   margin-left: 50%; /* Adjust the left margin */
   margin-top: 2rem; /* Adjust the top margin */
   margin-bottom: 1rem; /* Adjust the bottom margin */
+`;
+
+const Grid = styled.div`
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr); /* Adjusted to 3 columns for larger cards */
 `;
 
 export function GameSlider() {
@@ -34,12 +41,6 @@ export function GameSlider() {
     </SlideSection>
   );
 }
-
-const Grid = styled.div`
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(3, 1fr); /* Adjusted to 3 columns for larger cards */
-`;
 
 export function GameGrid() {
   return (
