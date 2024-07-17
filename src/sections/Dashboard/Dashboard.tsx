@@ -48,7 +48,7 @@ export default function Dashboard() {
       <Sidebar />
       <MainContent>
         <WelcomeBanner />
-        <h2 style={{margin-left: 60% }}>Games</h2>
+        <h2 style={{marginLeft: '60%'}}>Games</h2>
         <GameGrid />
       </MainContent>
     </>
