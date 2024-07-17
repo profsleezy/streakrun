@@ -15,7 +15,7 @@ const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0;
+  padding: 2rem 0 1rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   font-family: 'Orbitron', sans-serif; /* Use a tech display font */
 `;
@@ -55,10 +55,10 @@ const BuyNowItem = styled.a`
   border-radius: 5px;
   color: #FFFFFF;
   text-decoration: none;
-  background-color: #902EDE; /* Different background color */
+  background-color: #ec1495; /* Different background color */
 
   &:hover {
-    background-color: #ec1495; /* Change background color on hover */
+    background-color: #902EDE; /* Change background color on hover */
     transform: scale(1.05);
   }
 `;
@@ -103,8 +103,8 @@ const GlowEffect = styled.div`
 `;
 
 const LowerSection = styled.div`
-  margin-top: 1rem; /* Adjusted margin-top */
   padding-bottom: 1rem;
+  margin-top: 3rem; /* Added margin-top to separate from top items */
 `;
 
 export function Sidebar() {
