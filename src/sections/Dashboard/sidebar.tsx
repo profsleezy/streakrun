@@ -44,6 +44,25 @@ const SidebarItem = styled(NavLink)`
   }
 `;
 
+const BuyNowItem = styled.a`
+  font-size: 1rem;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  text-align: center;
+  width: 80%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 5px;
+  color: #FFFFFF;
+  text-decoration: none;
+  background-color: #FF0000; /* Different background color */
+
+  &:hover {
+    background-color: #ec1495; /* Change background color on hover */
+    transform: scale(1.05);
+  }
+`;
+
 const IconWrapper = styled.a`
   display: flex;
   align-items: center;
@@ -92,10 +111,15 @@ export function Sidebar() {
   return (
     <SidebarContainer>
       <SidebarItem exact to="/">Home</SidebarItem>
-      <SidebarItem href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">BUY NOW</SidebarItem>
+      <BuyNowItem href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">BUY NOW</BuyNowItem>
       <SidebarItem to="/mines">Mines</SidebarItem>
       <SidebarItem to="/hilo">Hilo</SidebarItem>
       <SidebarItem to="/plinko">Plinko</SidebarItem>
+      <SidebarItem to="/crash">Crash</SidebarItem>
+      <SidebarItem to="/slots">Slots</SidebarItem>
+      <SidebarItem to="/flip">Flip</SidebarItem>
+      <SidebarItem to="/Roulette">Roulette</SidebarItem>
+      <SidebarItem to="/dice">Dice</SidebarItem>
       <LowerSection>
         <IconWrapper href="https://t.me/streakrun" target="_blank" rel="noopener noreferrer">
           <img src={tosIcon} alt="TOS" />
