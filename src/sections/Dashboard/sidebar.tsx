@@ -55,7 +55,7 @@ const BuyNowItem = styled.a`
   border-radius: 5px;
   color: #FFFFFF;
   text-decoration: none;
-  background-color: #6A2671; /* Different background color */
+  background-color: #902EDE; /* Different background color */
 
   &:hover {
     background-color: #ec1495; /* Change background color on hover */
