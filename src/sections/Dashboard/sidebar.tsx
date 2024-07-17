@@ -15,7 +15,7 @@ const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3rem 0 2rem;
+  padding: 4rem 0 3rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   font-family: 'Orbitron', sans-serif; /* Use a tech display font */
 `;
