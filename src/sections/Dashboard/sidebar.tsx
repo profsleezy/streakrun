@@ -103,9 +103,8 @@ const GlowEffect = styled.div`
 `;
 
 const LowerSection = styled.div`
-  margin-top: auto;
+  margin-top: 1rem; /* Adjusted margin-top */
   padding-bottom: 1rem;
-  margin-top: 2rem; /* Added margin-top to separate from top items */
 `;
 
 export function Sidebar() {
