@@ -1,88 +1,93 @@
 import { GambaUi, useSound, useWagerInput } from 'gamba-react-ui-v2'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import SOUND from './test.mp3'
+import { Canvas } from '@react-three/fiber'
+import { useGamba } from 'gamba-react-v2'
+import { Effect } from './Effect'
+import { Sidebar } from './sidebar'; 
 
-export default function TradingSimulator() {
+export default function HigherOrLowerGame() {
+  const _hue = React.useRef(0)
   const [wager, setWager] = useWagerInput()
-  const [currentValue, setCurrentValue] = useState(Math.random())
-  const [nextValue, setNextValue] = useState(Math.random())
-  const [guess, setGuess] = useState(null) // 'up' or 'down'
-  const [result, setResult] = useState(null) // 'win' or 'lose'
-  const [gameResult, setGameResult] = useState(null) // Result from game play
+  const [currentValue, setCurrentValue] = React.useState(Math.floor(Math.random() * 100))
+  const [nextValue, setNextValue] = React.useState(Math.floor(Math.random() * 100))
+  const [userGuess, setUserGuess] = React.useState(null) // null, 'higher', 'lower'
+  const game = GambaUi.useGame()
   const sound = useSound({ test: SOUND })
 
-  // Simulate value changes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setNextValue(currentValue + (Math.random() - 0.5) * 0.1)
-    }, 2000)
-
-    return () => clearInterval(interval)
-  }, [currentValue])
-
-  const handleGuess = (direction) => {
-    setGuess(direction)
+  const click = () => {
+    _hue.current = (_hue.current + 30) % 360
+    sound.play('test', { playbackRate: .75 + Math.random() * .5 })
   }
 
-  const handlePlay = async () => {
-    // Play the game with wager and guess
-    const game = GambaUi.useGame()
+  const play = async () => {
+    if (userGuess === null) return // Do nothing if no guess is made
 
-    try {
-      await game.play({
-        wager,
-        bet: [guess === 'up' ? 1 : 0, guess === 'down' ? 1 : 0],
-      })
+    const result = nextValue > currentValue ? 'higher' : 'lower'
+    const win = (userGuess === result)
+    
+    // Implement game logic here to handle wager and result
+    console.log(`Current Value: ${currentValue}, Next Value: ${nextValue}, Guess: ${userGuess}, Result: ${win ? 'Win' : 'Lose'}`)
+    
+    await game.play({
+      wager,
+      bet: [2, 0],
+    })
 
-      const result = await game.result()
-      const isCorrect = (guess === 'up' && nextValue > currentValue) ||
-                        (guess === 'down' && nextValue < currentValue)
-      setResult(isCorrect ? 'win' : 'lose')
-      setGameResult(result)
-      setCurrentValue(nextValue)
-      sound.play('test', { playbackRate: .75 + Math.random() * .5 })
-    } catch (error) {
-      console.error('Error playing game:', error)
-    }
+    // Update the values
+    setCurrentValue(nextValue)
+    setNextValue(Math.floor(Math.random() * 100))
+    setUserGuess(null) // Reset user guess
+  }
+
+  const handleGuess = (guess) => {
+    setUserGuess(guess)
   }
 
   return (
     <>
       <GambaUi.Portal target="screen">
         <GambaUi.Canvas
-          render={({ ctx, size }) => {
-            // Example visual update for current value and next value
-            const hue = (currentValue + 0.5) * 360 // Just for demo
+          render={({ ctx, size }, clock) => {
+            const scale = 3 + Math.cos(clock.time) * .5
+            const hue = _hue.current
 
-            ctx.fillStyle = 'hsla(' + hue + ', 50%, 50%, 1)'
+            ctx.fillStyle = 'hsla(' + hue + ', 50%, 3%, 1)'
             ctx.fillRect(0, 0, size.width, size.height)
 
+            ctx.save()
+            ctx.translate(size.width / 2, size.height / 2)
+
+            // Example trading visuals
+            ctx.fillStyle = 'hsla(' + hue + ', 75%, 60%, .2)'
+            ctx.fillRect(-size.width / 2, -size.height / 2, size.width, size.height)
+
+            // Draw current and next values as visual indicators
+            ctx.fillStyle = 'hsla(' + hue + ', 75%, 60%, 1)'
+            ctx.font = '32px Arial'
             ctx.textAlign = 'center'
             ctx.textBaseline = 'middle'
-            ctx.font = '32px Arial'
-            ctx.fillStyle = 'white'
-            ctx.fillText(`Current Value: ${currentValue.toFixed(2)}`, size.width / 2, size.height / 2 - 20)
-            ctx.fillText(`Next Value: ${nextValue.toFixed(2)}`, size.width / 2, size.height / 2 + 20)
+            ctx.fillText(`Current: ${currentValue}`, 0, -50)
+            ctx.fillText(`Next: ${nextValue}`, 0, 50)
 
-            if (result) {
-              ctx.fillStyle = result === 'win' ? 'green' : 'red'
-              ctx.fillText(`You ${result}!`, size.width / 2, size.height / 2 + 60)
-            }
+            ctx.restore()
           }}
         />
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
         <GambaUi.WagerInput value={wager} onChange={setWager} />
-        <GambaUi.Button onClick={() => handleGuess('up')}>
-          Guess Up
+        <GambaUi.Button onClick={click}>
+          Useless button
         </GambaUi.Button>
-        <GambaUi.Button onClick={() => handleGuess('down')}>
-          Guess Down
+        <GambaUi.Button onClick={() => handleGuess('lower')}>
+          Guess Lower
         </GambaUi.Button>
-        <GambaUi.PlayButton onClick={handlePlay}>
-          Play
+        <GambaUi.Button onClick={() => handleGuess('higher')}>
+          Guess Higher
+        </GambaUi.Button>
+        <GambaUi.PlayButton onClick={play}>
+          Submit Guess
         </GambaUi.PlayButton>
-        {gameResult && <div>Game Result: {JSON.stringify(gameResult)}</div>}
       </GambaUi.Portal>
     </>
   )
