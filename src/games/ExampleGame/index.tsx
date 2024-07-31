@@ -1,43 +1,16 @@
-import { GambaUi, useSound, useWagerInput } from 'gamba-react-ui-v2'
-import React from 'react'
-import SOUND from './test.mp3'
-import { Canvas } from '@react-three/fiber'
-import { useGamba } from 'gamba-react-v2'
-
-export default function ExampleGame() {
-  const _data = React.useRef(Array(100).fill(50)) // Start with a default value
-  const _previousValue = React.useRef(50) // Track the last value
-  const [wager, setWager] = useWagerInput()
-  const game = GambaUi.useGame()
-  const sound = useSound({ test: SOUND })
-
-  const click = () => {
-    sound.play('test', { playbackRate: .75 + Math.random() * .5 })
-  }
-
-  const play = async () => {
-    await game.play({
-      wager,
-      bet: [2, 0],
-    })
-    const result = await game.result()
-    console.log(result)
-  }
-
-  return (
-    <>
-      <GambaUi.Portal target="screen">
-      <GambaUi.Canvas
+<GambaUi.Canvas
   render={({ ctx, size }, clock) => {
     const { width, height } = size
     const data = _data.current
     const previousValue = _previousValue.current
     const step = width / (data.length - 1)
-    const maxRange = height / 4 // Increased range for larger fluctuations
+    
+    // Simulate gradual stock price movement
+    const maxRange = height / 2 // Increased range for more noticeable fluctuations
+    const slowFactor = 0.1 // Control the rate of change
 
-    // Reduce the rate of change and smooth out the movement
-    const slowFactor = 0.0005 // Even slower updates
-    const randomChange = (Math.random() - 0.5) * 0.1 // Smaller random change
+    // Create smoother fluctuations by generating a small random change
+    const randomChange = (Math.random() - 0.5) * slowFactor
     const newValue = Math.max(0, Math.min(height, previousValue + randomChange * maxRange))
 
     // Update the data with new smoothed values
@@ -64,16 +37,3 @@ export default function ExampleGame() {
     ctx.restore()
   }}
 />
-      </GambaUi.Portal>
-      <GambaUi.Portal target="controls">
-        <GambaUi.WagerInput value={wager} onChange={setWager} />
-        <GambaUi.Button onClick={click}>
-          Useless button
-        </GambaUi.Button>
-        <GambaUi.PlayButton onClick={play}>
-          Double Or nothing
-        </GambaUi.PlayButton>
-      </GambaUi.Portal>
-    </>
-  )
-}
