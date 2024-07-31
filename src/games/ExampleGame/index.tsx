@@ -35,12 +35,12 @@ export default function ExampleGame() {
             const previousValue = _previousValue.current
             const lastUpdateTime = _lastUpdateTime.current
             const step = width / (data.length - 1)
-            const maxRange = height / 5 // Increased range for noticeable fluctuations
-            const updateInterval = 5000 // Update every 5 seconds
+            const maxRange = height / 4 // Adjusted for noticeable fluctuations
+            const updateInterval = 1000 // Update every 1 second
 
             // Slow down the movement by updating less frequently
             if (clock.time - lastUpdateTime >= updateInterval) {
-              const randomChange = (Math.random() - 0.5) * 0.2 // Smaller random change
+              const randomChange = (Math.random() - 0.5) * 1.0 // Increased random change
               const newValue = Math.max(0, Math.min(height, previousValue + randomChange * maxRange))
 
               // Update the data with new smoothed values
