@@ -1,4 +1,33 @@
-<GambaUi.Canvas
+import { GambaUi, useSound, useWagerInput } from 'gamba-react-ui-v2'
+import React from 'react'
+import SOUND from './test.mp3'
+import { Canvas } from '@react-three/fiber'
+import { useGamba } from 'gamba-react-v2'
+
+export default function ExampleGame() {
+  const _data = React.useRef(Array(100).fill(50)) // Start with a default value
+  const _previousValue = React.useRef(50) // Track the last value
+  const [wager, setWager] = useWagerInput()
+  const game = GambaUi.useGame()
+  const sound = useSound({ test: SOUND })
+
+  const click = () => {
+    sound.play('test', { playbackRate: .75 + Math.random() * .5 })
+  }
+
+  const play = async () => {
+    await game.play({
+      wager,
+      bet: [2, 0],
+    })
+    const result = await game.result()
+    console.log(result)
+  }
+
+  return (
+    <>
+      <GambaUi.Portal target="screen">
+      <GambaUi.Canvas
   render={({ ctx, size }, clock) => {
     const { width, height } = size
     const data = _data.current
@@ -37,3 +66,17 @@
     ctx.restore()
   }}
 />
+
+      </GambaUi.Portal>
+      <GambaUi.Portal target="controls">
+        <GambaUi.WagerInput value={wager} onChange={setWager} />
+        <GambaUi.Button onClick={click}>
+          Useless button
+        </GambaUi.Button>
+        <GambaUi.PlayButton onClick={play}>
+          Double Or nothing
+        </GambaUi.PlayButton>
+      </GambaUi.Portal>
+    </>
+  )
+}
