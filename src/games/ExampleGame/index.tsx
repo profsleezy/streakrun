@@ -8,6 +8,7 @@ export default function TradingSimulator() {
   const [nextValue, setNextValue] = useState(Math.random())
   const [guess, setGuess] = useState(null) // 'up' or 'down'
   const [result, setResult] = useState(null) // 'win' or 'lose'
+  const [balance, setBalance] = useState(1000) // Starting balance
   const sound = useSound({ test: SOUND })
 
   // Simulate value changes
@@ -23,14 +24,24 @@ export default function TradingSimulator() {
     setGuess(direction)
     const isCorrect = (direction === 'up' && nextValue > currentValue) ||
                       (direction === 'down' && nextValue < currentValue)
-    setResult(isCorrect ? 'win' : 'lose')
+    
+    // Update balance based on guess correctness
+    if (isCorrect) {
+      setBalance(prevBalance => prevBalance + wager)
+      setResult('win')
+    } else {
+      setBalance(prevBalance => prevBalance - wager)
+      setResult('lose')
+    }
+    
+    // Update current value
     setCurrentValue(nextValue)
     sound.play('test', { playbackRate: .75 + Math.random() * .5 })
   }
 
   const handlePlay = async () => {
-    // Implement play logic based on wager if needed
-    console.log(`Wager: ${wager}, Guess: ${guess}, Result: ${result}`)
+    // Log the result of the play action
+    console.log(`Wager: ${wager}, Guess: ${guess}, Result: ${result}, Balance: ${balance}`)
   }
 
   return (
@@ -69,6 +80,7 @@ export default function TradingSimulator() {
         <GambaUi.PlayButton onClick={handlePlay}>
           Play
         </GambaUi.PlayButton>
+        <div>Balance: ${balance}</div>
       </GambaUi.Portal>
     </>
   )
