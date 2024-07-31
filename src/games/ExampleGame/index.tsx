@@ -5,7 +5,8 @@ import { Canvas } from '@react-three/fiber'
 import { useGamba } from 'gamba-react-v2'
 
 export default function ExampleGame() {
-  const _data = React.useRef(Array(100).fill(0))
+  const _data = React.useRef(Array(100).fill(50)) // Start with a default value
+  const _previousValue = React.useRef(50) // Track the last value
   const [wager, setWager] = useWagerInput()
   const game = GambaUi.useGame()
   const sound = useSound({ test: SOUND })
@@ -30,12 +31,18 @@ export default function ExampleGame() {
           render={({ ctx, size }, clock) => {
             const { width, height } = size
             const data = _data.current
+            const previousValue = _previousValue.current
             const step = width / (data.length - 1)
+            const maxRange = height / 2 // Maximum fluctuation range
 
-            // Update the data with new random values
-            const newValue = Math.random() * height // Random new value
+            // Simulate stock price movement
+            const randomChange = (Math.random() - 0.5) * 2 * 0.5 // Small random change
+            const newValue = Math.max(0, Math.min(height, previousValue + randomChange * maxRange))
+
+            // Update the data with new smoothed values
             data.shift()
             data.push(newValue)
+            _previousValue.current = newValue
 
             // Clear the canvas
             ctx.clearRect(0, 0, width, height)
