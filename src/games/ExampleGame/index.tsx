@@ -8,7 +8,6 @@ export default function HigherOrLowerGame() {
   const [nextNumber, setNextNumber] = React.useState(generateRandomNumber());
   const [guess, setGuess] = React.useState(null); // 'higher' or 'lower'
   const [resultMessage, setResultMessage] = React.useState('');
-  const [balance, setBalance] = React.useState(1000); // Initial balance for demonstration
   const game = GambaUi.useGame();
   const sound = useSound({ test: SOUND });
 
@@ -26,24 +25,23 @@ export default function HigherOrLowerGame() {
     setGuess(guess);
 
     let outcomeMessage;
-    let updatedBalance = balance;
+    let betArray = [2, 0]; // Default bet array
 
     if (isCorrect) {
-      updatedBalance += wager;
-      outcomeMessage = `Correct! You win ${wager}. Your new balance is ${updatedBalance}.`;
+      outcomeMessage = `Correct! You win ${wager * 2}.`;
+      betArray = [2, 0]; // Win case
     } else {
-      updatedBalance -= wager;
-      outcomeMessage = `Wrong! You lose ${wager}. Your new balance is ${updatedBalance}.`;
+      outcomeMessage = `Wrong! You lose ${wager}.`;
+      betArray = [0, 2]; // Lose case
     }
 
-    setBalance(updatedBalance);
     setResultMessage(outcomeMessage);
 
     // Play sound on guess
     sound.play('test', { playbackRate: 0.75 + Math.random() * 0.5 });
 
-    // Simulate game play
-    await game.play({ wager, bet: [2, 0] });
+    // Play the game and handle results
+    await game.play({ wager, bet: betArray });
     const result = await game.result();
     console.log('Game result:', result);
   };
@@ -55,7 +53,6 @@ export default function HigherOrLowerGame() {
           <h1>Current Number: {currentNumber}</h1>
           <h2>Next Number: {nextNumber}</h2>
           <h3>{resultMessage}</h3>
-          <h4>Balance: {balance}</h4>
         </div>
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
