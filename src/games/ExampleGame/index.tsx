@@ -33,10 +33,11 @@ export default function ExampleGame() {
             const data = _data.current
             const previousValue = _previousValue.current
             const step = width / (data.length - 1)
-            const maxRange = height / 5 // Reduced range for smaller fluctuations
+            const maxRange = height / 4 // Increased range for larger fluctuations
+            const slowFactor = 0.005 // Slow down the updates
 
             // Simulate slower stock price movement
-            const randomChange = (Math.random() - 0.5) * 0.2 // Smaller random change
+            const randomChange = (Math.random() - 0.5) * 0.4 // Slightly larger random change
             const newValue = Math.max(0, Math.min(height, previousValue + randomChange * maxRange))
 
             // Update the data with new smoothed values
