@@ -80,3 +80,5 @@ export default function ExampleGame() {
     </>
   )
 }
+
+export default Example
