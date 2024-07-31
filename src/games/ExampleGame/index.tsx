@@ -27,43 +27,43 @@ export default function ExampleGame() {
   return (
     <>
       <GambaUi.Portal target="screen">
-        <GambaUi.Canvas
-          render={({ ctx, size }, clock) => {
-            const { width, height } = size
-            const data = _data.current
-            const previousValue = _previousValue.current
-            const step = width / (data.length - 1)
-            const maxRange = height / 4 // Increased range for larger fluctuations
-            const slowFactor = 0.005 // Slow down the updates
+      <GambaUi.Canvas
+  render={({ ctx, size }, clock) => {
+    const { width, height } = size
+    const data = _data.current
+    const previousValue = _previousValue.current
+    const step = width / (data.length - 1)
+    const maxRange = height / 4 // Increased range for larger fluctuations
 
-            // Simulate slower stock price movement
-            const randomChange = (Math.random() - 0.5) * 0.4 // Slightly larger random change
-            const newValue = Math.max(0, Math.min(height, previousValue + randomChange * maxRange))
+    // Reduce the rate of change and smooth out the movement
+    const slowFactor = 0.0005 // Even slower updates
+    const randomChange = (Math.random() - 0.5) * 0.1 // Smaller random change
+    const newValue = Math.max(0, Math.min(height, previousValue + randomChange * maxRange))
 
-            // Update the data with new smoothed values
-            data.shift()
-            data.push(newValue)
-            _previousValue.current = newValue
+    // Update the data with new smoothed values
+    data.shift()
+    data.push(newValue)
+    _previousValue.current = newValue
 
-            // Clear the canvas
-            ctx.clearRect(0, 0, width, height)
+    // Clear the canvas
+    ctx.clearRect(0, 0, width, height)
 
-            // Draw the line
-            ctx.strokeStyle = 'hsla(200, 100%, 50%, 1)'
-            ctx.lineWidth = 2
-            ctx.beginPath()
+    // Draw the line
+    ctx.strokeStyle = 'hsla(200, 100%, 50%, 1)'
+    ctx.lineWidth = 2
+    ctx.beginPath()
 
-            ctx.moveTo(0, height - data[0])
+    ctx.moveTo(0, height - data[0])
 
-            for (let i = 1; i < data.length; i++) {
-              ctx.lineTo(i * step, height - data[i])
-            }
+    for (let i = 1; i < data.length; i++) {
+      ctx.lineTo(i * step, height - data[i])
+    }
 
-            ctx.stroke()
+    ctx.stroke()
 
-            ctx.restore()
-          }}
-        />
+    ctx.restore()
+  }}
+/>
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
         <GambaUi.WagerInput value={wager} onChange={setWager} />
