@@ -1,10 +1,6 @@
 import { GambaUi, useSound, useWagerInput } from 'gamba-react-ui-v2'
 import React from 'react'
 import SOUND from './test.mp3'
-import { Canvas } from '@react-three/fiber'
-import { useGamba } from 'gamba-react-v2'
-import { Effect } from './Effect'
-import { Sidebar } from './sidebar'; 
 
 export default function HigherOrLowerGame() {
   const _hue = React.useRef(0)
@@ -29,10 +25,14 @@ export default function HigherOrLowerGame() {
     // Implement game logic here to handle wager and result
     console.log(`Current Value: ${currentValue}, Next Value: ${nextValue}, Guess: ${userGuess}, Result: ${win ? 'Win' : 'Lose'}`)
     
-    await game.play({
-      wager,
-      bet: [2, 0],
-    })
+    try {
+      await game.play({
+        wager,
+        bet: [2, 0],
+      })
+    } catch (error) {
+      console.error("Game play error:", error)
+    }
 
     // Update the values
     setCurrentValue(nextValue)
