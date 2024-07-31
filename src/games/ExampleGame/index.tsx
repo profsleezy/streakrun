@@ -7,7 +7,6 @@ import { useGamba } from 'gamba-react-v2'
 export default function ExampleGame() {
   const _data = React.useRef(Array(100).fill(50)) // Start with a default value
   const _previousValue = React.useRef(50) // Track the last value
-  const _lastUpdateTime = React.useRef(0) // Track the last update time
   const [wager, setWager] = useWagerInput()
   const game = GambaUi.useGame()
   const sound = useSound({ test: SOUND })
@@ -33,38 +32,31 @@ export default function ExampleGame() {
             const { width, height } = size
             const data = _data.current
             const previousValue = _previousValue.current
-            const lastUpdateTime = _lastUpdateTime.current
             const step = width / (data.length - 1)
-            const maxRange = height / 8 // Adjusted for more visible fluctuations
-            const updateInterval = 100 // Update every 100 milliseconds
+            const maxRange = height / 4 // Increased range for larger fluctuations
+            const slowFactor = 0.005 // Slow down the updates
 
-            // Slow down the movement by updating less frequently
-            if (clock.time - lastUpdateTime >= updateInterval) {
-              const randomChange = (Math.random() - 0.5) * 5 // Increased random change for more noticeable effect
-              const newValue = Math.max(0, Math.min(height, previousValue + randomChange))
+            // Simulate slower stock price movement
+            const randomChange = (Math.random() - 0.5) * 0.4 // Slightly larger random change
+            const newValue = Math.max(0, Math.min(height, previousValue + randomChange * maxRange))
 
-              // Update the data with new smoothed values
-              data.shift()
-              data.push(newValue)
-              _previousValue.current = newValue
-              _lastUpdateTime.current = clock.time
-            }
+            // Update the data with new smoothed values
+            data.shift()
+            data.push(newValue)
+            _previousValue.current = newValue
 
             // Clear the canvas
             ctx.clearRect(0, 0, width, height)
 
-            // Draw the line with limited horizontal range
+            // Draw the line
             ctx.strokeStyle = 'hsla(200, 100%, 50%, 1)'
             ctx.lineWidth = 2
             ctx.beginPath()
 
-            // Start drawing from the beginning of the line
             ctx.moveTo(0, height - data[0])
 
-            // Draw up to 3/4 of the canvas width
             for (let i = 1; i < data.length; i++) {
-              const xPos = Math.min(i * step, width * 0.75) // Limit x position to 3/4 of the width
-              ctx.lineTo(xPos, height - data[i])
+              ctx.lineTo(i * step, height - data[i])
             }
 
             ctx.stroke()
