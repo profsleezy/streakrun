@@ -1,6 +1,12 @@
 import { GambaUi, useSound, useWagerInput } from 'gamba-react-ui-v2'
 import React from 'react'
 import SOUND from './test.mp3'
+import { Canvas } from '@react-three/fiber'
+import { GambaUi, useSound } from 'gamba-react-ui-v2'
+import { useGamba } from 'gamba-react-v2'
+import React from 'react'
+import { Effect } from './Effect'
+import { Sidebar } from './sidebar'; 
 
 export default function ExampleGame() {
   const _hue = React.useRef(0)
