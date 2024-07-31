@@ -34,11 +34,11 @@ export default function ExampleGame() {
     const previousValue = _previousValue.current
     const step = width / (data.length - 1)
     
-    // Simulate gradual stock price movement
-    const maxRange = height / 2 // Increased range for more noticeable fluctuations
-    const slowFactor = 0.1 // Control the rate of change
+    // Simulate very gradual stock price movement
+    const maxRange = height / 2 // Adjust based on desired fluctuation range
+    const slowFactor = 0.001 // Extremely slow updates
 
-    // Create smoother fluctuations by generating a small random change
+    // Generate a very small random change for smoother fluctuations
     const randomChange = (Math.random() - 0.5) * slowFactor
     const newValue = Math.max(0, Math.min(height, previousValue + randomChange * maxRange))
 
