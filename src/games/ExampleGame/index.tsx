@@ -6,7 +6,6 @@ import { useGamba } from 'gamba-react-v2'
 
 export default function ExampleGame() {
   const _data = React.useRef(Array(100).fill(0))
-  const _offset = React.useRef(0)
   const [wager, setWager] = useWagerInput()
   const game = GambaUi.useGame()
   const sound = useSound({ test: SOUND })
@@ -31,12 +30,12 @@ export default function ExampleGame() {
           render={({ ctx, size }, clock) => {
             const { width, height } = size
             const data = _data.current
-            const offset = _offset.current
             const step = width / (data.length - 1)
 
             // Update the data with new random values
+            const newValue = Math.random() * height // Random new value
             data.shift()
-            data.push(Math.sin(clock.time / 1000) * height / 4 + height / 2)
+            data.push(newValue)
 
             // Clear the canvas
             ctx.clearRect(0, 0, width, height)
