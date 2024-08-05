@@ -75,12 +75,22 @@ export default function ExampleGame() {
             const xScale = graphWidth / (prices.length - 1)
             const yScale = graphHeight / priceRange
 
-            ctx.moveTo(0, graphHeight - (prices[0] - minPrice) * yScale)
+            // Draw the smooth line using Bezier curves
+            for (let i = 0; i < prices.length - 1; i++) {
+              const x0 = i * xScale
+              const y0 = graphHeight - (prices[i] - minPrice) * yScale
+              const x1 = (i + 1) * xScale
+              const y1 = graphHeight - (prices[i + 1] - minPrice) * yScale
 
-            for (let i = 1; i < prices.length; i++) {
-              const x = i * xScale
-              const y = graphHeight - (prices[i] - minPrice) * yScale
-              ctx.lineTo(x, y)
+              // Control points for Bezier curve
+              const cpX = (x0 + x1) / 2
+              const cpY = (y0 + y1) / 2
+
+              if (i === 0) {
+                ctx.moveTo(x0, y0)
+              }
+
+              ctx.quadraticCurveTo(cpX, cpY, x1, y1)
             }
 
             ctx.stroke()
