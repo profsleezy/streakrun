@@ -49,7 +49,7 @@ export default function ExampleGame() {
   }
 
   const handleMouseMove = (event) => {
-    const { offsetX } = event.nativeEvent
+    const { offsetX, offsetY } = event.nativeEvent
     const xScale = (size.width - 2 * 20) / (prices.length - 1)
     const yScale = (size.height - 2 * 20) / (Math.max(...prices) - Math.min(...prices))
     
@@ -154,7 +154,7 @@ export default function ExampleGame() {
 
             for (let i = 0; i <= 10; i++) {
               const y = graphHeight - (i / 10) * graphHeight
-              ctx.fillText((minPrice + i * (priceRange / 10)).toFixed(2), -10, y)
+              ctx.fillText((minPrice + i * (priceRange / 10)).toFixed(2), -15, y)
             }
 
             // Draw tooltip
