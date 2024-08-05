@@ -12,8 +12,10 @@ export default function ExampleGame() {
   const [lastUpdateTime, setLastUpdateTime] = useState(Date.now())
   const [tooltip, setTooltip] = useState(null)
   const [highlightedIndex, setHighlightedIndex] = useState(null)
-  const [color, setColor] = useState(`hsla(${_hue.current}, 75%, 60%, 1)`)
   const [backgroundColor, setBackgroundColor] = useState('hsla(0, 0%, 10%, 1)')
+  const [gradientColor, setGradientColor] = useState('hsla(0, 0%, 60%, 0.1)')
+  const [lineColor, setLineColor] = useState('hsla(0, 75%, 60%, 1)')
+  const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -35,11 +37,15 @@ export default function ExampleGame() {
             const increase = lastThree[0] < lastThree[1] && lastThree[1] < lastThree[2]
             const decrease = lastThree[0] > lastThree[1] && lastThree[1] > lastThree[2]
             if (increase) {
-              setColor('green')
-              setBackgroundColor('hsla(120, 40%, 10%, 1)') // Change background to green
+              setBackgroundColor('hsla(120, 50%, 10%, 1)')
+              setGradientColor('hsla(120, 75%, 60%, 0.1)')
+              setLineColor('hsla(120, 75%, 60%, 1)')
+              setAxisColor('hsla(120, 75%, 50%, 1)')
             } else if (decrease) {
-              setColor(`hsla(${_hue.current}, 75%, 60%, 1)`)
-              setBackgroundColor('hsla(0, 0%, 10%, 1)') // Revert background color
+              setBackgroundColor('hsla(0, 50%, 10%, 1)')
+              setGradientColor('hsla(0, 75%, 60%, 0.1)')
+              setLineColor('hsla(0, 75%, 60%, 1)')
+              setAxisColor('hsla(0, 75%, 50%, 1)')
             }
           }
           // Keep only the last 50 points to maintain performance
@@ -89,7 +95,6 @@ export default function ExampleGame() {
       <GambaUi.Portal target="screen">
         <GambaUi.Canvas
           render={({ ctx, size }, clock) => {
-            const hue = _hue.current
             const width = size.width
             const height = size.height
             const margin = 40 // Increased margin to accommodate labels
@@ -101,7 +106,6 @@ export default function ExampleGame() {
             const xScale = graphWidth / (prices.length - 1)
             const yScale = graphHeight / priceRange
 
-            // Set background color
             ctx.fillStyle = backgroundColor
             ctx.fillRect(0, 0, width, height)
 
@@ -110,8 +114,8 @@ export default function ExampleGame() {
 
             // Draw gradient under the line
             const gradient = ctx.createLinearGradient(0, 0, 0, graphHeight)
-            gradient.addColorStop(0, 'hsla(' + hue + ', 75%, 60%, 0.1)')
-            gradient.addColorStop(1, 'hsla(' + hue + ', 75%, 60%, 0)')
+            gradient.addColorStop(0, gradientColor)
+            gradient.addColorStop(1, gradientColor.replace(/(\d+%)$/, '0')) // Reduce opacity
             ctx.fillStyle = gradient
             ctx.beginPath()
             ctx.moveTo(0, graphHeight)
@@ -125,7 +129,7 @@ export default function ExampleGame() {
             ctx.fill()
 
             // Draw the line
-            ctx.strokeStyle = color
+            ctx.strokeStyle = lineColor
             ctx.lineWidth = 2
             ctx.beginPath()
             for (let i = 0; i < prices.length - 1; i++) {
@@ -141,7 +145,7 @@ export default function ExampleGame() {
 
             // Highlight nearest point
             if (highlightedIndex !== null) {
-              ctx.strokeStyle = 'hsla(' + hue + ', 75%, 50%, 1)'
+              ctx.strokeStyle = 'hsla(0, 0%, 100%, 1)' // Contrast color for the highlighted point
               ctx.lineWidth = 2
               ctx.beginPath()
               const x = highlightedIndex * xScale
@@ -151,7 +155,7 @@ export default function ExampleGame() {
             }
 
             // Draw axes
-            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 50%, 1)'
+            ctx.strokeStyle = axisColor
             ctx.lineWidth = 1
             ctx.beginPath()
             ctx.moveTo(0, 0)
@@ -160,7 +164,7 @@ export default function ExampleGame() {
             ctx.stroke()
 
             // Draw y-axis labels
-            ctx.fillStyle = 'hsla(' + hue + ', 75%, 75%, 1)'
+            ctx.fillStyle = axisColor
             ctx.font = '12px Arial'
             ctx.textAlign = 'right'
             ctx.textBaseline = 'middle'
@@ -168,13 +172,13 @@ export default function ExampleGame() {
             for (let i = 0; i <= 10; i++) {
               const y = graphHeight - (i / 10) * graphHeight
               const value = (minPrice + i * (priceRange / 10)).toFixed(2)
-              ctx.fillText(value, -25, y) // Adjusted x position further to the right
+              ctx.fillText(value, -20, y) // Adjusted x position
             }
 
             // Draw tooltip
             if (tooltip) {
-              ctx.fillStyle = 'hsla(' + hue + ', 75%, 90%, 1)'
-              ctx.strokeStyle = 'hsla(' + hue + ', 75%, 70%, 1)'
+              ctx.fillStyle = 'hsla(0, 0%, 90%, 1)'
+              ctx.strokeStyle = 'hsla(0, 0%, 70%, 1)'
               ctx.lineWidth = 1
               ctx.font = '12px Arial'
               ctx.textAlign = 'center'
