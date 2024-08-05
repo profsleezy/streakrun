@@ -10,7 +10,6 @@ export default function ExampleGame() {
 
   const [prices, setPrices] = useState([100])
   const [lastUpdateTime, setLastUpdateTime] = useState(Date.now())
-  const [tooltip, setTooltip] = useState(null)
   const [highlightedIndex, setHighlightedIndex] = useState(null)
 
   const generateNewPrice = () => {
@@ -49,21 +48,17 @@ export default function ExampleGame() {
   }
 
   const handleMouseMove = (event) => {
-    const { offsetX, offsetY } = event.nativeEvent
+    const { offsetX } = event.nativeEvent
     const xScale = (size.width - 2 * 20) / (prices.length - 1)
-    const yScale = (size.height - 2 * 20) / (Math.max(...prices) - Math.min(...prices))
     
     // Find the nearest data point
     const index = Math.round(offsetX / xScale)
     if (index >= 0 && index < prices.length) {
-      const y = (size.height - 2 * 20) - (prices[index] - Math.min(...prices)) * yScale
-      setTooltip({ x: offsetX + 20, y: y + 20, price: prices[index] })
       setHighlightedIndex(index)
     }
   }
 
   const handleMouseLeave = () => {
-    setTooltip(null)
     setHighlightedIndex(null)
   }
 
@@ -90,30 +85,26 @@ export default function ExampleGame() {
             ctx.save()
             ctx.translate(margin, margin)
 
-            // Draw grid lines
-            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 20%, 0.5)'
-            ctx.lineWidth = 1
+            // Draw gradient under the line
+            const gradient = ctx.createLinearGradient(0, 0, 0, graphHeight)
+            gradient.addColorStop(0, 'hsla(' + hue + ', 75%, 60%, 0.3)')
+            gradient.addColorStop(1, 'hsla(' + hue + ', 75%, 60%, 0)')
+            ctx.fillStyle = gradient
             ctx.beginPath()
-
-            for (let i = 0; i <= 10; i++) {
-              const y = graphHeight - (i / 10) * graphHeight
-              ctx.moveTo(0, y)
-              ctx.lineTo(graphWidth, y)
+            ctx.moveTo(0, graphHeight)
+            for (let i = 0; i < prices.length; i++) {
+              const x = i * xScale
+              const y = graphHeight - (prices[i] - minPrice) * yScale
+              ctx.lineTo(x, y)
             }
+            ctx.lineTo(graphWidth, graphHeight)
+            ctx.closePath()
+            ctx.fill()
 
-            for (let i = 0; i <= 10; i++) {
-              const x = (i / 10) * graphWidth
-              ctx.moveTo(x, 0)
-              ctx.lineTo(x, graphHeight)
-            }
-
-            ctx.stroke()
-
-            // Draw the graph
+            // Draw the line
             ctx.strokeStyle = 'hsla(' + hue + ', 75%, 60%, 1)'
             ctx.lineWidth = 2
             ctx.beginPath()
-
             for (let i = 0; i < prices.length - 1; i++) {
               const x0 = i * xScale
               const y0 = graphHeight - (prices[i] - minPrice) * yScale
@@ -123,7 +114,6 @@ export default function ExampleGame() {
               ctx.moveTo(x0, y0)
               ctx.lineTo(x1, y1)
             }
-
             ctx.stroke()
 
             // Highlight nearest point
@@ -154,25 +144,7 @@ export default function ExampleGame() {
 
             for (let i = 0; i <= 10; i++) {
               const y = graphHeight - (i / 10) * graphHeight
-              ctx.fillText((minPrice + i * (priceRange / 10)).toFixed(2), -15, y)
-            }
-
-            // Draw tooltip
-            if (tooltip) {
-              ctx.fillStyle = 'hsla(' + hue + ', 75%, 90%, 1)'
-              ctx.strokeStyle = 'hsla(' + hue + ', 75%, 70%, 1)'
-              ctx.lineWidth = 1
-              ctx.font = '12px Arial'
-              ctx.textAlign = 'center'
-              ctx.textBaseline = 'middle'
-              
-              ctx.beginPath()
-              ctx.rect(tooltip.x, tooltip.y - 20, 60, 20)
-              ctx.stroke()
-              ctx.fill()
-              
-              ctx.fillStyle = 'black'
-              ctx.fillText(`$${tooltip.price.toFixed(2)}`, tooltip.x + 30, tooltip.y - 10)
+              ctx.fillText((minPrice + i * (priceRange / 10)).toFixed(2), -20, y)
             }
 
             ctx.restore()
