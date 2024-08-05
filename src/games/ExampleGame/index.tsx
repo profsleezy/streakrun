@@ -16,9 +16,7 @@ export default function ExampleGame() {
   const [gradientColor, setGradientColor] = useState('hsla(0, 75%, 60%, 0.1)') // Initial red gradient
   const [lineColor, setLineColor] = useState('hsla(0, 75%, 60%, 1)')
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
-  const [horizontalLineY, setHorizontalLineY] = useState(null)
-  const [secondHorizontalLineY, setSecondHorizontalLineY] = useState(null) // New state for second line
-  const [position, setPosition] = useState('Long') // Initial state
+  const [linePositions, setLinePositions] = useState([]) // State to track line positions
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -72,20 +70,16 @@ export default function ExampleGame() {
     })
     const result = await game.result()
     console.log(result)
-  
-    // Get the current price
-    const currentPrice = prices[prices.length - 1]
-    setHorizontalLineY(currentPrice)
-  
-    // Calculate the second line position based on a smaller pixel distance
-    const fixedPixelDistance = 20
-    const graphHeight = size.height - 2 * 40 // Adjust if your margins are different
-    const priceRange = Math.max(...prices) - Math.min(...prices)
-    const yScale = graphHeight / priceRange
-  
-    // Compute the second line's price value
-    const secondLinePrice = currentPrice + (fixedPixelDistance / yScale)
-    setSecondHorizontalLineY(secondLinePrice)
+    // Calculate the y-coordinate of the current stock line point
+    if (prices.length > 1) {
+      const lastIndex = prices.length - 1
+      const lastPrice = prices[lastIndex]
+      const graphWidth = size.width - 60 - 20
+      const graphHeight = size.height - 20 - 20
+      const yScale = graphHeight / (Math.max(...prices) - Math.min(...prices))
+      const y = graphHeight - (lastPrice - Math.min(...prices)) * yScale
+      setLinePositions([y - 10, y + 10]) // Set positions for two horizontal lines
+    }
   }
 
   const handleMouseMove = (event) => {
@@ -163,35 +157,6 @@ export default function ExampleGame() {
             }
             ctx.stroke()
 
-            // Draw horizontal lines if set
-            if (horizontalLineY !== null || secondHorizontalLineY !== null) {
-              const y = graphHeight - (horizontalLineY - minPrice) * yScale
-              const secondY = secondHorizontalLineY !== null ? graphHeight - (secondHorizontalLineY - minPrice) * yScale : null
-
-              ctx.save()
-              ctx.strokeStyle = 'white'
-              ctx.lineWidth = 3
-              ctx.setLineDash([5, 10])
-
-              // Draw first horizontal line
-              if (horizontalLineY !== null) {
-                ctx.beginPath()
-                ctx.moveTo(0, y)
-                ctx.lineTo(graphWidth, y)
-                ctx.stroke()
-              }
-
-              // Draw second horizontal line if it's defined and within bounds
-              if (secondY !== null && secondY >= 0 && secondY <= graphHeight) {
-                ctx.beginPath()
-                ctx.moveTo(0, secondY)
-                ctx.lineTo(graphWidth, secondY)
-                ctx.stroke()
-              }
-
-              ctx.restore()
-            }
-
             // Highlight nearest point
             if (highlightedIndex !== null) {
               ctx.strokeStyle = 'hsla(0, 0%, 100%, 1)' // Contrast color for the highlighted point
@@ -200,6 +165,18 @@ export default function ExampleGame() {
               const x = highlightedIndex * xScale
               const y = graphHeight - (prices[highlightedIndex] - minPrice) * yScale
               ctx.arc(x, y, 4, 0, Math.PI * 2)
+              ctx.stroke()
+            }
+
+            // Draw horizontal lines if they exist
+            if (linePositions.length === 2) {
+              ctx.strokeStyle = 'hsla(0, 0%, 100%, 0.5)'
+              ctx.lineWidth = 1
+              ctx.beginPath()
+              ctx.moveTo(0, linePositions[0])
+              ctx.lineTo(graphWidth, linePositions[0])
+              ctx.moveTo(0, linePositions[1])
+              ctx.lineTo(graphWidth, linePositions[1])
               ctx.stroke()
             }
 
@@ -251,8 +228,8 @@ export default function ExampleGame() {
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
         <GambaUi.WagerInput value={wager} onChange={setWager} />
-        <GambaUi.Button onClick={() => setPosition(position === 'Long' ? 'Short' : 'Long')}>
-          {position === 'Long' ? '📈 Long' : '📉 Short'}
+        <GambaUi.Button onClick={click}>
+          Useless button
         </GambaUi.Button>
         <GambaUi.PlayButton onClick={play}>
           Double Or nothing
