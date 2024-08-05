@@ -11,12 +11,14 @@ export default function ExampleGame() {
   const [prices, setPrices] = React.useState([100]);
   const [referencePrice, setReferencePrice] = React.useState(100);
 
+  // Generate new price
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1];
     const change = (Math.random() - 0.5) * 2;
     return Math.max(0, lastPrice + change);
   };
 
+  // Update prices and reference price
   const updatePrices = () => {
     setPrices(prices => {
       const newPrices = [...prices, generateNewPrice()];
@@ -30,19 +32,14 @@ export default function ExampleGame() {
     return () => clearInterval(interval);
   }, []);
 
-  const drawGraph = () => {
-    const canvas = document.getElementById('stockCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
+  const drawGraph = (ctx, size) => {
+    const width = size.width;
+    const height = size.height;
     const hue = _hue.current;
 
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = `hsla(${hue}, 50%, 10%, 1)`;
     ctx.fillRect(0, 0, width, height);
-
-    ctx.save();
 
     // Calculate graph dimensions
     const graphWidth = width;
@@ -96,17 +93,7 @@ export default function ExampleGame() {
     ctx.lineTo(0, graphHeight);
     ctx.lineTo(graphWidth, graphHeight);
     ctx.stroke();
-
-    ctx.restore();
   };
-
-  React.useEffect(() => {
-    const animate = () => {
-      drawGraph();
-      requestAnimationFrame(animate);
-    };
-    animate();
-  }, [prices, referencePrice]);
 
   const click = () => {
     _hue.current = (_hue.current + 30) % 360;
@@ -125,11 +112,10 @@ export default function ExampleGame() {
   return (
     <>
       <GambaUi.Portal target="screen">
-        <canvas
-          id="stockCanvas"
-          width="800"
-          height="600"
-          style={{ border: '1px solid black' }}
+        <GambaUi.Canvas
+          render={({ ctx, size }, clock) => {
+            drawGraph(ctx, size);
+          }}
         />
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
