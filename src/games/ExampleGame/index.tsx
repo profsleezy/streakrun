@@ -37,21 +37,21 @@ export default function ExampleGame() {
     const width = canvas.width;
     const height = canvas.height;
     const hue = _hue.current;
-    const margin = 20;
 
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = `hsla(${hue}, 50%, 10%, 1)`;
     ctx.fillRect(0, 0, width, height);
 
     ctx.save();
-    ctx.translate(margin, margin);
 
-    const graphWidth = width - 2 * margin;
-    const graphHeight = height - 2 * margin;
+    // Calculate graph dimensions
+    const graphWidth = width;
+    const graphHeight = height;
     const maxPrice = Math.max(...prices);
     const minPrice = Math.min(...prices);
     const priceRange = maxPrice - minPrice;
 
+    // Normalize prices and draw the graph
     ctx.strokeStyle = `hsla(${hue}, 75%, 60%, 1)`;
     ctx.lineWidth = 2;
     ctx.beginPath();
