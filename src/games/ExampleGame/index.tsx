@@ -73,12 +73,14 @@ export default function ExampleGame() {
     const result = await game.result()
     console.log(result)
     // Set the horizontal line at the current price
-    setHorizontalLineY(prices[prices.length - 1])
+    const currentPrice = prices[prices.length - 1]
+    setHorizontalLineY(currentPrice)
+    
     // Set additional line based on position
     if (position === 'Long') {
-      setAdditionalLineY(prices[prices.length - 1] - 10) // Example offset for short position
+      setAdditionalLineY(currentPrice - 10) // Example offset for Short position
     } else {
-      setAdditionalLineY(prices[prices.length - 1] + 10) // Example offset for long position
+      setAdditionalLineY(currentPrice + 10) // Example offset for Long position
     }
   }
 
