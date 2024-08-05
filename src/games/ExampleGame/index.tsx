@@ -74,7 +74,7 @@ export default function ExampleGame() {
 
     // Update the state to show horizontal lines
     const latestPrice = prices[prices.length - 1]
-    setLineYPositions([latestPrice, latestPrice + 5]) // Adding a line slightly above the current price
+    setLineYPositions([latestPrice, latestPrice + 10]) // Adjust the second line to be clearly above the first one
     setShowLines(true)
   }
 
@@ -188,7 +188,7 @@ export default function ExampleGame() {
 
             // Draw horizontal lines if showLines is true
             if (showLines) {
-              ctx.strokeStyle = 'hsla(0, 75%, 60%, 0.5)' // Line color
+              ctx.strokeStyle = 'hsla(0, 100%, 50%, 0.5)' // Line color
               ctx.lineWidth = 1
               ctx.beginPath()
               lineYPositions.forEach(yPos => {
@@ -229,7 +229,7 @@ export default function ExampleGame() {
           Useless button
         </GambaUi.Button>
         <GambaUi.PlayButton onClick={play}>
-          Double Or nothing
+          Double Or Nothing
         </GambaUi.PlayButton>
       </GambaUi.Portal>
     </>
