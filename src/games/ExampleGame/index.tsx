@@ -12,6 +12,7 @@ export default function ExampleGame() {
   const [lastUpdateTime, setLastUpdateTime] = useState(Date.now())
   const [tooltip, setTooltip] = useState(null)
   const [highlightedIndex, setHighlightedIndex] = useState(null)
+  const [color, setColor] = useState(`hsla(${_hue.current}, 75%, 60%, 1)`)
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -26,6 +27,19 @@ export default function ExampleGame() {
       if (elapsed > 1000) {
         setPrices(prices => {
           const newPrices = [...prices, generateNewPrice()]
+          // Check for trends
+          const length = newPrices.length
+          if (length > 2) {
+            const lastThree = newPrices.slice(-3)
+            const increase = lastThree[0] < lastThree[1] && lastThree[1] < lastThree[2]
+            const decrease = lastThree[0] > lastThree[1] && lastThree[1] > lastThree[2]
+            if (increase) {
+              setColor('green')
+            } else if (decrease) {
+              setColor(`hsla(${_hue.current}, 75%, 60%, 1)`)
+            }
+          }
+          // Keep only the last 50 points to maintain performance
           return newPrices.slice(-50)
         })
         setLastUpdateTime(now)
@@ -50,13 +64,13 @@ export default function ExampleGame() {
 
   const handleMouseMove = (event) => {
     const { offsetX, offsetY } = event.nativeEvent
-    const xScale = (size.width - 2 * 20) / (prices.length - 1)
-    const yScale = (size.height - 2 * 20) / (Math.max(...prices) - Math.min(...prices))
+    const xScale = (size.width - 2 * 40) / (prices.length - 1)
+    const yScale = (size.height - 2 * 40) / (Math.max(...prices) - Math.min(...prices))
     
     // Find the nearest data point
-    const index = Math.round((offsetX - 20) / xScale)
+    const index = Math.round((offsetX - 40) / xScale)
     if (index >= 0 && index < prices.length) {
-      const y = (size.height - 2 * 20) - (prices[index] - Math.min(...prices)) * yScale
+      const y = (size.height - 2 * 40) - (prices[index] - Math.min(...prices)) * yScale
       setTooltip({ x: offsetX + 10, y: y + 20, price: prices[index] })
       setHighlightedIndex(index)
     }
@@ -107,7 +121,7 @@ export default function ExampleGame() {
             ctx.fill()
 
             // Draw the line
-            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 60%, 1)'
+            ctx.strokeStyle = color
             ctx.lineWidth = 2
             ctx.beginPath()
             for (let i = 0; i < prices.length - 1; i++) {
@@ -150,7 +164,7 @@ export default function ExampleGame() {
             for (let i = 0; i <= 10; i++) {
               const y = graphHeight - (i / 10) * graphHeight
               const value = (minPrice + i * (priceRange / 10)).toFixed(2)
-              ctx.fillText(value, -10, y) // Adjusted x position
+              ctx.fillText(value, -15, y) // Adjusted x position
             }
 
             // Draw tooltip
