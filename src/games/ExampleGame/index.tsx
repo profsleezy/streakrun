@@ -16,7 +16,8 @@ export default function ExampleGame() {
   const [gradientColor, setGradientColor] = useState('hsla(0, 75%, 60%, 0.1)') // Initial red gradient
   const [lineColor, setLineColor] = useState('hsla(0, 75%, 60%, 1)')
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
-  const [horizontalLineY, setHorizontalLineY] = useState(null) // State to keep track of the horizontal line position
+  const [horizontalLineY, setHorizontalLineY] = useState(null)
+  const [position, setPosition] = useState('Long') // Initial state
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -70,10 +71,8 @@ export default function ExampleGame() {
     })
     const result = await game.result()
     console.log(result)
-
-    // Set the horizontal line position to the current price when button is pressed
-    const currentPrice = prices[prices.length - 1]
-    setHorizontalLineY(currentPrice)
+    // Set the horizontal line at the current price
+    setHorizontalLineY(prices[prices.length - 1])
   }
 
   const handleMouseMove = (event) => {
@@ -151,6 +150,23 @@ export default function ExampleGame() {
             }
             ctx.stroke()
 
+            // Draw horizontal line if set
+            if (horizontalLineY !== null) {
+              const y = graphHeight - (horizontalLineY - minPrice) * yScale
+
+              ctx.save()
+              ctx.strokeStyle = 'white'
+              ctx.lineWidth = 3
+              ctx.setLineDash([5, 10])
+              
+              ctx.beginPath()
+              ctx.moveTo(0, y)
+              ctx.lineTo(graphWidth, y)
+              ctx.stroke()
+              
+              ctx.restore()
+            }
+
             // Highlight nearest point
             if (highlightedIndex !== null) {
               ctx.strokeStyle = 'hsla(0, 0%, 100%, 1)' // Contrast color for the highlighted point
@@ -160,23 +176,6 @@ export default function ExampleGame() {
               const y = graphHeight - (prices[highlightedIndex] - minPrice) * yScale
               ctx.arc(x, y, 4, 0, Math.PI * 2)
               ctx.stroke()
-            }
-
-            // Draw horizontal line if set
-            if (horizontalLineY !== null) {
-              const y = graphHeight - (horizontalLineY - minPrice) * yScale
-            
-              ctx.save()
-              ctx.strokeStyle = 'white' // Line color
-              ctx.lineWidth = 3 // Make the line thicker
-              ctx.setLineDash([5, 10]) // Dotted line pattern [dash length, space length]
-              
-              ctx.beginPath()
-              ctx.moveTo(0, y)
-              ctx.lineTo(graphWidth, y)
-              ctx.stroke()
-              
-              ctx.restore()
             }
 
             // Draw axes
@@ -227,11 +226,11 @@ export default function ExampleGame() {
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
         <GambaUi.WagerInput value={wager} onChange={setWager} />
-        <GambaUi.Button onClick={click}>
-          Useless button
+        <GambaUi.Button onClick={() => setPosition(position === 'Long' ? 'Short' : 'Long')}>
+          {position === 'Long' ? '📈 Long' : '📉 Short'}
         </GambaUi.Button>
         <GambaUi.PlayButton onClick={play}>
-          Double Or Nothing
+          Double Or nothing
         </GambaUi.PlayButton>
       </GambaUi.Portal>
     </>
