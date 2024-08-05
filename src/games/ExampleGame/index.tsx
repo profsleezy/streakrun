@@ -249,6 +249,15 @@ export default function ExampleGame() {
           onMouseLeave={handleMouseLeave}
         />
       </GambaUi.Portal>
+      <GambaUi.Portal target="controls">
+        <GambaUi.WagerInput value={wager} onChange={setWager} />
+        <GambaUi.Button onClick={() => setPosition(position === 'Long' ? 'Short' : 'Long')}>
+          {position === 'Long' ? '📈 Long' : '📉 Short'}
+        </GambaUi.Button>
+        <GambaUi.PlayButton onClick={play}>
+          Double Or nothing
+        </GambaUi.PlayButton>
+      </GambaUi.Portal>
     </>
   )
 }
