@@ -23,7 +23,11 @@ export default function ExampleGame() {
       const now = Date.now()
       const elapsed = now - lastUpdateTime
       if (elapsed > 1000) { // Update every second
-        setPrices(prices => [...prices, generateNewPrice()])
+        setPrices(prices => {
+          const newPrices = [...prices, generateNewPrice()]
+          // Keep only the last 50 points to maintain performance
+          return newPrices.slice(-50)
+        })
         setLastUpdateTime(now)
       }
     }, 100) // Check every 100ms to ensure smooth updating
@@ -75,22 +79,15 @@ export default function ExampleGame() {
             const xScale = graphWidth / (prices.length - 1)
             const yScale = graphHeight / priceRange
 
-            // Draw the smooth line using Bezier curves
             for (let i = 0; i < prices.length - 1; i++) {
               const x0 = i * xScale
               const y0 = graphHeight - (prices[i] - minPrice) * yScale
               const x1 = (i + 1) * xScale
               const y1 = graphHeight - (prices[i + 1] - minPrice) * yScale
 
-              // Control points for Bezier curve
-              const cpX = (x0 + x1) / 2
-              const cpY = (y0 + y1) / 2
-
-              if (i === 0) {
-                ctx.moveTo(x0, y0)
-              }
-
-              ctx.quadraticCurveTo(cpX, cpY, x1, y1)
+              // Draw a line segment
+              ctx.moveTo(x0, y0)
+              ctx.lineTo(x1, y1)
             }
 
             ctx.stroke()
