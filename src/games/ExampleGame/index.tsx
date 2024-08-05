@@ -183,64 +183,57 @@ export default function ExampleGame() {
 
             const numLabels = 10
             for (let i = 0; i <= numLabels; i++) {
-              const y = graphHeight - (i / numLabels) * graph
-              const numLabels = 10
-              for (let i = 0; i <= numLabels; i++) {
-                const y = graphHeight - (i / numLabels) * graphHeight
-                const value = (minPrice + i * (priceRange / numLabels)).toFixed(2)
-                ctx.fillText(value, -10, y) // Adjusted x position for visibility
-              }
-  
-              // Draw horizontal lines if showLines is true
-              if (showLines) {
-                ctx.strokeStyle = 'hsla(0, 100%, 50%, 0.5)' // Line color
-                ctx.lineWidth = 1
-                ctx.beginPath()
-                lineYPositions.forEach(yPos => {
-                  const y = graphHeight - (yPos - minPrice) * yScale
-                  ctx.moveTo(0, y)
-                  ctx.lineTo(graphWidth, y)
-                })
-                ctx.stroke()
-              }
-  
-              // Draw tooltip
-              if (tooltip) {
-                ctx.fillStyle = 'hsla(0, 0%, 90%, 1)'
-                ctx.strokeStyle = 'hsla(0, 0%, 70%, 1)'
-                ctx.lineWidth = 1
-                ctx.font = '12px Arial'
-                ctx.textAlign = 'center'
-                ctx.textBaseline = 'middle'
-                
-                ctx.beginPath()
-                ctx.rect(tooltip.x, tooltip.y - 20, 60, 20)
-                ctx.stroke()
-                ctx.fill()
-                
-                ctx.fillStyle = 'black'
-                ctx.fillText(`$${tooltip.price.toFixed(2)}`, tooltip.x + 30, tooltip.y - 10)
-              }
-  
-              ctx.restore()
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-          />
-        </GambaUi.Portal>
-        <GambaUi.Portal target="controls">
-          <GambaUi.WagerInput value={wager} onChange={setWager} />
-          <GambaUi.Button onClick={click}>
-            Useless button
-          </GambaUi.Button>
-          <GambaUi.Button onClick={() => setMode(mode === 'short' ? 'long' : 'short')}>
-            {mode === 'short' ? 'Long 📈' : 'Short 📉'}
-          </GambaUi.Button>
-          <GambaUi.PlayButton onClick={play}>
-            Double Or Nothing
-          </GambaUi.PlayButton>
-        </GambaUi.Portal>
-      </>
-    )
-  }
-  
+              const y = graphHeight - (i / numLabels) * graphHeight
+              const value = (minPrice + i * (priceRange / numLabels)).toFixed(2)
+              ctx.fillText(value, -10, y) // Adjusted x position for visibility
+            }
+
+            // Draw horizontal lines if showLines is true
+            if (showLines) {
+              ctx.strokeStyle = 'hsla(0, 100%, 50%, 0.5)' // Line color
+              ctx.lineWidth = 1
+              ctx.beginPath()
+              lineYPositions.forEach(yPos => {
+                const y = graphHeight - (yPos - minPrice) * yScale
+                ctx.moveTo(0, y)
+                ctx.lineTo(graphWidth, y)
+              })
+              ctx.stroke()
+            }
+
+            // Draw tooltip
+            if (tooltip) {
+              ctx.fillStyle = 'hsla(0, 0%, 90%, 1)'
+              ctx.strokeStyle = 'hsla(0, 0%, 70%, 1)'
+              ctx.lineWidth = 1
+              ctx.font = '12px Arial'
+              ctx.textAlign = 'center'
+              ctx.textBaseline = 'middle'
+              
+              ctx.beginPath()
+              ctx.rect(tooltip.x, tooltip.y - 20, 60, 20)
+              ctx.stroke()
+              ctx.fill()
+              
+              ctx.fillStyle = 'black'
+              ctx.fillText(`$${tooltip.price.toFixed(2)}`, tooltip.x + 30, tooltip.y - 10)
+            }
+
+            ctx.restore()
+          }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        />
+      </GambaUi.Portal>
+      <GambaUi.Portal target="controls">
+        <GambaUi.WagerInput value={wager} onChange={setWager} />
+        <GambaUi.Button onClick={() => setMode(mode === 'short' ? 'long' : 'short')}>
+          {mode === 'short' ? 'Long 📈' : 'Short 📉'}
+        </GambaUi.Button>
+        <GambaUi.PlayButton onClick={play}>
+          Double Or Nothing
+        </GambaUi.PlayButton>
+      </GambaUi.Portal>
+    </>
+  )
+}
