@@ -17,7 +17,7 @@ export default function ExampleGame() {
   const [lineColor, setLineColor] = useState('hsla(0, 75%, 60%, 1)')
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
   const [horizontalLineY, setHorizontalLineY] = useState(null)
-  const [additionalLineY, setAdditionalLineY] = useState(null)
+  const [secondHorizontalLineY, setSecondHorizontalLineY] = useState(null) // New state for second line
   const [position, setPosition] = useState('Long') // Initial state
 
   const generateNewPrice = () => {
@@ -72,21 +72,10 @@ export default function ExampleGame() {
     })
     const result = await game.result()
     console.log(result)
-
+    // Set the horizontal line and the second line
     const currentPrice = prices[prices.length - 1]
-    console.log('Current Price:', currentPrice) // Debug log
-
     setHorizontalLineY(currentPrice)
-    
-    if (position === 'Long') {
-      setAdditionalLineY(currentPrice - 10) // Example offset for Short position
-    } else {
-      setAdditionalLineY(currentPrice + 10) // Example offset for Long position
-    }
-
-    // Log values for debugging
-    console.log('Horizontal Line Y:', horizontalLineY)
-    console.log('Additional Line Y:', additionalLineY)
+    setSecondHorizontalLineY(currentPrice * 1.05) // Example: 5% above the current price
   }
 
   const handleMouseMove = (event) => {
@@ -167,37 +156,26 @@ export default function ExampleGame() {
             // Draw horizontal lines if set
             if (horizontalLineY !== null) {
               const y = graphHeight - (horizontalLineY - minPrice) * yScale
-              console.log('Drawing Horizontal Line at Y:', y) // Debug log
+              const secondY = graphHeight - (secondHorizontalLineY - minPrice) * yScale
 
               ctx.save()
               ctx.strokeStyle = 'white'
               ctx.lineWidth = 3
               ctx.setLineDash([5, 10])
-              
+
+              // Draw first horizontal line
               ctx.beginPath()
               ctx.moveTo(0, y)
               ctx.lineTo(graphWidth, y)
               ctx.stroke()
-              
+
+              // Draw second horizontal line
+              ctx.beginPath()
+              ctx.moveTo(0, secondY)
+              ctx.lineTo(graphWidth, secondY)
+              ctx.stroke()
+
               ctx.restore()
-
-              // Draw additional line based on position
-              if (additionalLineY !== null) {
-                const additionalY = graphHeight - (additionalLineY - minPrice) * yScale
-                console.log('Drawing Additional Line at Y:', additionalY) // Debug log
-
-                ctx.save()
-                ctx.strokeStyle = 'red'
-                ctx.lineWidth = 3
-                ctx.setLineDash([5, 10])
-                
-                ctx.beginPath()
-                ctx.moveTo(0, additionalY)
-                ctx.lineTo(graphWidth, additionalY)
-                ctx.stroke()
-                
-                ctx.restore()
-              }
             }
 
             // Highlight nearest point
