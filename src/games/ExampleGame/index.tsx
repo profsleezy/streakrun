@@ -75,7 +75,7 @@ export default function ExampleGame() {
             const hue = _hue.current
             const width = size.width
             const height = size.height
-            const margin = 20
+            const margin = 40 // Increased margin to accommodate labels
             const graphWidth = width - 2 * margin
             const graphHeight = height - 2 * margin
             const maxPrice = Math.max(...prices)
@@ -149,7 +149,8 @@ export default function ExampleGame() {
 
             for (let i = 0; i <= 10; i++) {
               const y = graphHeight - (i / 10) * graphHeight
-              ctx.fillText((minPrice + i * (priceRange / 10)).toFixed(2), -25, y)
+              const value = (minPrice + i * (priceRange / 10)).toFixed(2)
+              ctx.fillText(value, -10, y) // Adjusted x position
             }
 
             // Draw tooltip
