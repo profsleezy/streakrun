@@ -12,8 +12,8 @@ export default function ExampleGame() {
   const [lastUpdateTime, setLastUpdateTime] = useState(Date.now())
   const [tooltip, setTooltip] = useState(null)
   const [highlightedIndex, setHighlightedIndex] = useState(null)
-  const [backgroundColor, setBackgroundColor] = useState('hsla(0, 50%, 10%, 1)') // Initial red color
-  const [gradientColor, setGradientColor] = useState('hsla(0, 75%, 60%, 0.1)') // Initial red gradient
+  const [backgroundColor, setBackgroundColor] = useState('hsla(0, 50%, 10%, 1)')
+  const [gradientColor, setGradientColor] = useState('hsla(0, 75%, 60%, 0.1)')
   const [lineColor, setLineColor] = useState('hsla(0, 75%, 60%, 1)')
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
 
@@ -30,7 +30,6 @@ export default function ExampleGame() {
       if (elapsed > 1000) {
         setPrices(prices => {
           const newPrices = [...prices, generateNewPrice()]
-          // Check for trends
           const length = newPrices.length
           if (length > 2) {
             const lastThree = newPrices.slice(-3)
@@ -48,7 +47,6 @@ export default function ExampleGame() {
               setAxisColor('hsla(0, 75%, 50%, 1)')
             }
           }
-          // Keep only the last 50 points to maintain performance
           return newPrices.slice(-50)
         })
         setLastUpdateTime(now)
@@ -76,7 +74,6 @@ export default function ExampleGame() {
     const xScale = (size.width - 2 * 60) / (prices.length - 1)
     const yScale = (size.height - 2 * 40) / (Math.max(...prices) - Math.min(...prices))
     
-    // Find the nearest data point
     const index = Math.round((offsetX - 60) / xScale)
     if (index >= 0 && index < prices.length) {
       const y = (size.height - 2 * 40) - (prices[index] - Math.min(...prices)) * yScale
@@ -118,7 +115,7 @@ export default function ExampleGame() {
             // Draw gradient under the line
             const gradient = ctx.createLinearGradient(0, 0, 0, graphHeight)
             gradient.addColorStop(0, gradientColor)
-            gradient.addColorStop(1, gradientColor.replace(/(\d+%)$/, '0')) // Reduce opacity
+            gradient.addColorStop(1, gradientColor.replace(/(\d+%)$/, '0.1')) // Adjusted opacity
             ctx.fillStyle = gradient
             ctx.beginPath()
             ctx.moveTo(0, graphHeight)
@@ -131,29 +128,28 @@ export default function ExampleGame() {
             ctx.closePath()
             ctx.fill()
 
-            // Draw the line
+            // Draw the line with smoothing
             ctx.strokeStyle = lineColor
             ctx.lineWidth = 2
             ctx.beginPath()
+            ctx.moveTo(0, graphHeight - (prices[0] - minPrice) * yScale)
             for (let i = 0; i < prices.length - 1; i++) {
               const x0 = i * xScale
               const y0 = graphHeight - (prices[i] - minPrice) * yScale
               const x1 = (i + 1) * xScale
               const y1 = graphHeight - (prices[i + 1] - minPrice) * yScale
-
-              ctx.moveTo(x0, y0)
-              ctx.lineTo(x1, y1)
+              ctx.quadraticCurveTo(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2)
             }
             ctx.stroke()
 
             // Highlight nearest point
             if (highlightedIndex !== null) {
-              ctx.strokeStyle = 'hsla(0, 0%, 100%, 1)' // Contrast color for the highlighted point
+              ctx.strokeStyle = 'hsla(0, 0%, 100%, 0.7)'
               ctx.lineWidth = 2
               ctx.beginPath()
               const x = highlightedIndex * xScale
               const y = graphHeight - (prices[highlightedIndex] - minPrice) * yScale
-              ctx.arc(x, y, 4, 0, Math.PI * 2)
+              ctx.arc(x, y, 5, 0, 2 * Math.PI)
               ctx.stroke()
             }
 
@@ -168,36 +164,36 @@ export default function ExampleGame() {
 
             // Draw y-axis labels
             ctx.fillStyle = axisColor
-            ctx.font = '12px Arial'
             ctx.textAlign = 'right'
-            ctx.textBaseline = 'middle'
-
-            const numLabels = 10
-            for (let i = 0; i <= numLabels; i++) {
-              const y = graphHeight - (i / numLabels) * graphHeight
-              const value = (minPrice + i * (priceRange / numLabels)).toFixed(2)
-              ctx.fillText(value, -10, y) // Adjusted x position for visibility
+            ctx.font = '12px Arial'
+            for (let i = 0; i <= 10; i++) {
+              const y = graphHeight - (i / 10) * graphHeight
+              const value = Math.round(minPrice + (priceRange * i) / 10)
+              ctx.fillText(value, -10, y + marginTop + 4)
             }
 
-            // Draw tooltip
-            if (tooltip) {
-              ctx.fillStyle = 'hsla(0, 0%, 90%, 1)'
-              ctx.strokeStyle = 'hsla(0, 0%, 70%, 1)'
-              ctx.lineWidth = 1
-              ctx.font = '12px Arial'
-              ctx.textAlign = 'center'
-              ctx.textBaseline = 'middle'
-              
-              ctx.beginPath()
-              ctx.rect(tooltip.x, tooltip.y - 20, 60, 20)
-              ctx.stroke()
-              ctx.fill()
-              
-              ctx.fillStyle = 'black'
-              ctx.fillText(`$${tooltip.price.toFixed(2)}`, tooltip.x + 30, tooltip.y - 10)
+            // Draw x-axis labels
+            ctx.textAlign = 'center'
+            for (let i = 0; i < prices.length; i++) {
+              const x = i * xScale
+              ctx.fillText(i, x, graphHeight + marginTop + 15)
             }
 
             ctx.restore()
+
+            // Draw tooltip
+            if (tooltip) {
+              ctx.fillStyle = 'hsla(0, 0%, 100%, 0.9)'
+              ctx.strokeStyle = 'hsla(0, 0%, 0%, 0.5)'
+              ctx.lineWidth = 1
+              ctx.beginPath()
+              ctx.rect(tooltip.x, tooltip.y, 80, 30)
+              ctx.fill()
+              ctx.stroke()
+              ctx.fillStyle = 'hsla(0, 0%, 0%, 0.8)'
+              ctx.font = '12px Arial'
+              ctx.fillText(`Price: ${tooltip.price.toFixed(2)}`, tooltip.x + 5, tooltip.y + 18)
+            }
           }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
