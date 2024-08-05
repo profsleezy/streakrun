@@ -18,6 +18,7 @@ export default function ExampleGame() {
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
   const [showLines, setShowLines] = useState(false) // State to control horizontal lines
   const [lineYPositions, setLineYPositions] = useState([]) // Store Y positions for lines
+  const [mode, setMode] = useState('short') // State for button mode ('short' or 'long')
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -74,7 +75,8 @@ export default function ExampleGame() {
 
     // Update the state to show horizontal lines
     const latestPrice = prices[prices.length - 1]
-    setLineYPositions([latestPrice, latestPrice + 0.3]) // Adjust the second line to be clearly above the first one
+    const offset = mode === 'short' ? 0.3 : -0.3 // Adjust offset based on mode
+    setLineYPositions([latestPrice, latestPrice + offset]) // Adjust the second line's position
     setShowLines(true)
   }
 
@@ -181,57 +183,64 @@ export default function ExampleGame() {
 
             const numLabels = 10
             for (let i = 0; i <= numLabels; i++) {
-              const y = graphHeight - (i / numLabels) * graphHeight
-              const value = (minPrice + i * (priceRange / numLabels)).toFixed(2)
-              ctx.fillText(value, -10, y) // Adjusted x position for visibility
-            }
-
-            // Draw horizontal lines if showLines is true
-            if (showLines) {
-              ctx.strokeStyle = 'hsla(0, 100%, 50%, 0.5)' // Line color
-              ctx.lineWidth = 1
-              ctx.beginPath()
-              lineYPositions.forEach(yPos => {
-                const y = graphHeight - (yPos - minPrice) * yScale
-                ctx.moveTo(0, y)
-                ctx.lineTo(graphWidth, y)
-              })
-              ctx.stroke()
-            }
-
-            // Draw tooltip
-            if (tooltip) {
-              ctx.fillStyle = 'hsla(0, 0%, 90%, 1)'
-              ctx.strokeStyle = 'hsla(0, 0%, 70%, 1)'
-              ctx.lineWidth = 1
-              ctx.font = '12px Arial'
-              ctx.textAlign = 'center'
-              ctx.textBaseline = 'middle'
-              
-              ctx.beginPath()
-              ctx.rect(tooltip.x, tooltip.y - 20, 60, 20)
-              ctx.stroke()
-              ctx.fill()
-              
-              ctx.fillStyle = 'black'
-              ctx.fillText(`$${tooltip.price.toFixed(2)}`, tooltip.x + 30, tooltip.y - 10)
-            }
-
-            ctx.restore()
-          }}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        />
-      </GambaUi.Portal>
-      <GambaUi.Portal target="controls">
-        <GambaUi.WagerInput value={wager} onChange={setWager} />
-        <GambaUi.Button onClick={click}>
-          Useless button
-        </GambaUi.Button>
-        <GambaUi.PlayButton onClick={play}>
-          Double Or Nothing
-        </GambaUi.PlayButton>
-      </GambaUi.Portal>
-    </>
-  )
-}
+              const y = graphHeight - (i / numLabels) * graph
+              const numLabels = 10
+              for (let i = 0; i <= numLabels; i++) {
+                const y = graphHeight - (i / numLabels) * graphHeight
+                const value = (minPrice + i * (priceRange / numLabels)).toFixed(2)
+                ctx.fillText(value, -10, y) // Adjusted x position for visibility
+              }
+  
+              // Draw horizontal lines if showLines is true
+              if (showLines) {
+                ctx.strokeStyle = 'hsla(0, 100%, 50%, 0.5)' // Line color
+                ctx.lineWidth = 1
+                ctx.beginPath()
+                lineYPositions.forEach(yPos => {
+                  const y = graphHeight - (yPos - minPrice) * yScale
+                  ctx.moveTo(0, y)
+                  ctx.lineTo(graphWidth, y)
+                })
+                ctx.stroke()
+              }
+  
+              // Draw tooltip
+              if (tooltip) {
+                ctx.fillStyle = 'hsla(0, 0%, 90%, 1)'
+                ctx.strokeStyle = 'hsla(0, 0%, 70%, 1)'
+                ctx.lineWidth = 1
+                ctx.font = '12px Arial'
+                ctx.textAlign = 'center'
+                ctx.textBaseline = 'middle'
+                
+                ctx.beginPath()
+                ctx.rect(tooltip.x, tooltip.y - 20, 60, 20)
+                ctx.stroke()
+                ctx.fill()
+                
+                ctx.fillStyle = 'black'
+                ctx.fillText(`$${tooltip.price.toFixed(2)}`, tooltip.x + 30, tooltip.y - 10)
+              }
+  
+              ctx.restore()
+            }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+          />
+        </GambaUi.Portal>
+        <GambaUi.Portal target="controls">
+          <GambaUi.WagerInput value={wager} onChange={setWager} />
+          <GambaUi.Button onClick={click}>
+            Useless button
+          </GambaUi.Button>
+          <GambaUi.Button onClick={() => setMode(mode === 'short' ? 'long' : 'short')}>
+            {mode === 'short' ? 'Long 📈' : 'Short 📉'}
+          </GambaUi.Button>
+          <GambaUi.PlayButton onClick={play}>
+            Double Or Nothing
+          </GambaUi.PlayButton>
+        </GambaUi.Portal>
+      </>
+    )
+  }
+  
