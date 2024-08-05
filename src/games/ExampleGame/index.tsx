@@ -97,7 +97,7 @@ export default function ExampleGame() {
           render={({ ctx, size }, clock) => {
             const width = size.width
             const height = size.height
-            const margin = 40 // Increased margin to accommodate labels
+            const margin = 60 // Increased margin to accommodate labels and make space for the y-axis labels
             const graphWidth = width - 2 * margin
             const graphHeight = height - 2 * margin
             const maxPrice = Math.max(...prices)
@@ -169,10 +169,11 @@ export default function ExampleGame() {
             ctx.textAlign = 'right'
             ctx.textBaseline = 'middle'
 
-            for (let i = 0; i <= 10; i++) {
-              const y = graphHeight - (i / 10) * graphHeight
-              const value = (minPrice + i * (priceRange / 10)).toFixed(2)
-              ctx.fillText(value, -20, y) // Adjusted x position
+            const numLabels = 10
+            for (let i = 0; i <= numLabels; i++) {
+              const y = graphHeight - (i / numLabels) * graphHeight
+              const value = (minPrice + i * (priceRange / numLabels)).toFixed(2)
+              ctx.fillText(value, -10, y) // Adjusted x position to -10 for visibility
             }
 
             // Draw tooltip
