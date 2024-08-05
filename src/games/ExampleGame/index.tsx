@@ -75,13 +75,17 @@ export default function ExampleGame() {
     // Set the horizontal line and the second line
     const currentPrice = prices[prices.length - 1]
     setHorizontalLineY(currentPrice)
-
+  
     // Calculate the second line position based on a smaller pixel distance
-    // For example, if you want the lines to be 10 pixels apart:
     const fixedPixelDistance = 5
-    setSecondHorizontalLineY(currentPrice + fixedPixelDistance / (size.height - 2 * 40) * (Math.max(...prices) - Math.min(...prices))) // Adjust based on yScale
+    const graphHeight = size.height - 2 * 40 // Adjust if your margins are different
+    const priceRange = Math.max(...prices) - Math.min(...prices)
+    const yScale = graphHeight / priceRange
+  
+    // Compute the second line's price value
+    const secondLinePrice = currentPrice + fixedPixelDistance / yScale
+    setSecondHorizontalLineY(secondLinePrice)
   }
-
   const handleMouseMove = (event) => {
     const { offsetX, offsetY } = event.nativeEvent
     const xScale = (size.width - 2 * 60) / (prices.length - 1)
@@ -158,6 +162,7 @@ export default function ExampleGame() {
             ctx.stroke()
 
             // Draw horizontal lines if set
+// Draw horizontal lines if set
             if (horizontalLineY !== null) {
               const y = graphHeight - (horizontalLineY - minPrice) * yScale
               const secondY = graphHeight - (secondHorizontalLineY - minPrice) * yScale
@@ -167,20 +172,23 @@ export default function ExampleGame() {
               ctx.lineWidth = 3
               ctx.setLineDash([5, 10])
 
-              // Draw first horizontal line
-              ctx.beginPath()
-              ctx.moveTo(0, y)
-              ctx.lineTo(graphWidth, y)
-              ctx.stroke()
+  // Draw first horizontal line
+            ctx.beginPath()
+            ctx.moveTo(0, y)
+            ctx.lineTo(graphWidth, y)
+            ctx.stroke()
 
-              // Draw second horizontal line
+          // Draw second horizontal line
+            if (secondHorizontalLineY >= minPrice && secondHorizontalLineY <= maxPrice) {
               ctx.beginPath()
               ctx.moveTo(0, secondY)
               ctx.lineTo(graphWidth, secondY)
               ctx.stroke()
-
-              ctx.restore()
             }
+
+            ctx.restore()
+          }
+
 
             // Highlight nearest point
             if (highlightedIndex !== null) {
