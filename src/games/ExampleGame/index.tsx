@@ -72,11 +72,12 @@ export default function ExampleGame() {
     })
     const result = await game.result()
     console.log(result)
-    // Set the horizontal line at the current price
+
     const currentPrice = prices[prices.length - 1]
+    console.log('Current Price:', currentPrice) // Debug log
+
     setHorizontalLineY(currentPrice)
     
-    // Set additional line based on position
     if (position === 'Long') {
       setAdditionalLineY(currentPrice - 10) // Example offset for Short position
     } else {
@@ -166,6 +167,7 @@ export default function ExampleGame() {
             // Draw horizontal lines if set
             if (horizontalLineY !== null) {
               const y = graphHeight - (horizontalLineY - minPrice) * yScale
+              console.log('Drawing Horizontal Line at Y:', y) // Debug log
 
               ctx.save()
               ctx.strokeStyle = 'white'
@@ -182,6 +184,7 @@ export default function ExampleGame() {
               // Draw additional line based on position
               if (additionalLineY !== null) {
                 const additionalY = graphHeight - (additionalLineY - minPrice) * yScale
+                console.log('Drawing Additional Line at Y:', additionalY) // Debug log
 
                 ctx.save()
                 ctx.strokeStyle = 'red'
