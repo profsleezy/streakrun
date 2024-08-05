@@ -9,7 +9,7 @@ export default function ExampleGame() {
   const sound = useSound({ test: SOUND })
 
   const [prices, setPrices] = React.useState([100])
-  const [lastUpdateTime, setLastUpdateTime] = React.useState(Date.now())
+  const [animationFrame, setAnimationFrame] = React.useState(null)
 
   // Function to generate a new price
   const generateNewPrice = () => {
@@ -18,21 +18,84 @@ export default function ExampleGame() {
     return Math.max(0, lastPrice + change)
   }
 
+  // Function to update prices and request the next animation frame
+  const updatePrices = () => {
+    setPrices(prices => {
+      const newPrices = [...prices, generateNewPrice()]
+      // Keep only the last 50 points to maintain performance
+      return newPrices.slice(-50)
+    })
+    requestAnimationFrame(drawGraph)
+  }
+
+  // Function to draw the graph
+  const drawGraph = () => {
+    const canvas = document.getElementById('stockCanvas')
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    const width = canvas.width
+    const height = canvas.height
+    const hue = _hue.current
+    const margin = 20
+
+    ctx.fillStyle = 'hsla(' + hue + ', 50%, 10%, 1)'
+    ctx.fillRect(0, 0, width, height)
+
+    ctx.save()
+    ctx.translate(margin, margin)
+
+    // Calculate the graph dimensions
+    const graphWidth = width - 2 * margin
+    const graphHeight = height - 2 * margin
+    const maxPrice = Math.max(...prices)
+    const minPrice = Math.min(...prices)
+    const priceRange = maxPrice - minPrice
+
+    // Normalize prices and draw the graph
+    ctx.strokeStyle = 'hsla(' + hue + ', 75%, 60%, 1)'
+    ctx.lineWidth = 2
+    ctx.beginPath()
+
+    const xScale = graphWidth / (prices.length - 1)
+    const yScale = graphHeight / priceRange
+
+    for (let i = 0; i < prices.length - 1; i++) {
+      const x0 = i * xScale
+      const y0 = graphHeight - (prices[i] - minPrice) * yScale
+      const x1 = (i + 1) * xScale
+      const y1 = graphHeight - (prices[i + 1] - minPrice) * yScale
+
+      // Draw a line segment
+      ctx.moveTo(x0, y0)
+      ctx.lineTo(x1, y1)
+    }
+
+    ctx.stroke()
+
+    // Draw axes
+    ctx.strokeStyle = 'hsla(' + hue + ', 75%, 50%, 1)'
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.moveTo(0, 0)
+    ctx.lineTo(0, graphHeight)
+    ctx.lineTo(graphWidth, graphHeight)
+    ctx.stroke()
+
+    ctx.restore()
+  }
+
   React.useEffect(() => {
-    const interval = setInterval(() => {
-      const now = Date.now()
-      const elapsed = now - lastUpdateTime
-      if (elapsed > 1000) { // Update every second
-        setPrices(prices => {
-          const newPrices = [...prices, generateNewPrice()]
-          // Keep only the last 50 points to maintain performance
-          return newPrices.slice(-50)
-        })
-        setLastUpdateTime(now)
-      }
-    }, 100) // Check every 100ms to ensure smooth updating
+    // Start updating prices and drawing the graph
+    const frame = requestAnimationFrame(drawGraph)
+    setAnimationFrame(frame)
+    return () => cancelAnimationFrame(frame)
+  }, [])
+
+  React.useEffect(() => {
+    // Update prices every second
+    const interval = setInterval(updatePrices, 1000)
     return () => clearInterval(interval)
-  }, [lastUpdateTime])
+  }, [])
 
   const click = () => {
     _hue.current = (_hue.current + 30) % 360
@@ -51,58 +114,11 @@ export default function ExampleGame() {
   return (
     <>
       <GambaUi.Portal target="screen">
-        <GambaUi.Canvas
-          render={({ ctx, size }, clock) => {
-            const hue = _hue.current
-            const width = size.width
-            const height = size.height
-            const margin = 20 // Margin around the graph
-
-            ctx.fillStyle = 'hsla(' + hue + ', 50%, 10%, 1)'
-            ctx.fillRect(0, 0, width, height)
-
-            ctx.save()
-            ctx.translate(margin, margin)
-
-            // Calculate the graph dimensions
-            const graphWidth = width - 2 * margin
-            const graphHeight = height - 2 * margin
-            const maxPrice = Math.max(...prices)
-            const minPrice = Math.min(...prices)
-            const priceRange = maxPrice - minPrice
-
-            // Normalize prices and draw the graph
-            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 60%, 1)'
-            ctx.lineWidth = 2
-            ctx.beginPath()
-
-            const xScale = graphWidth / (prices.length - 1)
-            const yScale = graphHeight / priceRange
-
-            for (let i = 0; i < prices.length - 1; i++) {
-              const x0 = i * xScale
-              const y0 = graphHeight - (prices[i] - minPrice) * yScale
-              const x1 = (i + 1) * xScale
-              const y1 = graphHeight - (prices[i + 1] - minPrice) * yScale
-
-              // Draw a line segment
-              ctx.moveTo(x0, y0)
-              ctx.lineTo(x1, y1)
-            }
-
-            ctx.stroke()
-
-            // Draw axes
-            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 50%, 1)'
-            ctx.lineWidth = 1
-            ctx.beginPath()
-            ctx.moveTo(0, 0)
-            ctx.lineTo(0, graphHeight)
-            ctx.lineTo(graphWidth, graphHeight)
-            ctx.stroke()
-
-            ctx.restore()
-          }}
+        <canvas
+          id="stockCanvas"
+          width="800"
+          height="600"
+          style={{ border: '1px solid black' }}
         />
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
