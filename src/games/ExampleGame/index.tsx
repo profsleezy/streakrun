@@ -112,7 +112,7 @@ export default function ExampleGame() {
             ctx.save()
             ctx.translate(marginLeft, marginTop)
 
-            // Draw gradient under the line
+            // Draw the gradient under the line
             const gradient = ctx.createLinearGradient(0, 0, 0, graphHeight)
             gradient.addColorStop(0, gradientColor)
             gradient.addColorStop(1, gradientColor.replace(/(\d+%)$/, '0.1')) // Adjusted opacity
