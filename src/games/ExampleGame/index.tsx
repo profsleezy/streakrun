@@ -9,6 +9,7 @@ export default function ExampleGame() {
   const sound = useSound({ test: SOUND })
 
   const [prices, setPrices] = React.useState([100])
+  const [referencePrice, setReferencePrice] = React.useState(100)
   const [animationFrame, setAnimationFrame] = React.useState(null)
 
   // Function to generate a new price
@@ -18,13 +19,14 @@ export default function ExampleGame() {
     return Math.max(0, lastPrice + change)
   }
 
-  // Function to update prices and request the next animation frame
+  // Function to update prices and reference price, and request the next animation frame
   const updatePrices = () => {
     setPrices(prices => {
       const newPrices = [...prices, generateNewPrice()]
       // Keep only the last 50 points to maintain performance
       return newPrices.slice(-50)
     })
+    setReferencePrice(generateNewPrice()) // Update reference price
     requestAnimationFrame(drawGraph)
   }
 
@@ -37,6 +39,7 @@ export default function ExampleGame() {
     const height = canvas.height
     const hue = _hue.current
     const margin = 20
+    const referencePrice = _hue.current // Use the hue value as the reference price for simplicity
 
     ctx.fillStyle = 'hsla(' + hue + ', 50%, 10%, 1)'
     ctx.fillRect(0, 0, width, height)
@@ -71,6 +74,23 @@ export default function ExampleGame() {
     }
 
     ctx.stroke()
+
+    // Draw reference line
+    const referenceY = graphHeight - (referencePrice - minPrice) * yScale
+    ctx.strokeStyle = 'hsla(' + hue + ', 75%, 90%, 1)'
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.setLineDash([5, 5]) // Dash pattern for the reference line
+    ctx.moveTo(0, referenceY)
+    ctx.lineTo(graphWidth, referenceY)
+    ctx.stroke()
+
+    // Label the reference line
+    ctx.fillStyle = 'hsla(' + hue + ', 75%, 90%, 1)'
+    ctx.textAlign = 'right'
+    ctx.textBaseline = 'middle'
+    ctx.font = '14px Arial'
+    ctx.fillText('Ref Price: ' + referencePrice.toFixed(2), graphWidth - 10, referenceY)
 
     // Draw axes
     ctx.strokeStyle = 'hsla(' + hue + ', 75%, 50%, 1)'
