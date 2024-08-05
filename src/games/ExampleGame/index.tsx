@@ -17,6 +17,7 @@ export default function ExampleGame() {
   const [lineColor, setLineColor] = useState('hsla(0, 75%, 60%, 1)')
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
   const [horizontalLineY, setHorizontalLineY] = useState(null)
+  const [additionalLineY, setAdditionalLineY] = useState(null)
   const [position, setPosition] = useState('Long') // Initial state
 
   const generateNewPrice = () => {
@@ -73,6 +74,12 @@ export default function ExampleGame() {
     console.log(result)
     // Set the horizontal line at the current price
     setHorizontalLineY(prices[prices.length - 1])
+    // Set additional line based on position
+    if (position === 'Long') {
+      setAdditionalLineY(prices[prices.length - 1] - 10) // Example offset for short position
+    } else {
+      setAdditionalLineY(prices[prices.length - 1] + 10) // Example offset for long position
+    }
   }
 
   const handleMouseMove = (event) => {
@@ -150,7 +157,7 @@ export default function ExampleGame() {
             }
             ctx.stroke()
 
-            // Draw horizontal line if set
+            // Draw horizontal lines if set
             if (horizontalLineY !== null) {
               const y = graphHeight - (horizontalLineY - minPrice) * yScale
 
@@ -165,6 +172,23 @@ export default function ExampleGame() {
               ctx.stroke()
               
               ctx.restore()
+
+              // Draw additional line based on position
+              if (additionalLineY !== null) {
+                const additionalY = graphHeight - (additionalLineY - minPrice) * yScale
+
+                ctx.save()
+                ctx.strokeStyle = 'red'
+                ctx.lineWidth = 3
+                ctx.setLineDash([5, 10])
+                
+                ctx.beginPath()
+                ctx.moveTo(0, additionalY)
+                ctx.lineTo(graphWidth, additionalY)
+                ctx.stroke()
+                
+                ctx.restore()
+              }
             }
 
             // Highlight nearest point
