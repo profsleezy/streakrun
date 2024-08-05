@@ -49,41 +49,49 @@ export default function ExampleGame() {
       <GambaUi.Portal target="screen">
         <GambaUi.Canvas
           render={({ ctx, size }, clock) => {
-            const scale = 3 + Math.cos(clock.time) * .5
             const hue = _hue.current
-
-            ctx.fillStyle = 'hsla(' + hue + ', 50%, 3%, 1)'
-            ctx.fillRect(0, 0, size.width, size.height)
-
-            ctx.save()
-            ctx.translate(size.width / 2, size.height / 2)
-
-            // Draw the price graph
-            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 60%, 1)'
-            ctx.lineWidth = 2
-            ctx.beginPath()
             const width = size.width
             const height = size.height
-            const priceCount = prices.length
+            const margin = 20 // Margin around the graph
 
-            // Normalize prices to fit within the canvas
+            ctx.fillStyle = 'hsla(' + hue + ', 50%, 10%, 1)'
+            ctx.fillRect(0, 0, width, height)
+
+            ctx.save()
+            ctx.translate(margin, margin)
+
+            // Calculate the graph dimensions
+            const graphWidth = width - 2 * margin
+            const graphHeight = height - 2 * margin
             const maxPrice = Math.max(...prices)
             const minPrice = Math.min(...prices)
             const priceRange = maxPrice - minPrice
 
-            const xScale = width / (priceCount - 1)
-            const yScale = height / priceRange
+            // Normalize prices and draw the graph
+            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 60%, 1)'
+            ctx.lineWidth = 2
+            ctx.beginPath()
 
-            // Move to the starting point
-            ctx.moveTo(0, height - (prices[0] - minPrice) * yScale)
+            const xScale = graphWidth / (prices.length - 1)
+            const yScale = graphHeight / priceRange
 
-            // Draw lines between points
-            for (let i = 1; i < priceCount; i++) {
+            ctx.moveTo(0, graphHeight - (prices[0] - minPrice) * yScale)
+
+            for (let i = 1; i < prices.length; i++) {
               const x = i * xScale
-              const y = height - (prices[i] - minPrice) * yScale
+              const y = graphHeight - (prices[i] - minPrice) * yScale
               ctx.lineTo(x, y)
             }
 
+            ctx.stroke()
+
+            // Draw axes
+            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 50%, 1)'
+            ctx.lineWidth = 1
+            ctx.beginPath()
+            ctx.moveTo(0, 0)
+            ctx.lineTo(0, graphHeight)
+            ctx.lineTo(graphWidth, graphHeight)
             ctx.stroke()
 
             ctx.restore()
