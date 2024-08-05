@@ -116,18 +116,12 @@ export default function ExampleGame() {
             ctx.lineTo(graphWidth, graphHeight)
             ctx.stroke()
 
-            // Draw x-axis labels
+            // Draw y-axis labels
             ctx.fillStyle = 'hsla(' + hue + ', 75%, 75%, 1)'
             ctx.font = '12px Arial'
-            ctx.textAlign = 'center'
-            ctx.textBaseline = 'top'
+            ctx.textAlign = 'right'
+            ctx.textBaseline = 'middle'
 
-            for (let i = 0; i < prices.length; i += Math.max(1, Math.floor(prices.length / 10))) {
-              const x = i * xScale
-              ctx.fillText(i, x, graphHeight + 5)
-            }
-
-            // Draw y-axis labels
             for (let i = 0; i <= 10; i++) {
               const y = graphHeight - (i / 10) * graphHeight
               ctx.fillText((minPrice + i * (priceRange / 10)).toFixed(2), -15, y)
