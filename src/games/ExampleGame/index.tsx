@@ -82,6 +82,10 @@ export default function ExampleGame() {
     } else {
       setAdditionalLineY(currentPrice + 10) // Example offset for Long position
     }
+
+    // Log values for debugging
+    console.log('Horizontal Line Y:', horizontalLineY)
+    console.log('Additional Line Y:', additionalLineY)
   }
 
   const handleMouseMove = (event) => {
