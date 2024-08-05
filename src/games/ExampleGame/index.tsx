@@ -75,7 +75,11 @@ export default function ExampleGame() {
     // Set the horizontal line and the second line
     const currentPrice = prices[prices.length - 1]
     setHorizontalLineY(currentPrice)
-    setSecondHorizontalLineY(currentPrice * 1.05) // Example: 5% above the current price
+
+    // Calculate the second line position based on a fixed pixel distance
+    // For example, if you want the lines to be 30 pixels apart:
+    const fixedPixelDistance = 30
+    setSecondHorizontalLineY(currentPrice + fixedPixelDistance / yScale) // Adjust based on yScale
   }
 
   const handleMouseMove = (event) => {
