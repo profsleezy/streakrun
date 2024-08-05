@@ -13,6 +13,7 @@ export default function ExampleGame() {
   const [tooltip, setTooltip] = useState(null)
   const [highlightedIndex, setHighlightedIndex] = useState(null)
   const [color, setColor] = useState(`hsla(${_hue.current}, 75%, 60%, 1)`)
+  const [backgroundColor, setBackgroundColor] = useState('hsla(0, 0%, 10%, 1)')
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -35,8 +36,10 @@ export default function ExampleGame() {
             const decrease = lastThree[0] > lastThree[1] && lastThree[1] > lastThree[2]
             if (increase) {
               setColor('green')
+              setBackgroundColor('hsla(120, 40%, 10%, 1)') // Change background to green
             } else if (decrease) {
               setColor(`hsla(${_hue.current}, 75%, 60%, 1)`)
+              setBackgroundColor('hsla(0, 0%, 10%, 1)') // Revert background color
             }
           }
           // Keep only the last 50 points to maintain performance
@@ -98,7 +101,8 @@ export default function ExampleGame() {
             const xScale = graphWidth / (prices.length - 1)
             const yScale = graphHeight / priceRange
 
-            ctx.fillStyle = 'hsla(' + hue + ', 50%, 10%, 1)'
+            // Set background color
+            ctx.fillStyle = backgroundColor
             ctx.fillRect(0, 0, width, height)
 
             ctx.save()
@@ -164,7 +168,7 @@ export default function ExampleGame() {
             for (let i = 0; i <= 10; i++) {
               const y = graphHeight - (i / 10) * graphHeight
               const value = (minPrice + i * (priceRange / 10)).toFixed(2)
-              ctx.fillText(value, -15, y) // Adjusted x position
+              ctx.fillText(value, -25, y) // Adjusted x position further to the right
             }
 
             // Draw tooltip
