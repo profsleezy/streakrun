@@ -16,6 +16,7 @@ export default function ExampleGame() {
   const [gradientColor, setGradientColor] = useState('hsla(0, 75%, 60%, 0.1)') // Initial red gradient
   const [lineColor, setLineColor] = useState('hsla(0, 75%, 60%, 1)')
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
+  const [horizontalLineY, setHorizontalLineY] = useState(null) // State to keep track of the horizontal line position
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -69,6 +70,10 @@ export default function ExampleGame() {
     })
     const result = await game.result()
     console.log(result)
+
+    // Set the horizontal line position to the current price when button is pressed
+    const currentPrice = prices[prices.length - 1]
+    setHorizontalLineY(currentPrice)
   }
 
   const handleMouseMove = (event) => {
@@ -157,6 +162,17 @@ export default function ExampleGame() {
               ctx.stroke()
             }
 
+            // Draw horizontal line if set
+            if (horizontalLineY !== null) {
+              const y = graphHeight - (horizontalLineY - minPrice) * yScale
+              ctx.strokeStyle = 'hsla(0, 100%, 50%, 0.8)' // Line color
+              ctx.lineWidth = 1
+              ctx.beginPath()
+              ctx.moveTo(0, y)
+              ctx.lineTo(graphWidth, y)
+              ctx.stroke()
+            }
+
             // Draw axes
             ctx.strokeStyle = axisColor
             ctx.lineWidth = 1
@@ -209,7 +225,7 @@ export default function ExampleGame() {
           Useless button
         </GambaUi.Button>
         <GambaUi.PlayButton onClick={play}>
-          Double Or nothing
+          Double Or Nothing
         </GambaUi.PlayButton>
       </GambaUi.Portal>
     </>
