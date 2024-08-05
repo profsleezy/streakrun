@@ -78,7 +78,7 @@ export default function ExampleGame() {
 
     // Calculate the second line position based on a smaller pixel distance
     // For example, if you want the lines to be 10 pixels apart:
-    const fixedPixelDistance = 2
+    const fixedPixelDistance = 5
     setSecondHorizontalLineY(currentPrice + fixedPixelDistance / (size.height - 2 * 40) * (Math.max(...prices) - Math.min(...prices))) // Adjust based on yScale
   }
 
