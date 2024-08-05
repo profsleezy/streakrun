@@ -74,7 +74,7 @@ export default function ExampleGame() {
 
     // Update the state to show horizontal lines
     const latestPrice = prices[prices.length - 1]
-    setLineYPositions([latestPrice, latestPrice + 2]) // Adjust the second line to be clearly above the first one
+    setLineYPositions([latestPrice, latestPrice + 0.3]) // Adjust the second line to be clearly above the first one
     setShowLines(true)
   }
 
