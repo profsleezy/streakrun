@@ -73,11 +73,11 @@ export default function ExampleGame() {
 
   const handleMouseMove = (event) => {
     const { offsetX, offsetY } = event.nativeEvent
-    const xScale = (size.width - 2 * 40) / (prices.length - 1)
+    const xScale = (size.width - 2 * 60) / (prices.length - 1) // Adjusted for left margin
     const yScale = (size.height - 2 * 40) / (Math.max(...prices) - Math.min(...prices))
     
     // Find the nearest data point
-    const index = Math.round((offsetX - 40) / xScale)
+    const index = Math.round((offsetX - 60) / xScale) // Adjusted for left margin
     if (index >= 0 && index < prices.length) {
       const y = (size.height - 2 * 40) - (prices[index] - Math.min(...prices)) * yScale
       setTooltip({ x: offsetX + 10, y: y + 20, price: prices[index] })
@@ -97,9 +97,12 @@ export default function ExampleGame() {
           render={({ ctx, size }, clock) => {
             const width = size.width
             const height = size.height
-            const margin = 60 // Increased margin to accommodate labels and make space for the y-axis labels
-            const graphWidth = width - 2 * margin
-            const graphHeight = height - 2 * margin
+            const marginLeft = 60 // Increased margin for y-axis labels
+            const marginTop = 20
+            const marginBottom = 20
+            const marginRight = 20
+            const graphWidth = width - marginLeft - marginRight
+            const graphHeight = height - marginTop - marginBottom
             const maxPrice = Math.max(...prices)
             const minPrice = Math.min(...prices)
             const priceRange = maxPrice - minPrice
@@ -110,7 +113,7 @@ export default function ExampleGame() {
             ctx.fillRect(0, 0, width, height)
 
             ctx.save()
-            ctx.translate(margin, margin)
+            ctx.translate(marginLeft, marginTop)
 
             // Draw gradient under the line
             const gradient = ctx.createLinearGradient(0, 0, 0, graphHeight)
@@ -173,7 +176,7 @@ export default function ExampleGame() {
             for (let i = 0; i <= numLabels; i++) {
               const y = graphHeight - (i / numLabels) * graphHeight
               const value = (minPrice + i * (priceRange / numLabels)).toFixed(2)
-              ctx.fillText(value, -10, y) // Adjusted x position to -10 for visibility
+              ctx.fillText(value, -10, y) // Adjusted x position for visibility
             }
 
             // Draw tooltip
