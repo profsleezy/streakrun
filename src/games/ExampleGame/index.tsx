@@ -54,10 +54,10 @@ export default function ExampleGame() {
     const yScale = (size.height - 2 * 20) / (Math.max(...prices) - Math.min(...prices))
     
     // Find the nearest data point
-    const index = Math.round(offsetX / xScale)
+    const index = Math.round((offsetX - 20) / xScale)
     if (index >= 0 && index < prices.length) {
       const y = (size.height - 2 * 20) - (prices[index] - Math.min(...prices)) * yScale
-      setTooltip({ x: offsetX + 20, y: y + 20, price: prices[index] })
+      setTooltip({ x: offsetX + 10, y: y + 20, price: prices[index] })
       setHighlightedIndex(index)
     }
   }
@@ -90,25 +90,9 @@ export default function ExampleGame() {
             ctx.save()
             ctx.translate(margin, margin)
 
-            // Draw grid lines
-            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 20%, 0.5)'
-            ctx.lineWidth = 1
-            ctx.beginPath()
-            for (let i = 0; i <= 10; i++) {
-              const y = graphHeight - (i / 10) * graphHeight
-              ctx.moveTo(0, y)
-              ctx.lineTo(graphWidth, y)
-            }
-            for (let i = 0; i <= 10; i++) {
-              const x = (i / 10) * graphWidth
-              ctx.moveTo(x, 0)
-              ctx.lineTo(x, graphHeight)
-            }
-            ctx.stroke()
-
             // Draw gradient under the line
             const gradient = ctx.createLinearGradient(0, 0, 0, graphHeight)
-            gradient.addColorStop(0, 'hsla(' + hue + ', 75%, 60%, 0.2)')
+            gradient.addColorStop(0, 'hsla(' + hue + ', 75%, 60%, 0.1)')
             gradient.addColorStop(1, 'hsla(' + hue + ', 75%, 60%, 0)')
             ctx.fillStyle = gradient
             ctx.beginPath()
