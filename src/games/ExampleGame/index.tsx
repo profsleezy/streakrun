@@ -11,7 +11,6 @@ export default function ExampleGame() {
   const [prices, setPrices] = React.useState([100])
   const [lastUpdateTime, setLastUpdateTime] = React.useState(Date.now())
 
-  // Function to generate a new price
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
     const change = (Math.random() - 0.5) * 2
@@ -22,15 +21,14 @@ export default function ExampleGame() {
     const interval = setInterval(() => {
       const now = Date.now()
       const elapsed = now - lastUpdateTime
-      if (elapsed > 1000) { // Update every second
+      if (elapsed > 1000) {
         setPrices(prices => {
           const newPrices = [...prices, generateNewPrice()]
-          // Keep only the last 50 points to maintain performance
           return newPrices.slice(-50)
         })
         setLastUpdateTime(now)
       }
-    }, 100) // Check every 100ms to ensure smooth updating
+    }, 100)
     return () => clearInterval(interval)
   }, [lastUpdateTime])
 
@@ -56,7 +54,7 @@ export default function ExampleGame() {
             const hue = _hue.current
             const width = size.width
             const height = size.height
-            const margin = 20 // Margin around the graph
+            const margin = 20
 
             ctx.fillStyle = 'hsla(' + hue + ', 50%, 10%, 1)'
             ctx.fillRect(0, 0, width, height)
@@ -64,20 +62,38 @@ export default function ExampleGame() {
             ctx.save()
             ctx.translate(margin, margin)
 
-            // Calculate the graph dimensions
             const graphWidth = width - 2 * margin
             const graphHeight = height - 2 * margin
             const maxPrice = Math.max(...prices)
             const minPrice = Math.min(...prices)
             const priceRange = maxPrice - minPrice
 
-            // Normalize prices and draw the graph
+            const xScale = graphWidth / (prices.length - 1)
+            const yScale = graphHeight / priceRange
+
+            // Draw grid lines
+            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 20%, 0.5)'
+            ctx.lineWidth = 1
+            ctx.beginPath()
+
+            for (let i = 0; i <= 10; i++) {
+              const y = graphHeight - (i / 10) * graphHeight
+              ctx.moveTo(0, y)
+              ctx.lineTo(graphWidth, y)
+            }
+
+            for (let i = 0; i <= 10; i++) {
+              const x = (i / 10) * graphWidth
+              ctx.moveTo(x, 0)
+              ctx.lineTo(x, graphHeight)
+            }
+
+            ctx.stroke()
+
+            // Draw the graph
             ctx.strokeStyle = 'hsla(' + hue + ', 75%, 60%, 1)'
             ctx.lineWidth = 2
             ctx.beginPath()
-
-            const xScale = graphWidth / (prices.length - 1)
-            const yScale = graphHeight / priceRange
 
             for (let i = 0; i < prices.length - 1; i++) {
               const x0 = i * xScale
@@ -85,7 +101,6 @@ export default function ExampleGame() {
               const x1 = (i + 1) * xScale
               const y1 = graphHeight - (prices[i + 1] - minPrice) * yScale
 
-              // Draw a line segment
               ctx.moveTo(x0, y0)
               ctx.lineTo(x1, y1)
             }
@@ -100,6 +115,23 @@ export default function ExampleGame() {
             ctx.lineTo(0, graphHeight)
             ctx.lineTo(graphWidth, graphHeight)
             ctx.stroke()
+
+            // Draw x-axis labels
+            ctx.fillStyle = 'hsla(' + hue + ', 75%, 75%, 1)'
+            ctx.font = '12px Arial'
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'top'
+
+            for (let i = 0; i < prices.length; i += Math.max(1, Math.floor(prices.length / 10))) {
+              const x = i * xScale
+              ctx.fillText(i, x, graphHeight + 5)
+            }
+
+            // Draw y-axis labels
+            for (let i = 0; i <= 10; i++) {
+              const y = graphHeight - (i / 10) * graphHeight
+              ctx.fillText((minPrice + i * (priceRange / 10)).toFixed(2), -15, y)
+            }
 
             ctx.restore()
           }}
