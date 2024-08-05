@@ -49,7 +49,7 @@ export default function ExampleGame() {
   }
 
   const handleMouseMove = (event) => {
-    const { offsetX, offsetY } = event.nativeEvent
+    const { offsetX } = event.nativeEvent
     const xScale = (size.width - 2 * 20) / (prices.length - 1)
     const yScale = (size.height - 2 * 20) / (Math.max(...prices) - Math.min(...prices))
     
@@ -57,7 +57,7 @@ export default function ExampleGame() {
     const index = Math.round(offsetX / xScale)
     if (index >= 0 && index < prices.length) {
       const y = (size.height - 2 * 20) - (prices[index] - Math.min(...prices)) * yScale
-      setTooltip({ x: offsetX, y: y, price: prices[index] })
+      setTooltip({ x: offsetX + 20, y: y + 20, price: prices[index] })
       setHighlightedIndex(index)
     }
   }
@@ -148,7 +148,7 @@ export default function ExampleGame() {
 
             // Draw y-axis labels
             ctx.fillStyle = 'hsla(' + hue + ', 75%, 75%, 1)'
-            ctx.font = '14px Arial'
+            ctx.font = '12px Arial'
             ctx.textAlign = 'right'
             ctx.textBaseline = 'middle'
 
@@ -167,12 +167,12 @@ export default function ExampleGame() {
               ctx.textBaseline = 'middle'
               
               ctx.beginPath()
-              ctx.rect(tooltip.x + 10, tooltip.y - 20, 60, 20)
+              ctx.rect(tooltip.x, tooltip.y - 20, 60, 20)
               ctx.stroke()
               ctx.fill()
               
               ctx.fillStyle = 'black'
-              ctx.fillText(`$${tooltip.price.toFixed(2)}`, tooltip.x + 40, tooltip.y - 10)
+              ctx.fillText(`$${tooltip.price.toFixed(2)}`, tooltip.x + 30, tooltip.y - 10)
             }
 
             ctx.restore()
