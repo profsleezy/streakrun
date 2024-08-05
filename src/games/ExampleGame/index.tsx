@@ -1,15 +1,17 @@
 import { GambaUi, useSound, useWagerInput } from 'gamba-react-ui-v2'
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import SOUND from './test.mp3'
 
 export default function ExampleGame() {
-  const _hue = React.useRef(0)
+  const _hue = useRef(0)
   const [wager, setWager] = useWagerInput()
   const game = GambaUi.useGame()
   const sound = useSound({ test: SOUND })
 
-  const [prices, setPrices] = React.useState([100])
-  const [lastUpdateTime, setLastUpdateTime] = React.useState(Date.now())
+  const [prices, setPrices] = useState([100])
+  const [lastUpdateTime, setLastUpdateTime] = useState(Date.now())
+  const [tooltip, setTooltip] = useState(null)
+  const [highlightedIndex, setHighlightedIndex] = useState(null)
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -17,7 +19,7 @@ export default function ExampleGame() {
     return Math.max(0, lastPrice + change)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       const now = Date.now()
       const elapsed = now - lastUpdateTime
@@ -46,6 +48,25 @@ export default function ExampleGame() {
     console.log(result)
   }
 
+  const handleMouseMove = (event) => {
+    const { offsetX, offsetY } = event.nativeEvent
+    const xScale = (size.width - 2 * 20) / (prices.length - 1)
+    const yScale = (size.height - 2 * 20) / (Math.max(...prices) - Math.min(...prices))
+    
+    // Find the nearest data point
+    const index = Math.round(offsetX / xScale)
+    if (index >= 0 && index < prices.length) {
+      const y = (size.height - 2 * 20) - (prices[index] - Math.min(...prices)) * yScale
+      setTooltip({ x: offsetX, y: y, price: prices[index] })
+      setHighlightedIndex(index)
+    }
+  }
+
+  const handleMouseLeave = () => {
+    setTooltip(null)
+    setHighlightedIndex(null)
+  }
+
   return (
     <>
       <GambaUi.Portal target="screen">
@@ -55,21 +76,19 @@ export default function ExampleGame() {
             const width = size.width
             const height = size.height
             const margin = 20
+            const graphWidth = width - 2 * margin
+            const graphHeight = height - 2 * margin
+            const maxPrice = Math.max(...prices)
+            const minPrice = Math.min(...prices)
+            const priceRange = maxPrice - minPrice
+            const xScale = graphWidth / (prices.length - 1)
+            const yScale = graphHeight / priceRange
 
             ctx.fillStyle = 'hsla(' + hue + ', 50%, 10%, 1)'
             ctx.fillRect(0, 0, width, height)
 
             ctx.save()
             ctx.translate(margin, margin)
-
-            const graphWidth = width - 2 * margin
-            const graphHeight = height - 2 * margin
-            const maxPrice = Math.max(...prices)
-            const minPrice = Math.min(...prices)
-            const priceRange = maxPrice - minPrice
-
-            const xScale = graphWidth / (prices.length - 1)
-            const yScale = graphHeight / priceRange
 
             // Draw grid lines
             ctx.strokeStyle = 'hsla(' + hue + ', 75%, 20%, 0.5)'
@@ -107,6 +126,17 @@ export default function ExampleGame() {
 
             ctx.stroke()
 
+            // Highlight nearest point
+            if (highlightedIndex !== null) {
+              ctx.strokeStyle = 'hsla(' + hue + ', 75%, 50%, 1)'
+              ctx.lineWidth = 2
+              ctx.beginPath()
+              const x = highlightedIndex * xScale
+              const y = graphHeight - (prices[highlightedIndex] - minPrice) * yScale
+              ctx.arc(x, y, 4, 0, Math.PI * 2)
+              ctx.stroke()
+            }
+
             // Draw axes
             ctx.strokeStyle = 'hsla(' + hue + ', 75%, 50%, 1)'
             ctx.lineWidth = 1
@@ -118,17 +148,37 @@ export default function ExampleGame() {
 
             // Draw y-axis labels
             ctx.fillStyle = 'hsla(' + hue + ', 75%, 75%, 1)'
-            ctx.font = '12px Arial'
+            ctx.font = '14px Arial'
             ctx.textAlign = 'right'
             ctx.textBaseline = 'middle'
 
             for (let i = 0; i <= 10; i++) {
               const y = graphHeight - (i / 10) * graphHeight
-              ctx.fillText((minPrice + i * (priceRange / 10)).toFixed(2), -15, y)
+              ctx.fillText((minPrice + i * (priceRange / 10)).toFixed(2), -10, y)
+            }
+
+            // Draw tooltip
+            if (tooltip) {
+              ctx.fillStyle = 'hsla(' + hue + ', 75%, 90%, 1)'
+              ctx.strokeStyle = 'hsla(' + hue + ', 75%, 70%, 1)'
+              ctx.lineWidth = 1
+              ctx.font = '12px Arial'
+              ctx.textAlign = 'center'
+              ctx.textBaseline = 'middle'
+              
+              ctx.beginPath()
+              ctx.rect(tooltip.x + 10, tooltip.y - 20, 60, 20)
+              ctx.stroke()
+              ctx.fill()
+              
+              ctx.fillStyle = 'black'
+              ctx.fillText(`$${tooltip.price.toFixed(2)}`, tooltip.x + 40, tooltip.y - 10)
             }
 
             ctx.restore()
           }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
         />
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
