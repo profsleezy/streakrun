@@ -1,17 +1,37 @@
 import { GambaUi, useSound, useWagerInput } from 'gamba-react-ui-v2'
 import React from 'react'
 import SOUND from './test.mp3'
-import { Canvas } from '@react-three/fiber'
-import { useGamba } from 'gamba-react-v2'
 
 export default function ExampleGame() {
-  const _data = React.useRef(Array(100).fill(50)) // Start with a default value
-  const _previousValue = React.useRef(50) // Track the last value
+  const _hue = React.useRef(0)
   const [wager, setWager] = useWagerInput()
   const game = GambaUi.useGame()
   const sound = useSound({ test: SOUND })
 
+  const [prices, setPrices] = React.useState([100])
+  const [lastUpdateTime, setLastUpdateTime] = React.useState(Date.now())
+
+  // Function to generate a new price
+  const generateNewPrice = () => {
+    const lastPrice = prices[prices.length - 1]
+    const change = (Math.random() - 0.5) * 2
+    return Math.max(0, lastPrice + change)
+  }
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      const now = Date.now()
+      const elapsed = now - lastUpdateTime
+      if (elapsed > 1000) { // Update every second
+        setPrices(prices => [...prices, generateNewPrice()])
+        setLastUpdateTime(now)
+      }
+    }, 100) // Check every 100ms to ensure smooth updating
+    return () => clearInterval(interval)
+  }, [lastUpdateTime])
+
   const click = () => {
+    _hue.current = (_hue.current + 30) % 360
     sound.play('test', { playbackRate: .75 + Math.random() * .5 })
   }
 
@@ -27,46 +47,48 @@ export default function ExampleGame() {
   return (
     <>
       <GambaUi.Portal target="screen">
-      <GambaUi.Canvas
-  render={({ ctx, size }, clock) => {
-    const { width, height } = size
-    const data = _data.current
-    const previousValue = _previousValue.current
-    const step = width / (data.length - 1)
-    
-    // Simulate very gradual stock price movement
-    const maxRange = height / 2 // Adjust based on desired fluctuation range
-    const slowFactor = 0.001 // Extremely slow updates
+        <GambaUi.Canvas
+          render={({ ctx, size }, clock) => {
+            const scale = 3 + Math.cos(clock.time) * .5
+            const hue = _hue.current
 
-    // Generate a very small random change for smoother fluctuations
-    const randomChange = (Math.random() - 0.5) * slowFactor
-    const newValue = Math.max(0, Math.min(height, previousValue + randomChange * maxRange))
+            ctx.fillStyle = 'hsla(' + hue + ', 50%, 3%, 1)'
+            ctx.fillRect(0, 0, size.width, size.height)
 
-    // Update the data with new smoothed values
-    data.shift()
-    data.push(newValue)
-    _previousValue.current = newValue
+            ctx.save()
+            ctx.translate(size.width / 2, size.height / 2)
 
-    // Clear the canvas
-    ctx.clearRect(0, 0, width, height)
+            // Draw the price graph
+            ctx.strokeStyle = 'hsla(' + hue + ', 75%, 60%, 1)'
+            ctx.lineWidth = 2
+            ctx.beginPath()
+            const width = size.width
+            const height = size.height
+            const priceCount = prices.length
 
-    // Draw the line
-    ctx.strokeStyle = 'hsla(200, 100%, 50%, 1)'
-    ctx.lineWidth = 2
-    ctx.beginPath()
+            // Normalize prices to fit within the canvas
+            const maxPrice = Math.max(...prices)
+            const minPrice = Math.min(...prices)
+            const priceRange = maxPrice - minPrice
 
-    ctx.moveTo(0, height - data[0])
+            const xScale = width / (priceCount - 1)
+            const yScale = height / priceRange
 
-    for (let i = 1; i < data.length; i++) {
-      ctx.lineTo(i * step, height - data[i])
-    }
+            // Move to the starting point
+            ctx.moveTo(0, height - (prices[0] - minPrice) * yScale)
 
-    ctx.stroke()
+            // Draw lines between points
+            for (let i = 1; i < priceCount; i++) {
+              const x = i * xScale
+              const y = height - (prices[i] - minPrice) * yScale
+              ctx.lineTo(x, y)
+            }
 
-    ctx.restore()
-  }}
-/>
+            ctx.stroke()
 
+            ctx.restore()
+          }}
+        />
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
         <GambaUi.WagerInput value={wager} onChange={setWager} />
