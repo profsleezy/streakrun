@@ -165,12 +165,18 @@ export default function ExampleGame() {
             // Draw horizontal line if set
             if (horizontalLineY !== null) {
               const y = graphHeight - (horizontalLineY - minPrice) * yScale
-              ctx.strokeStyle = 'hsla(0, 100%, 50%, 0.8)' // Line color
-              ctx.lineWidth = 1
+            
+              ctx.save()
+              ctx.strokeStyle = 'white' // Line color
+              ctx.lineWidth = 3 // Make the line thicker
+              ctx.setLineDash([5, 10]) // Dotted line pattern [dash length, space length]
+              
               ctx.beginPath()
               ctx.moveTo(0, y)
               ctx.lineTo(graphWidth, y)
               ctx.stroke()
+              
+              ctx.restore()
             }
 
             // Draw axes
