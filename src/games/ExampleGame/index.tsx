@@ -16,7 +16,6 @@ export default function ExampleGame() {
   const [gradientColor, setGradientColor] = useState('hsla(0, 75%, 60%, 0.1)') // Initial red gradient
   const [lineColor, setLineColor] = useState('hsla(0, 75%, 60%, 1)')
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
-  const [showLines, setShowLines] = useState(false) // State to control horizontal lines
   const [lineYPositions, setLineYPositions] = useState([]) // Store Y positions for lines
   const [mode, setMode] = useState('short') // State to handle short/long mode
 
@@ -77,7 +76,6 @@ export default function ExampleGame() {
     const latestPrice = prices[prices.length - 1]
     const offset = mode === 'short' ? 0.3 : -0.3 // Adjust the second line's offset based on the mode
     setLineYPositions([latestPrice, latestPrice + offset])
-    setShowLines(true)
   }
 
   const handleMouseMove = (event) => {
@@ -188,8 +186,17 @@ export default function ExampleGame() {
               ctx.fillText(value, -10, y) // Adjusted x position for visibility
             }
 
+            // Check if the graph touches the bust price and remove lines if true
+            if (lineYPositions.length === 2) {
+              const graphTouchesBustPrice = prices.some(price => price >= lineYPositions[1])
+              if (graphTouchesBustPrice) {
+                setLineYPositions([]) // Clear the lines
+                return // Exit early if lines should be removed
+              }
+            }
+
             // Draw horizontal lines if showLines is true
-            if (showLines) {
+            if (lineYPositions.length === 2) {
               // Draw the thick dashed white line
               ctx.strokeStyle = 'white' // Line color
               ctx.lineWidth = 4 // Line thickness
