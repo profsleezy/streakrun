@@ -190,7 +190,7 @@ export default function ExampleGame() {
 
             // Draw horizontal lines if showLines is true
             if (showLines) {
-              // Draw the first line (thick, dashed, white)
+              // Draw the thick dashed white line
               ctx.strokeStyle = 'white' // Line color
               ctx.lineWidth = 4 // Line thickness
               ctx.setLineDash([10, 5]) // Dashed line pattern
@@ -201,16 +201,26 @@ export default function ExampleGame() {
               ctx.stroke()
               ctx.setLineDash([]) // Reset to solid lines
 
-              // Draw the second line
-              ctx.strokeStyle = 'hsla(0, 100%, 50%, 0.5)' // Line color
+              // Draw the red line for the bust price
+              ctx.strokeStyle = 'red' // Line color
               ctx.lineWidth = 1
               ctx.beginPath()
-              lineYPositions.forEach(yPos => {
-                const y = graphHeight - (yPos - minPrice) * yScale
-                ctx.moveTo(0, y)
-                ctx.lineTo(graphWidth, y)
-              })
+              const y2 = graphHeight - (lineYPositions[1] - minPrice) * yScale
+              ctx.moveTo(0, y2)
+              ctx.lineTo(graphWidth, y2)
               ctx.stroke()
+
+              // Label the lines
+              ctx.fillStyle = 'white'
+              ctx.font = '12px Arial'
+              ctx.textAlign = 'left'
+              ctx.textBaseline = 'middle'
+
+              // Label for the entry price
+              ctx.fillText('Entry Price', graphWidth - 100, y1 - 10)
+
+              // Label for the bust price
+              ctx.fillText('Bust Price', graphWidth - 100, y2 - 10)
             }
 
             // Draw tooltip
