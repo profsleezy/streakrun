@@ -191,11 +191,12 @@ export default function ExampleGame() {
               const graphTouchesBustPrice = prices.some(price => price >= lineYPositions[1])
               if (graphTouchesBustPrice) {
                 setLineYPositions([]) // Clear the lines
+                ctx.restore() // Restore context before early return
                 return // Exit early if lines should be removed
               }
             }
 
-            // Draw horizontal lines if showLines is true
+            // Draw horizontal lines if lineYPositions has two values
             if (lineYPositions.length === 2) {
               // Draw the thick dashed white line
               ctx.strokeStyle = 'white' // Line color
