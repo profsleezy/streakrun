@@ -60,6 +60,11 @@ export default function ExampleGame() {
     return () => clearInterval(interval)
   }, [lastUpdateTime])
 
+  const click = () => {
+    _hue.current = (_hue.current + 30) % 360
+    sound.play('test', { playbackRate: .75 + Math.random() * .5 })
+  }
+
   const play = async () => {
     await game.play({
       wager,
@@ -184,16 +189,13 @@ export default function ExampleGame() {
             }
 
             // Draw horizontal lines if showLines is true
-            if (showLines && lineYPositions.length) {
-              // Calculate y positions
-              const y1 = graphHeight - (lineYPositions[0] - minPrice) * yScale
-              const y2 = graphHeight - (lineYPositions[1] - minPrice) * yScale
-
-              // Draw the thick dashed white line for entry price
+            if (showLines) {
+              // Draw the thick dashed white line
               ctx.strokeStyle = 'white' // Line color
               ctx.lineWidth = 4 // Line thickness
               ctx.setLineDash([10, 5]) // Dashed line pattern
               ctx.beginPath()
+              const y1 = graphHeight - (lineYPositions[0] - minPrice) * yScale
               ctx.moveTo(0, y1)
               ctx.lineTo(graphWidth, y1)
               ctx.stroke()
@@ -203,6 +205,7 @@ export default function ExampleGame() {
               ctx.strokeStyle = 'red' // Line color
               ctx.lineWidth = 1
               ctx.beginPath()
+              const y2 = graphHeight - (lineYPositions[1] - minPrice) * yScale
               ctx.moveTo(0, y2)
               ctx.lineTo(graphWidth, y2)
               ctx.stroke()
@@ -218,13 +221,6 @@ export default function ExampleGame() {
 
               // Label for the bust price
               ctx.fillText('Bust Price', graphWidth - 100, y2 - 10)
-
-              // Check if the graph touches the bust price and remove lines if true
-              const graphTouchesBustPrice = prices.some(price => price >= lineYPositions[1])
-              if (graphTouchesBustPrice) {
-                setLineYPositions([])
-                setShowLines(false)
-              }
             }
 
             // Draw tooltip
