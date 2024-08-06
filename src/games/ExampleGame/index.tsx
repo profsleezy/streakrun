@@ -60,24 +60,6 @@ export default function ExampleGame() {
     return () => clearInterval(interval)
   }, [lastUpdateTime])
 
-  const checkIntersection = (lineYPositions, prices) => {
-    const lastPrice = prices[prices.length - 1]
-    if (lineYPositions.length < 2) return false
-
-    const bustPriceY = lineYPositions[1]
-    const maxPrice = Math.max(...prices)
-    const minPrice = Math.min(...prices)
-
-    const priceRange = maxPrice - minPrice
-    const graphHeight = 500 - 40 - 20
-    const yScale = graphHeight / priceRange
-
-    const yValue = graphHeight - (bustPriceY - minPrice) * yScale
-
-    // Check if the last price in the graph is greater than the bust price
-    return lastPrice >= bustPriceY
-  }
-
   const play = async () => {
     await game.play({
       wager,
@@ -90,13 +72,7 @@ export default function ExampleGame() {
     const latestPrice = prices[prices.length - 1]
     const offset = mode === 'short' ? 0.3 : -0.3 // Adjust the second line's offset based on the mode
     setLineYPositions([latestPrice, latestPrice + offset])
-    
-    // Check if the graph intersects with the bust price
-    if (checkIntersection([latestPrice, latestPrice + offset], prices)) {
-      setLineYPositions([])
-    } else {
-      setShowLines(true)
-    }
+    setShowLines(true)
   }
 
   const handleMouseMove = (event) => {
@@ -209,12 +185,15 @@ export default function ExampleGame() {
 
             // Draw horizontal lines if showLines is true
             if (showLines && lineYPositions.length) {
+              // Calculate y positions
+              const y1 = graphHeight - (lineYPositions[0] - minPrice) * yScale
+              const y2 = graphHeight - (lineYPositions[1] - minPrice) * yScale
+
               // Draw the thick dashed white line for entry price
               ctx.strokeStyle = 'white' // Line color
               ctx.lineWidth = 4 // Line thickness
               ctx.setLineDash([10, 5]) // Dashed line pattern
               ctx.beginPath()
-              const y1 = graphHeight - (lineYPositions[0] - minPrice) * yScale
               ctx.moveTo(0, y1)
               ctx.lineTo(graphWidth, y1)
               ctx.stroke()
@@ -224,7 +203,6 @@ export default function ExampleGame() {
               ctx.strokeStyle = 'red' // Line color
               ctx.lineWidth = 1
               ctx.beginPath()
-              const y2 = graphHeight - (lineYPositions[1] - minPrice) * yScale
               ctx.moveTo(0, y2)
               ctx.lineTo(graphWidth, y2)
               ctx.stroke()
@@ -240,6 +218,13 @@ export default function ExampleGame() {
 
               // Label for the bust price
               ctx.fillText('Bust Price', graphWidth - 100, y2 - 10)
+
+              // Check if the graph touches the bust price and remove lines if true
+              const graphTouchesBustPrice = prices.some(price => price >= lineYPositions[1])
+              if (graphTouchesBustPrice) {
+                setLineYPositions([])
+                setShowLines(false)
+              }
             }
 
             // Draw tooltip
