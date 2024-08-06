@@ -76,7 +76,7 @@ export default function ExampleGame() {
 
     // Update the state to show indicators
     const latestPrice = prices[prices.length - 1]
-    const offset = mode === 'short' ? 0.3 : -0.3 // Adjust the second indicator's offset based on the mode
+    const offset = mode === 'short' ? 0.6 : -0.6 // Adjust the second indicator's offset based on the mode
     setEntryPrice(latestPrice)
     setBustPrice(latestPrice + offset)
   }
@@ -93,7 +93,7 @@ export default function ExampleGame() {
           setEntryPrice(null) // Remove the entry price indicator
           setBustPrice(null) // Remove the bust price indicator
         }
-      }, 3000) // 3-second delay
+      }, 1000) // 3-second delay
 
       setTimeoutId(id)
     }
