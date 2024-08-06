@@ -16,7 +16,8 @@ export default function ExampleGame() {
   const [gradientColor, setGradientColor] = useState('hsla(0, 75%, 60%, 0.1)') // Initial red gradient
   const [lineColor, setLineColor] = useState('hsla(0, 75%, 60%, 1)')
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
-  const [lineYPositions, setLineYPositions] = useState([]) // Store Y positions for lines
+  const [entryPrice, setEntryPrice] = useState(null) // Store entry price
+  const [bustPrice, setBustPrice] = useState(null) // Store bust price
   const [mode, setMode] = useState('short') // State to handle short/long mode
 
   const generateNewPrice = () => {
@@ -72,11 +73,19 @@ export default function ExampleGame() {
     const result = await game.result()
     console.log(result)
 
-    // Update the state to show horizontal lines
+    // Update the state to show indicators
     const latestPrice = prices[prices.length - 1]
-    const offset = mode === 'short' ? 0.3 : -0.3 // Adjust the second line's offset based on the mode
-    setLineYPositions([latestPrice, latestPrice + offset])
+    const offset = mode === 'short' ? 0.3 : -0.3 // Adjust the second indicator's offset based on the mode
+    setEntryPrice(latestPrice)
+    setBustPrice(latestPrice + offset)
   }
+
+  useEffect(() => {
+    if (bustPrice !== null && prices.some(price => price >= bustPrice)) {
+      setEntryPrice(null) // Remove the entry price indicator
+      setBustPrice(null) // Remove the bust price indicator
+    }
+  }, [prices, bustPrice])
 
   const handleMouseMove = (event) => {
     const { offsetX, offsetY } = event.nativeEvent
@@ -186,47 +195,25 @@ export default function ExampleGame() {
               ctx.fillText(value, -10, y) // Adjusted x position for visibility
             }
 
-            // Draw horizontal lines if lineYPositions has two values
-            if (lineYPositions.length === 2) {
-              // Check if the graph touches the bust price
-              const graphTouchesBustPrice = prices.some(price => price >= lineYPositions[1])
-              if (graphTouchesBustPrice) {
-                setLineYPositions([]) // Clear the lines
-                ctx.restore() // Restore context before early return
-                return // Exit early if lines should be removed
-              }
-
-              // Draw the thick dashed white line
-              ctx.strokeStyle = 'white' // Line color
-              ctx.lineWidth = 4 // Line thickness
-              ctx.setLineDash([10, 5]) // Dashed line pattern
-              ctx.beginPath()
-              const y1 = graphHeight - (lineYPositions[0] - minPrice) * yScale
-              ctx.moveTo(0, y1)
-              ctx.lineTo(graphWidth, y1)
-              ctx.stroke()
-              ctx.setLineDash([]) // Reset to solid lines
-
-              // Draw the red line for the bust price
-              ctx.strokeStyle = 'red' // Line color
-              ctx.lineWidth = 1
-              ctx.beginPath()
-              const y2 = graphHeight - (lineYPositions[1] - minPrice) * yScale
-              ctx.moveTo(0, y2)
-              ctx.lineTo(graphWidth, y2)
-              ctx.stroke()
-
-              // Label the lines
+            // Draw indicators for entry price and bust price if they are set
+            if (entryPrice !== null) {
+              const yEntry = graphHeight - (entryPrice - minPrice) * yScale
+              // Draw entry price circle
               ctx.fillStyle = 'white'
-              ctx.font = '12px Arial'
-              ctx.textAlign = 'left'
-              ctx.textBaseline = 'middle'
+              ctx.beginPath()
+              ctx.arc(0, yEntry, 5, 0, Math.PI * 2)
+              ctx.fill()
+              ctx.fillText('Entry Price', 10, yEntry - 10)
+            }
 
-              // Label for the entry price
-              ctx.fillText('Entry Price', graphWidth - 100, y1 - 10)
-
-              // Label for the bust price
-              ctx.fillText('Bust Price', graphWidth - 100, y2 - 10)
+            if (bustPrice !== null) {
+              const yBust = graphHeight - (bustPrice - minPrice) * yScale
+              // Draw bust price circle
+              ctx.fillStyle = 'red'
+              ctx.beginPath()
+              ctx.arc(0, yBust, 5, 0, Math.PI * 2)
+              ctx.fill()
+              ctx.fillText('Bust Price', 10, yBust - 10)
             }
 
             // Draw tooltip
