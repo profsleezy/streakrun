@@ -89,8 +89,9 @@ export default function ExampleGame() {
           const currentPrice = prices[prices.length - 1]
           const now = Date.now()
           if (now - checkTimestamp >= 1000) {
-            // Check if the current price is at or below the bust price
-            if (currentPrice <= bustPrice) {
+            // Check if the current price meets the condition based on the mode
+            if ((mode === 'short' && currentPrice <= bustPrice) ||
+                (mode === 'long' && currentPrice >= bustPrice)) {
               setEntryPrice(null) // Remove the entry price indicator
               setBustPrice(null) // Remove the bust price indicator
               setCheckTimestamp(null) // Reset the check timestamp
@@ -102,7 +103,7 @@ export default function ExampleGame() {
       const intervalId = setInterval(checkBustPrice, 100)
       return () => clearInterval(intervalId) // Clear the interval on component unmount or bustPrice change
     }
-  }, [bustPrice, checkTimestamp, prices])
+  }, [bustPrice, checkTimestamp, prices, mode])
 
   const handleMouseMove = (event) => {
     const { offsetX, offsetY } = event.nativeEvent
