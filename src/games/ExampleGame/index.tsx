@@ -18,7 +18,7 @@ export default function ExampleGame() {
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
   const [showLines, setShowLines] = useState(false) // State to control horizontal lines
   const [lineYPositions, setLineYPositions] = useState([]) // Store Y positions for lines
-  const [mode, setMode] = useState('short') // State for button mode ('short' or 'long')
+  const [mode, setMode] = useState('short') // State to handle short/long mode
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -75,8 +75,8 @@ export default function ExampleGame() {
 
     // Update the state to show horizontal lines
     const latestPrice = prices[prices.length - 1]
-    const offset = mode === 'short' ? 0.3 : -0.3 // Adjust offset based on mode
-    setLineYPositions([latestPrice, latestPrice + offset]) // Adjust the second line's position
+    const offset = mode === 'short' ? 0.3 : -0.3 // Adjust the second line's offset based on the mode
+    setLineYPositions([latestPrice, latestPrice + offset])
     setShowLines(true)
   }
 
@@ -190,6 +190,18 @@ export default function ExampleGame() {
 
             // Draw horizontal lines if showLines is true
             if (showLines) {
+              // Draw the first line (thick, dashed, white)
+              ctx.strokeStyle = 'white' // Line color
+              ctx.lineWidth = 4 // Line thickness
+              ctx.setLineDash([10, 5]) // Dashed line pattern
+              ctx.beginPath()
+              const y1 = graphHeight - (lineYPositions[0] - minPrice) * yScale
+              ctx.moveTo(0, y1)
+              ctx.lineTo(graphWidth, y1)
+              ctx.stroke()
+              ctx.setLineDash([]) // Reset to solid lines
+
+              // Draw the second line
               ctx.strokeStyle = 'hsla(0, 100%, 50%, 0.5)' // Line color
               ctx.lineWidth = 1
               ctx.beginPath()
@@ -227,6 +239,9 @@ export default function ExampleGame() {
       </GambaUi.Portal>
       <GambaUi.Portal target="controls">
         <GambaUi.WagerInput value={wager} onChange={setWager} />
+        <GambaUi.Button onClick={click}>
+          Useless button
+        </GambaUi.Button>
         <GambaUi.Button onClick={() => setMode(mode === 'short' ? 'long' : 'short')}>
           {mode === 'short' ? 'Long 📈' : 'Short 📉'}
         </GambaUi.Button>
