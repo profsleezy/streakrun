@@ -60,9 +60,22 @@ export default function ExampleGame() {
     return () => clearInterval(interval)
   }, [lastUpdateTime])
 
-  const click = () => {
-    _hue.current = (_hue.current + 30) % 360
-    sound.play('test', { playbackRate: .75 + Math.random() * .5 })
+  const checkIntersection = (lineYPositions, prices) => {
+    const lastPrice = prices[prices.length - 1]
+    if (lineYPositions.length < 2) return false
+
+    const bustPriceY = lineYPositions[1]
+    const maxPrice = Math.max(...prices)
+    const minPrice = Math.min(...prices)
+
+    const priceRange = maxPrice - minPrice
+    const graphHeight = 500 - 40 - 20
+    const yScale = graphHeight / priceRange
+
+    const yValue = graphHeight - (bustPriceY - minPrice) * yScale
+
+    // Check if the last price in the graph is greater than the bust price
+    return lastPrice >= bustPriceY
   }
 
   const play = async () => {
@@ -77,7 +90,13 @@ export default function ExampleGame() {
     const latestPrice = prices[prices.length - 1]
     const offset = mode === 'short' ? 0.3 : -0.3 // Adjust the second line's offset based on the mode
     setLineYPositions([latestPrice, latestPrice + offset])
-    setShowLines(true)
+    
+    // Check if the graph intersects with the bust price
+    if (checkIntersection([latestPrice, latestPrice + offset], prices)) {
+      setLineYPositions([])
+    } else {
+      setShowLines(true)
+    }
   }
 
   const handleMouseMove = (event) => {
@@ -189,8 +208,8 @@ export default function ExampleGame() {
             }
 
             // Draw horizontal lines if showLines is true
-            if (showLines) {
-              // Draw the thick dashed white line
+            if (showLines && lineYPositions.length) {
+              // Draw the thick dashed white line for entry price
               ctx.strokeStyle = 'white' // Line color
               ctx.lineWidth = 4 // Line thickness
               ctx.setLineDash([10, 5]) // Dashed line pattern
