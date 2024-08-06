@@ -19,6 +19,7 @@ export default function ExampleGame() {
   const [entryPrice, setEntryPrice] = useState(null) // Store entry price
   const [bustPrice, setBustPrice] = useState(null) // Store bust price
   const [mode, setMode] = useState('short') // State to handle short/long mode
+  const [timeoutId, setTimeoutId] = useState(null) // State to store timeout ID
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -81,9 +82,20 @@ export default function ExampleGame() {
   }
 
   useEffect(() => {
-    if (bustPrice !== null && prices.some(price => price >= bustPrice)) {
-      setEntryPrice(null) // Remove the entry price indicator
-      setBustPrice(null) // Remove the bust price indicator
+    if (bustPrice !== null) {
+      // Clear any existing timeout
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+      // Set a new timeout to check if the bust price is touched
+      const id = setTimeout(() => {
+        if (prices.some(price => price >= bustPrice)) {
+          setEntryPrice(null) // Remove the entry price indicator
+          setBustPrice(null) // Remove the bust price indicator
+        }
+      }, 3000) // 3-second delay
+
+      setTimeoutId(id)
     }
   }, [prices, bustPrice])
 
