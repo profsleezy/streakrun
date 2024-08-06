@@ -18,8 +18,9 @@ export default function ExampleGame() {
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
   const [entryPrice, setEntryPrice] = useState(null) // Store entry price
   const [bustPrice, setBustPrice] = useState(null) // Store bust price
-  const [mode, setMode] = useState('short') // State to handle short/long mode
+  const [priceTouchedBustPrice, setPriceTouchedBustPrice] = useState(false) // State to track if price touched bust price
   const [timeoutId, setTimeoutId] = useState(null) // State to store timeout ID
+  const [mode, setMode] = useState('short') // State to handle short/long mode
 
   const generateNewPrice = () => {
     const lastPrice = prices[prices.length - 1]
@@ -76,28 +77,32 @@ export default function ExampleGame() {
 
     // Update the state to show indicators
     const latestPrice = prices[prices.length - 1]
-    const offset = mode === 'short' ? 0.6 : -0.6 // Adjust the second indicator's offset based on the mode
+    const offset = mode === 'short' ? 0.3 : -0.3 // Adjust the second indicator's offset based on the mode
     setEntryPrice(latestPrice)
     setBustPrice(latestPrice + offset)
+    setPriceTouchedBustPrice(false) // Reset the state when a new price is set
+
+    // Clear any existing timeout
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+    }
+    // Set a new timeout to check if the bust price is touched
+    const id = setTimeout(() => {
+      if (prices.some(price => price >= bustPrice)) {
+        setPriceTouchedBustPrice(true) // Set the state to true if bust price is touched
+      }
+    }, 1000) // 1-second delay
+
+    setTimeoutId(id)
   }
 
   useEffect(() => {
-    if (bustPrice !== null) {
-      // Clear any existing timeout
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-      }
-      // Set a new timeout to check if the bust price is touched
-      const id = setTimeout(() => {
-        if (prices.some(price => price >= bustPrice)) {
-          setEntryPrice(null) // Remove the entry price indicator
-          setBustPrice(null) // Remove the bust price indicator
-        }
-      }, 1000) // 3-second delay
-
-      setTimeoutId(id)
+    if (priceTouchedBustPrice) {
+      setEntryPrice(null) // Remove the entry price indicator
+      setBustPrice(null) // Remove the bust price indicator
+      setPriceTouchedBustPrice(false) // Reset the state
     }
-  }, [prices, bustPrice])
+  }, [priceTouchedBustPrice])
 
   const handleMouseMove = (event) => {
     const { offsetX, offsetY } = event.nativeEvent
