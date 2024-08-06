@@ -18,7 +18,6 @@ export default function ExampleGame() {
   const [axisColor, setAxisColor] = useState('hsla(0, 75%, 50%, 1)')
   const [entryPrice, setEntryPrice] = useState(null) // Store entry price
   const [bustPrice, setBustPrice] = useState(null) // Store bust price
-  const [timeoutId, setTimeoutId] = useState(null) // State to store timeout ID
   const [checkTimestamp, setCheckTimestamp] = useState(null) // State to store timestamp for bust price check
   const [mode, setMode] = useState('short') // State to handle short/long mode
 
@@ -81,22 +80,29 @@ export default function ExampleGame() {
     setEntryPrice(latestPrice)
     setBustPrice(latestPrice + offset)
     setCheckTimestamp(Date.now()) // Set timestamp for bust price check
-
-    // Clear any existing timeout
-    if (timeoutId) {
-      clearTimeout(timeoutId)
-    }
-    // Set a new timeout to check if the bust price is touched
-    const id = setTimeout(() => {
-      const currentPrice = prices[prices.length - 1]
-      if (currentPrice <= bustPrice) {
-        setEntryPrice(null) // Remove the entry price indicator
-        setBustPrice(null) // Remove the bust price indicator
-      }
-    }, 1000) // 1-second delay
-
-    setTimeoutId(id)
   }
+
+  useEffect(() => {
+    if (bustPrice !== null) {
+      const checkBustPrice = () => {
+        if (checkTimestamp) {
+          const currentPrice = prices[prices.length - 1]
+          const now = Date.now()
+          if (now - checkTimestamp >= 1000) {
+            // Check if the current price is at or below the bust price
+            if (currentPrice <= bustPrice) {
+              setEntryPrice(null) // Remove the entry price indicator
+              setBustPrice(null) // Remove the bust price indicator
+              setCheckTimestamp(null) // Reset the check timestamp
+            }
+          }
+        }
+      }
+      // Set interval to check the price every 100 milliseconds
+      const intervalId = setInterval(checkBustPrice, 100)
+      return () => clearInterval(intervalId) // Clear the interval on component unmount or bustPrice change
+    }
+  }, [bustPrice, checkTimestamp, prices])
 
   const handleMouseMove = (event) => {
     const { offsetX, offsetY } = event.nativeEvent
